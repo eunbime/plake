@@ -14,8 +14,6 @@
   --foreground: #171717;
 }
 body {
-  color: var(--foreground);
-  background: var(--background);
   @apply font-sans;
 }
 .base-wrap {
