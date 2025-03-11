@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { MdLogin } from "react-icons/md";
 
@@ -13,17 +16,18 @@ const Header = () => {
   };
 
   return (
-    <header className="relative flex h-[60px] w-full items-center justify-center bg-white md:justify-start">
+    <header className="fixed left-0 top-0 flex h-[60px] w-full items-center justify-center bg-white md:justify-start">
       <SideBar isOpen={isOpen} onToggle={toggleSideBar} />
-      <div className="base-wrap flex justify-between md:w-full md:px-4 lg:p-0">
+      <div className="base-wrap flex justify-between">
         <div className="flex items-center">
-          <Image
-            className="md:mr-16"
-            src="/images/logo.png"
-            alt="logo-image"
-            width={70}
-            height={15}
-          />
+          <Link href="/" className="md:mr-16">
+            <Image
+              src="/images/logo.png"
+              alt="logo-image"
+              width={70}
+              height={15}
+            />
+          </Link>
           <div className="hidden md:flex">
             <NavList />
           </div>

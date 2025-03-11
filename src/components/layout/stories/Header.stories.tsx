@@ -24,7 +24,7 @@ const meta: Meta<typeof Header> = {
         <Story />
         <div
           style={{
-            padding: "20px",
+            padding: "80px",
             backgroundColor: "#dcdcdc",
           }}
         >
@@ -52,7 +52,7 @@ export const Default: Story = {
     },
   },
 };
-export const TabletResponsive: Story = {
+export const TabletSize: Story = {
   parameters: {
     viewport: {
       defaultViewport: "tablet",
@@ -65,7 +65,7 @@ export const TabletResponsive: Story = {
   },
 };
 
-export const DesktopResponsive: Story = {
+export const DesktopSize: Story = {
   parameters: {
     viewport: {
       defaultViewport: "desktop",
