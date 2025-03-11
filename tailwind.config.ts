@@ -86,6 +86,9 @@ const config: Config = {
       screens: {
         xs: "375px",
       },
+      fontFamily: {
+        sans: ["var(--font-pretendard)", "sans-serif"],
+      },
     },
   },
   plugins: [animate],
