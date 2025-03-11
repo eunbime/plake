@@ -18,8 +18,8 @@ const meta: Meta<typeof SideBar> = {
     },
   },
   args: {
-    isOpen: false, // 기본값으로 닫힌 상태 설정
-    onToggle: () => {}, // 빈 함수를 기본 핸들러로 설정
+    isOpen: false,
+    onToggle: () => {},
   },
   parameters: {
     componentSubtitle: "모바일 스크린에서 보여질 네비게이션 사이드바",
@@ -30,28 +30,13 @@ const meta: Meta<typeof SideBar> = {
       },
     },
   },
-  decorators: [
-    (Story, context) => {
-      return (
-        <div
-          key={`sidebar-${context.args.isOpen ? "open" : "closed"}`}
-          style={{ position: "relative", height: "100px", overflow: "hidden" }}
-        >
-          <Story
-            isOpen={context.args.isOpen}
-            onToggle={context.args.onToggle}
-          />
-        </div>
-      );
-    },
-  ],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof SideBar>;
 
-export const Closed: Story = {
+export const Default: Story = {
   args: {
     isOpen: false,
   },
@@ -67,28 +52,12 @@ export const Closed: Story = {
     },
   },
 };
-export const Open: Story = {
-  args: {
-    isOpen: true,
-  },
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile1",
-    },
-    docs: {
-      description: {
-        story:
-          "사용자가 메뉴 버튼을 클릭했을 때 표시되는 열린 상태의 사이드바입니다.",
-      },
-    },
-  },
-};
 
 export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: "사용자가 직접 제어할 수 있는 사이드바입니다.",
+        story: "메뉴 버튼을 눌러서 사이드바를 확인해보세요.",
       },
     },
   },
