@@ -1,6 +1,21 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
 
-import { IGathering } from "@/types/gathering";
+import { GatheringType, IGathering } from "@/types/gathering";
+
+const initialData: IGathering = {
+  id: 0,
+  teamId: "",
+  name: "",
+  type: GatheringType.MINDFULNESS,
+  location: "",
+  dateTime: "",
+  registrationEnd: "",
+  capacity: 0,
+  participantCount: 0,
+  image: "",
+  createdBy: 0,
+  canceledAt: null,
+};
 
 export const getGathering = async (id: string): Promise<IGathering> => {
   const response = await fetch(
@@ -21,6 +36,7 @@ export const useGatheringDetail = (id: string) => {
     return useQuery<IGathering>({
       queryKey: ["gathering", id],
       queryFn: () => getGathering(id),
+      initialData,
     });
   } catch (error) {
     throw error;
@@ -35,6 +51,7 @@ export const prefetchGatheringDetail = async (
     return queryClient.prefetchQuery<IGathering>({
       queryKey: ["gathering", id],
       queryFn: () => getGathering(id),
+      initialData,
     });
   } catch (error) {
     throw error;
