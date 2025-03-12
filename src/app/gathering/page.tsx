@@ -1,6 +1,7 @@
 import MainCardItem from "@/components/layout/MainCardItem";
 
 const cardData = {
+  id: 0,
   name: "달램핏 오피스 스트레칭",
   dateTime: new Date(),
   registrationEnd: new Date(),
