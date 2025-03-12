@@ -5,7 +5,7 @@ export enum GatheringType {
   WORKATION = "WORKATION",
 }
 
-export interface Gathering {
+export interface IGathering {
   id: number;
   teamId: string;
   name: string;
