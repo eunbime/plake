@@ -1,0 +1,8 @@
+addReviewers: true
+reviewers:
+  - yunhayeon
+  - eunbime
+  - k-impossible
+  - write-code-b
+numberOfReviewers: 2
+skipAuthors: true

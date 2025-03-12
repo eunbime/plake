@@ -1,0 +1,48 @@
+name: PR Automation
+
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - dev
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  add-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign Reviewers (Exclude PR Creator)
+        uses: kentaro-m/auto-assign-action@v2.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/auto_assign.yml
+
+  add-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign PR creator
+        uses: actions-ecosystem/action-add-assignees@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }}
+
+  add-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply Labels Based on PR Title or Branch Name
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            ${{ contains(github.event.pull_request.title, 'feature') && 'feature' || '' }}
+            ${{ contains(github.event.pull_request.title, 'fix') && 'fix' || '' }}
+            ${{ contains(github.event.pull_request.title, 'chore') && 'chore' || '' }}
+            ${{ contains(github.event.pull_request.title, 'bug') && 'bug' || '' }}
+            ${{ contains(github.event.pull_request.title, 'refactor') && 'refactor' || '' }}
+            ${{ contains(github.event.pull_request.title, 'docs') && 'docs' || '' }}
+            ${{ contains(github.event.pull_request.title, 'test') && 'test' || '' }}
+            ${{ contains(github.event.pull_request.title, 'style') && 'style' || '' }}
