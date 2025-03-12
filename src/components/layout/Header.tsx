@@ -42,7 +42,7 @@ const Header = () => {
         {isLoggedIn ? (
           <Popover>
             <PopoverTrigger className="hidden md:block">
-              <Avatar type="default" size="default" handleAvatar={() => {}} />
+              <Avatar type="default" size="default" />
             </PopoverTrigger>
             <PopoverContent align="end" sideOffset={1} className="w-28 p-0">
               <ul>
