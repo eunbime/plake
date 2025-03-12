@@ -27,15 +27,21 @@ const Avatar = ({
   };
 
   return (
-    <div className="overflow-hidden rounded-full">
+    <div
+      className="relative overflow-hidden rounded-full"
+      style={{ width: selectedSize, height: selectedSize }}
+    >
       <Image
         className="cursor-pointer"
         onClick={handleAvatar}
         src={avatarImg()}
         alt={`avatar-${type}`}
         aria-label={`avatar-${type}`}
-        width={selectedSize}
-        height={selectedSize}
+        fill={true}
+        style={{ objectFit: "fill" }}
+        placeholder="blur"
+        blurDataURL="/images/avatar_default.png"
+        loading="lazy"
       />
     </div>
   );
