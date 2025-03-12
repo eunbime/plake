@@ -11,38 +11,37 @@ const AVATAR_SIZE = {
   default: 35,
   large: 55,
 };
-const Avatar = ({
-  type,
-  size,
-  imgPath = "default",
-  handleAvatar,
-}: TAvatarProps) => {
+const Avatar = ({ type, size, imgPath, handleAvatar }: TAvatarProps) => {
   const selectedSize = AVATAR_SIZE[size];
 
-  const avatarImg = () => {
-    if (imgPath === "default") {
-      return `/images/avatar_${type}.png`;
-    }
-    return imgPath;
-  };
-
   return (
-    <div
-      className="relative overflow-hidden rounded-full"
-      style={{ width: selectedSize, height: selectedSize }}
-    >
-      <Image
-        className="cursor-pointer"
-        onClick={handleAvatar}
-        src={avatarImg()}
-        alt={`avatar-${type}`}
-        aria-label={`avatar-${type}`}
-        fill={true}
-        style={{ objectFit: "fill" }}
-        placeholder="blur"
-        blurDataURL="/images/avatar_default.png"
-        loading="lazy"
-      />
+    <div className="relative">
+      <div
+        className="overflow-hidden rounded-full"
+        style={{ width: selectedSize, height: selectedSize }}
+      >
+        <Image
+          className="cursor-pointer"
+          onClick={handleAvatar}
+          src={imgPath || "/images/avatar_default.png"}
+          alt={`avatar-${type}`}
+          aria-label={`avatar-${type}`}
+          width={selectedSize}
+          height={selectedSize}
+          style={{ objectFit: "fill" }}
+          loading="lazy"
+        />
+      </div>
+      {type === "editable" && (
+        <Image
+          className="absolute bottom-0 right-[-3px] z-10 overflow-visible"
+          src={"/images/edit-icon.png"}
+          alt="edit-icon"
+          aria-label="edit-icon"
+          width={selectedSize / 2}
+          height={selectedSize / 2}
+        />
+      )}
     </div>
   );
 };
