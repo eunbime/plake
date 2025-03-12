@@ -1,7 +1,7 @@
 const Page = () => {
   return (
     <div>
-      <h1>Welcome to the All Reviews Page</h1>
+      <h1>Welcome to the All Reviews Page merge Test</h1>
     </div>
   );
 };
