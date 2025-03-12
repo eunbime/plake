@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { useCalendar } from "@/hooks/useCalendar";
 
-import { Calendar } from "../calendar";
+import { Calendar } from "../Calendar";
 
 const meta = {
   title: "components/ui/calendar",
