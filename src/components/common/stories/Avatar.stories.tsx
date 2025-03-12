@@ -46,7 +46,7 @@ export const Default: Story = {
     },
   },
   args: {
-    imgPath: "default",
+    imgPath: "",
     size: "default",
     type: "default",
     handleAvatar: () => {},
