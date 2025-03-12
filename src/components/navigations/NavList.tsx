@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "../ui/button";
+import { Button } from "../ui/Button";
 
 interface INavListProps {
   onToggle?: () => void;
