@@ -6,8 +6,6 @@ import { useReviewList } from "@/hooks/review/useReviewList";
 const GatheringReviewList = () => {
   const { data } = useReviewList();
 
-  console.log(data);
-
   return (
     <section className="flex h-full min-h-[80vh] flex-col gap-6 border-t-2 border-gray-200 bg-white p-6 pb-20">
       <p className="text-lg font-semibold">

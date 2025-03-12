@@ -1,3 +1,5 @@
+import { IUser } from "@/types/user";
+
 export enum GatheringType {
   MINDFULNESS = "MINDFULNESS",
   DALLAEMFIT = "DALLAEMFIT",
@@ -18,4 +20,12 @@ export interface IGathering {
   image: string | null;
   createdBy: number;
   canceledAt: string | null;
+}
+
+export interface IParticipant {
+  User: IUser;
+  userId: string;
+  teamId: string;
+  gatheringId: string;
+  joinedAt: string;
 }
