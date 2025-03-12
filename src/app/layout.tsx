@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import QueryProvider from "@/components/providers/QueryProvider";
 
 const pretendard = localFont({
   src: [
@@ -51,9 +52,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pretendard.variable} antialiased`}>
+      <body
+        className={`${pretendard.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <Header />
-        <main className="global-layout-wrapper">{children}</main>
+        <main className="global-layout-wrapper">
+          <QueryProvider>{children}</QueryProvider>
+        </main>
         <Footer />
       </body>
     </html>

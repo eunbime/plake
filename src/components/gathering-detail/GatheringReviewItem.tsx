@@ -1,4 +1,4 @@
-import Rating from "../common/Rating";
+import Rating from "@/components/common/Rating";
 
 const GatheringReviewItem = () => {
   return (
