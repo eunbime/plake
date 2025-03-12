@@ -7,7 +7,7 @@ import {
 import GatheringReviewList from "@/components/gathering-detail/GatheringReviewList";
 import { prefetchReviewList } from "@/hooks/review/useReviewList";
 
-const GatheringReview = async () => {
+const GatheringReviewBoard = async () => {
   const queryClient = new QueryClient();
 
   await prefetchReviewList(queryClient);
@@ -19,4 +19,4 @@ const GatheringReview = async () => {
   );
 };
 
-export default GatheringReview;
+export default GatheringReviewBoard;
