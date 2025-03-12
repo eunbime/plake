@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { Button } from "../Button";
+import { Button } from "@/components/ui/Button";
 
 describe("Button 컴포넌트 테스트", () => {
   describe("기본 렌더링 테스트", () => {
