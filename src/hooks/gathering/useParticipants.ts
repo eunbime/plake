@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { QUERY_KEYS } from "@/constants/queryKeys";
 import { IParticipant } from "@/types/gathering";
 
 export const getParticipants = async (id: string): Promise<IParticipant[]> => {
@@ -12,13 +13,13 @@ export const getParticipants = async (id: string): Promise<IParticipant[]> => {
     throw new Error(data.message);
   }
 
-  return data ?? [];
+  return data;
 };
 
 export const useParticipants = (id: string) => {
   try {
     return useQuery<IParticipant[]>({
-      queryKey: ["gathering", id, "participants"],
+      queryKey: [QUERY_KEYS.GATHERING.participants(id)],
       queryFn: () => getParticipants(id),
       initialData: [],
     });

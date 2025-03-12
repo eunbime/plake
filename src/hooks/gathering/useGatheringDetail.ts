@@ -1,5 +1,6 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
 
+import { QUERY_KEYS } from "@/constants/queryKeys";
 import { GatheringType, IGathering } from "@/types/gathering";
 
 const initialData: IGathering = {
@@ -34,7 +35,7 @@ export const getGathering = async (id: string): Promise<IGathering> => {
 export const useGatheringDetail = (id: string) => {
   try {
     return useQuery<IGathering>({
-      queryKey: ["gathering", id],
+      queryKey: [QUERY_KEYS.GATHERING.detail(id)],
       queryFn: () => getGathering(id),
       initialData,
     });
@@ -49,7 +50,7 @@ export const prefetchGatheringDetail = async (
 ) => {
   try {
     return queryClient.prefetchQuery<IGathering>({
-      queryKey: ["gathering", id],
+      queryKey: [QUERY_KEYS.GATHERING.detail(id)],
       queryFn: () => getGathering(id),
       initialData,
     });

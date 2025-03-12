@@ -1,5 +1,6 @@
 import { QueryClient, useInfiniteQuery } from "@tanstack/react-query";
 
+import { QUERY_KEYS } from "@/constants/queryKeys";
 import { IReview } from "@/types/review";
 
 const getReviewList = async (): Promise<IReview[]> => {
@@ -16,7 +17,7 @@ const getReviewList = async (): Promise<IReview[]> => {
 export const useReviewList = () => {
   try {
     return useInfiniteQuery<IReview[]>({
-      queryKey: ["reviewList"],
+      queryKey: [QUERY_KEYS.REVIEW.list],
       queryFn: getReviewList,
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) => {
@@ -35,7 +36,7 @@ export const useReviewList = () => {
 export const prefetchReviewList = async (queryClient: QueryClient) => {
   try {
     return queryClient.prefetchInfiniteQuery({
-      queryKey: ["reviewList"],
+      queryKey: [QUERY_KEYS.REVIEW.list],
       queryFn: getReviewList,
       initialPageParam: 1,
     });
