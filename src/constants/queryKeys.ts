@@ -12,22 +12,14 @@ interface IQueryKeys {
   };
 }
 
-const createQueryKeys = (): IQueryKeys => {
-  const keys = {
-    GATHERING: {
-      all: ["gathering"] as const,
-      list: [...QUERY_KEYS.GATHERING.all, "list"] as const,
-      detail: (id: string) => [...QUERY_KEYS.GATHERING.all, id] as const,
-      participants: (id: string) =>
-        [...QUERY_KEYS.GATHERING.all, id, "participants"] as const,
-    },
-    REVIEW: {
-      all: ["review"] as const,
-      list: [...QUERY_KEYS.REVIEW.all, "list"] as const,
-    },
-  } as const;
-
-  return keys;
+export const QUERY_KEYS: IQueryKeys = {
+  GATHERING: {
+    all: ["gathering"] as const,
+    detail: (id: string) => ["gathering", id] as const,
+    participants: (id: string) => ["gathering", id, "participants"] as const,
+  },
+  REVIEW: {
+    all: ["review"] as const,
+    list: ["review", "list"] as const,
+  },
 };
-
-export const QUERY_KEYS = createQueryKeys();
