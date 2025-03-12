@@ -40,6 +40,9 @@ jobs:
           labels: |
             ${{ contains(github.event.pull_request.title, 'feature') && 'feature' || '' }}
             ${{ contains(github.event.pull_request.title, 'fix') && 'fix' || '' }}
+            ${{ contains(github.event.pull_request.title, 'chore') && 'chore' || '' }}
+            ${{ contains(github.event.pull_request.title, 'bug') && 'bug' || '' }}
+            ${{ contains(github.event.pull_request.title, 'refactor') && 'refactor' || '' }}
             ${{ contains(github.event.pull_request.title, 'docs') && 'docs' || '' }}
             ${{ contains(github.event.pull_request.title, 'test') && 'test' || '' }}
             ${{ contains(github.event.pull_request.title, 'style') && 'style' || '' }}
