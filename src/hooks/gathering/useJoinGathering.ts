@@ -4,8 +4,7 @@ import { useRouter } from "next/navigation";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { APIError } from "@/types/error";
 
-const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZWFtSWQiOiJwbGFrZSIsInVzZXJJZCI6MTYwMiwiaWF0IjoxNzQxODQyNDc3LCJleHAiOjE3NDE4NDYwNzd9.TdAqb4VcAJ5uV0uQHeDqjFvYLVTTg91CpcQ96O955Uo";
+const TOKEN = "token";
 
 export const joinGathering = async (
   id: string,
