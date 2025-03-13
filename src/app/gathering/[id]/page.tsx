@@ -1,34 +1,35 @@
-import { Suspense } from "react";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
 import FloatingBar from "@/components/gathering-detail/FloatingBar";
-import GatheringImageSkeleton from "@/components/skeletons/gathering-detail/GatheringImageSkeleton";
-import GatheringInformationSkeleton from "@/components/skeletons/gathering-detail/GatheringInformationSkeleton";
-import GatheringReviewSkeleton from "@/components/skeletons/gathering-detail/GatheringReviewSkeleton";
+import { prefetchGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+import { prefetchReviewList } from "@/hooks/review/useReviewList";
 
 import GatheringInformation from "./_components/GatheringInformation";
 import GatheringReviewBoard from "./_components/GatheringReviewBoard";
 
-export default function GatheringDetailPage() {
+export default async function GatheringDetailPage() {
   const id = "2196"; // 임시 params id
 
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    prefetchGatheringDetail(id, queryClient),
+    prefetchReviewList(queryClient),
+  ]);
+
   return (
-    <div className="base-wrap bg-gray-50">
-      <article className="flex h-full flex-col gap-8 px-0 pt-5 md:px-20 md:pt-10">
-        <Suspense
-          fallback={
-            <div className="flex w-full flex-col gap-10 md:flex-row">
-              <GatheringImageSkeleton />
-              <GatheringInformationSkeleton />
-            </div>
-          }
-        >
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="base-wrap bg-gray-50">
+        <article className="flex h-full flex-col gap-8 px-0 pt-5 md:px-20 md:pt-10">
           <GatheringInformation id={id} />
-        </Suspense>
-        <Suspense fallback={<GatheringReviewSkeleton />}>
           <GatheringReviewBoard />
-        </Suspense>
-      </article>
-      <FloatingBar id={id} />
-    </div>
+        </article>
+        <FloatingBar id={id} />
+      </div>
+    </HydrationBoundary>
   );
 }

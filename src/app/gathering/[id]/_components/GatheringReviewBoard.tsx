@@ -1,21 +1,13 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
+import { Suspense } from "react";
 
 import GatheringReviewList from "@/components/gathering-detail/GatheringReviewList";
-import { prefetchReviewList } from "@/hooks/review/useReviewList";
+import GatheringReviewSkeleton from "@/components/skeletons/gathering-detail/GatheringReviewSkeleton";
 
 const GatheringReviewBoard = async () => {
-  const queryClient = new QueryClient();
-
-  await prefetchReviewList(queryClient);
-
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <Suspense fallback={<GatheringReviewSkeleton />}>
       <GatheringReviewList />
-    </HydrationBoundary>
+    </Suspense>
   );
 };
 

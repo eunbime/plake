@@ -18,11 +18,12 @@ export default function GatheringDetailError({
 
   const getErrorMessage = () => {
     if (!isAPIError) return error.message;
-
     switch (error.status) {
       case 404:
       case 400:
         return error.message;
+      case 500:
+        return "서버 오류가 발생했습니다.";
       default:
         return "일시적인 오류가 발생했습니다.";
     }
