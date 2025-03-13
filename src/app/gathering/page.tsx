@@ -1,4 +1,6 @@
+import GatheringFilterSort from "@/components/common/GatheringFilterSort";
 import MainCardItem from "@/components/layout/MainCardItem";
+import Tab from "@/components/navigations/Tab";
 
 const cardData = {
   id: 0,
@@ -14,8 +16,9 @@ const cardData = {
 const Page = () => {
   return (
     <div>
-      <h1>Welcome to the Gathering Page</h1>
       <div className="base-wrap">
+        <Tab />
+        <GatheringFilterSort />
         <MainCardItem
           key={cardData.id}
           name={cardData.name}
