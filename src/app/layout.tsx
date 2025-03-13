@@ -56,10 +56,10 @@ export default function RootLayout({
         className={`${pretendard.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Header />
-        <main className="global-layout-wrapper">
-          <QueryProvider>{children}</QueryProvider>
-        </main>
+        <QueryProvider>
+          <Header />
+          <main className="global-layout-wrapper">{children}</main>
+        </QueryProvider>
         <Footer />
       </body>
     </html>
