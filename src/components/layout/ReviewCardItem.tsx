@@ -14,6 +14,8 @@ const tempUserId = "asdfdfer334";
 
 const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
   const { comment, createdAt, score, User, Gathering } = review;
+  const myReviewChk = User.id === tempUserId;
+
   return (
     <article className="flex flex-col gap-6 md:flex-row">
       <div className="relative min-h-[156px] w-full max-w-[280px] overflow-hidden rounded-3xl">
@@ -34,12 +36,12 @@ const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
           <span>{Gathering.location}</span>
         </div>
         <div className="flex items-center gap-2">
-          {User.id === tempUserId || (
+          {myReviewChk || (
             <Avatar type="default" size="small" imgPath={User.image ?? ""} />
           )}
 
           <p className="flex text-xs font-medium">
-            {User.id === tempUserId || (
+            {myReviewChk || (
               <span className="text-gray-700 after:mx-[6px] after:text-gray-500 after:content-['|']">
                 {User.name}
               </span>
