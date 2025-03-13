@@ -28,7 +28,7 @@ export default function GatheringDetailPage() {
           <GatheringReviewBoard />
         </Suspense>
       </article>
-      <FloatingBar />
+      <FloatingBar id={id} />
     </div>
   );
 }

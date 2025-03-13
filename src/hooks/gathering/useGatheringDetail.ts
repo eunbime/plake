@@ -46,7 +46,7 @@ export const useGatheringDetail = (id: string) => {
     if (error instanceof APIError) {
       throw error;
     }
-    throw new Error(`모임 상세 데이터를 가져오지 못했습니다: ${error}`);
+    throw new Error(`모임 상세 데이터를 가져오지 못했습니다`);
   }
 };
 
@@ -65,6 +65,6 @@ export const prefetchGatheringDetail = async (
     if (error instanceof APIError) {
       throw error;
     }
-    throw new Error(`모임 초기 데이터를 가져오지 못했습니다: ${error}`);
+    throw new Error(`모임 초기 데이터를 가져오지 못했습니다`);
   }
 };
