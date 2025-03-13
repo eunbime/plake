@@ -1,6 +1,9 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { Button } from "@/components/ui/Button";
+import { useCancelGathering } from "@/hooks/gathering/useCancelGathering";
 import { useGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
 import { useJoinGathering } from "@/hooks/gathering/useJoinGathering";
 import { useIsParticipant } from "@/hooks/gathering/useParticipants";
@@ -10,7 +13,9 @@ interface IFloatingBarProps {
 }
 
 const FloatingBar = ({ id }: IFloatingBarProps) => {
+  const pathname = usePathname();
   const currentUserId = 1601; // 임시 currentUserId: 1601(주최자), 1602(참여자)
+
   const {
     data: { createdBy },
   } = useGatheringDetail(id);
@@ -18,9 +23,19 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
     id,
     currentUserId,
   );
+  const { handleCancelGathering } = useCancelGathering(
+    id,
+    currentUserId === createdBy,
+  );
 
   const isParticipant = useIsParticipant(id, currentUserId);
   const isOrganizer = currentUserId === createdBy;
+
+  const handleCopyLink = () => {
+    const url = `${window.location.origin}${pathname}`;
+    navigator.clipboard.writeText(url);
+    window.alert("링크가 복사되었습니다.");
+  };
 
   return (
     <div className="fixed bottom-0 left-0 right-0 flex min-h-[84px] items-center border-t-2 border-gray-200 bg-white py-5">
@@ -37,8 +52,15 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
         </div>
         {isOrganizer ? (
           <div className="flex gap-2">
-            <Button variant="purple-outline">취소하기</Button>
-            <Button variant="purple">공유하기</Button>
+            <Button
+              onClick={() => handleCancelGathering()}
+              variant="purple-outline"
+            >
+              취소하기
+            </Button>
+            <Button variant="purple" onClick={handleCopyLink}>
+              공유하기
+            </Button>
           </div>
         ) : (
           <>
