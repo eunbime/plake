@@ -33,3 +33,9 @@ export const useParticipants = (id: string) => {
     throw new Error(`참여자 목록을 가져오지 못했습니다: ${error}`);
   }
 };
+
+export const useIsParticipant = (id: string, currentUserId?: number) => {
+  const { data: participants } = useParticipants(id);
+
+  return participants.some(participant => participant.userId === currentUserId);
+};
