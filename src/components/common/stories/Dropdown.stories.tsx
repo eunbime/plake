@@ -1,19 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import LocationDropdown from "@/components/common/Dropdown";
+import Dropdown from "@/components/common/Dropdown";
 
-const meta: Meta<typeof LocationDropdown> = {
+const meta: Meta<typeof Dropdown> = {
   title: "Components/Common/Dropdown",
-  component: LocationDropdown,
+  component: Dropdown,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {
-    isFormType: {
-      control: { type: "boolean" },
+    option: {
+      control: { type: "object" },
+      description: "select 내부의 옵션들",
+    },
+    placeholder: {
+      control: { type: "text" },
+      description: "기본으로 표시되는 문자",
+    },
+    type: {
+      control: { type: "text" },
       description:
-        "드롭다운의 상태 (true: 폼 타입 드롭다운, false: 폼 타입이 아닌경우의 드롭다운)",
+        "드롭다운의 타입 (sort : 정렬 드롭다운, form: 폼 내부에 사용되는 드롭다운)",
     },
     onSelect: {
       action: "clicked",
@@ -23,16 +31,22 @@ const meta: Meta<typeof LocationDropdown> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof LocationDropdown>;
+type Story = StoryObj<typeof Dropdown>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+export const FormDropdown: Story = {
   args: {
-    isFormType: false,
+    type: "form",
   },
 };
 
-export const FormTypeDropdown: Story = {
+export const SortDropdown: Story = {
   args: {
-    isFormType: true,
+    option: [
+      { value: "registrationEnd", label: "마감 임박" },
+      { value: "participantCount", label: "참여 인원 수" },
+    ],
+    type: "sort",
   },
 };
