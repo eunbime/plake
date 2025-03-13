@@ -1,6 +1,7 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import { APIError } from "@/types/error";
 import { GatheringType, IGathering } from "@/types/gathering";
 
 const initialData: IGathering = {
@@ -26,7 +27,7 @@ export const getGathering = async (id: string): Promise<IGathering> => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message);
+    throw new APIError(data.message, data.code, response.status);
   }
 
   return data;
@@ -38,9 +39,14 @@ export const useGatheringDetail = (id: string) => {
       queryKey: [QUERY_KEYS.GATHERING.detail(id)],
       queryFn: () => getGathering(id),
       initialData,
+      throwOnError: true,
+      retry: false,
     });
   } catch (error) {
-    throw error;
+    if (error instanceof APIError) {
+      throw error;
+    }
+    throw new Error(`모임 상세 데이터를 가져오지 못했습니다: ${error}`);
   }
 };
 
@@ -53,8 +59,12 @@ export const prefetchGatheringDetail = async (
       queryKey: [QUERY_KEYS.GATHERING.detail(id)],
       queryFn: () => getGathering(id),
       initialData,
+      retry: false,
     });
   } catch (error) {
-    throw error;
+    if (error instanceof APIError) {
+      throw error;
+    }
+    throw new Error(`모임 초기 데이터를 가져오지 못했습니다: ${error}`);
   }
 };
