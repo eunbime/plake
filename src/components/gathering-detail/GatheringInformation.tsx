@@ -2,22 +2,37 @@
 
 import { FaCircleCheck } from "react-icons/fa6";
 
-import DateTimeTag from "../common/DateTimeTag";
-import FavoriteButton from "../common/FavoriteButton";
-import ProgressBar from "../common/ProgressBar";
+import DateTimeTag from "@/components/common/DateTimeTag";
+import FavoriteButton from "@/components/common/FavoriteButton";
+import ProgressBar from "@/components/common/ProgressBar";
+import { useGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
 
-const GatheringDetailInformation = () => {
+import ParticipantAvatarStack from "./ParticipantAvatarStack";
+
+interface IGatheringDetailInformationProps {
+  id: string;
+}
+
+const GatheringDetailInformation = ({
+  id,
+}: IGatheringDetailInformationProps) => {
+  const { data } = useGatheringDetail(id);
+
+  const { name, location, capacity, participantCount, dateTime } = data;
+
+  const progress = (participantCount / capacity) * 100;
+
+  const isGatheringFull = participantCount >= capacity;
+
   return (
     <article className="flex h-[270px] flex-1 flex-col gap-6 rounded-3xl border-2 border-gray-200 bg-white px-1 py-6">
       <section className="mb-5 flex justify-between gap-2 px-6">
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <p className="text-lg font-semibold">달램핏 오피스 스트레칭</p>
-            <p className="text-sm font-medium">
-              을지로 3가 서울시 중구 청계천로 100
-            </p>
+            <p className="text-lg font-semibold">{name}</p>
+            <p className="text-sm font-medium text-gray-700">{location}</p>
           </div>
-          <DateTimeTag date={new Date()} />
+          <DateTimeTag date={new Date(dateTime)} />
         </div>
         <div>
           <FavoriteButton isFavorite={false} onToggle={() => {}} />
@@ -27,18 +42,20 @@ const GatheringDetailInformation = () => {
       <section className="flex flex-col gap-2 px-6">
         <div className="flex justify-between">
           <div className="flex items-center gap-3 text-sm font-semibold text-gray-900">
-            <p>모집 정원 16명</p>
-            <p>참여 유저</p>
+            <p>{`모집 정원 ${capacity}명`}</p>
+            <ParticipantAvatarStack id={id} />
           </div>
-          <div className="flex items-center gap-2 text-purple-500">
-            <FaCircleCheck size={18} />
-            <p className="text-sm font-medium">개설 확정</p>
-          </div>
+          {isGatheringFull && (
+            <div className="flex items-center gap-2 text-purple-500">
+              <FaCircleCheck size={18} />
+              <p className="text-sm font-medium">{"개설 확정"}</p>
+            </div>
+          )}
         </div>
-        <ProgressBar progress={50} />
+        <ProgressBar progress={progress} />
         <div className="flex items-center justify-between text-xs font-medium text-gray-700">
-          <span>최소인원 1명</span>
-          <span>최대인원 16명</span>
+          <span>{"최소인원 5명"}</span>
+          <span>{"최대인원 20명"}</span>
         </div>
       </section>
     </article>

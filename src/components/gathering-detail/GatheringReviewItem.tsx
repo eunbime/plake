@@ -1,20 +1,28 @@
-import Rating from "../common/Rating";
+import dayjs from "dayjs";
 
-const GatheringReviewItem = () => {
+import Avatar from "@/components/common/Avatar";
+import Rating from "@/components/common/Rating";
+import { IReview } from "@/types/review";
+
+interface IGatheringReviewItemProps {
+  review: IReview;
+}
+
+const GatheringReviewItem = ({ review }: IGatheringReviewItemProps) => {
+  const { comment, createdAt, score, User } = review;
+
   return (
     <article className="flex flex-col gap-4">
-      <Rating rating={4.5} />
-      <p className="text-sm font-medium">
-        {
-          "따듯하게 느껴지는 공간이에요 :) 평소에 달램 이용해보고 싶었는데 이렇게 같이 달램 생기니까 너무 좋아요! 프로그램이 더 많이 늘어났으면 좋겠어요."
-        }
-      </p>
-      <div className="flex gap-2">
-        <div>avatar</div>
-        <p className="flex gap-3">
-          <span>닉네임</span>
+      <Rating rating={score} />
+      <p className="text-sm font-medium text-gray-700">{comment}</p>
+      <div className="flex items-center gap-2">
+        <Avatar type="default" size="small" imgPath={User.image ?? ""} />
+        <p className="flex gap-3 text-xs font-medium">
+          <span className="text-gray-700">{User.name}</span>
           <span className="h-5 border-l border-gray-200" />
-          <time>날짜</time>
+          <time className="text-gray-500">
+            {dayjs(createdAt).format("YYYY.MM.DD")}
+          </time>
         </p>
       </div>
       <hr className="border-b-2 border-dashed border-gray-200" />
