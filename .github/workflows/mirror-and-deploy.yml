@@ -1,0 +1,51 @@
+name: Mirror and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: yunhayeon/plake
+          token: ${{ secrets.GH_PAT }}
+          path: target-repo
+
+      - name: Copy files to target repo
+        run: |
+          rm -rf target-repo/*
+          mkdir -p deploy
+          ITEMS=(".next" "public" "src" "components.json" "middleware.ts" "next.config.mjs" \
+                  "package.json" "package-lock.json" "postcss.config.mjs" "tailwind.config.ts" "tsconfig.json")
+          for ITEM in "${ITEMS[@]}"; do
+            if [ -e "$ITEM" ]; then
+              cp -r "$ITEM" deploy/
+            else
+              echo "⚠️ Warning: '$ITEM' not found, skipping..."
+            fi
+          done
+          cp -r deploy/* target-repo/
+
+      - name: Commit and push changes
+        run: |
+          cd target-repo
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "${{ github.event.commits[0].message }}" || echo "⚠️ No changes to commit"
+          git push origin main
