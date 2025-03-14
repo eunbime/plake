@@ -13,12 +13,9 @@ const ParticipantAvatarStack = ({ id }: IParticipantAvatarStackProps) => {
   return (
     <div className="flex -space-x-3">
       {slicedData.map(({ User }) => (
-        <Avatar
-          key={User.id}
-          type="default"
-          size="small"
-          imgPath={User.image ?? ""}
-        />
+        <div key={User.id} className="hover:z-10">
+          <Avatar type="default" size="small" imgPath={User.image} />
+        </div>
       ))}
       {data.length > 4 && (
         <div className="z-10 flex h-[25px] w-[25px] items-center justify-center rounded-full bg-gray-100 text-sm font-semibold text-gray-700">
