@@ -9,6 +9,7 @@ export interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
   variant?: "default" | "alert" | "mobileFull";
+  title?: string;
 }
 
 const Modal = ({
@@ -16,6 +17,7 @@ const Modal = ({
   onClose,
   children,
   variant = "default",
+  title,
 }: ModalProps) => {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -62,12 +64,15 @@ const Modal = ({
         onClick={e => e.stopPropagation()}
         aria-modal="true"
       >
-        <button
-          className="absolute right-5 top-5 text-gray-700"
-          onClick={onClose}
-        >
-          <IoCloseOutline size={24} />
-        </button>
+        <div className="mb-5 flex items-center justify-between">
+          {title && (
+            <h2 className="text-lg font-bold text-gray-900">{title}</h2>
+          )}
+
+          <button className="text-gray-700" onClick={onClose}>
+            <IoCloseOutline size={24} />
+          </button>
+        </div>
         {children}
       </div>
     </div>
