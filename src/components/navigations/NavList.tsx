@@ -1,15 +1,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { NAV_ITEMS } from "@/constants/nav";
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/Button";
-
-const NAV_ITEMS = [
-  { name: "모임 찾기", href: "/gathering" },
-  { name: "찜한 모임", href: "/favorites" },
-  { name: "모든 리뷰", href: "/all-reviews" },
-] as const;
 
 interface INavListProps {
   onToggleSideBar?: () => void;

@@ -1,24 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { MATCH_TITLE } from "@/constants/loginJoin";
+
 type TLoginJoinLayoutProps = {
   page: "login" | "join";
 };
-
-const MATCH_TITLE = {
-  login: {
-    title: "로그인",
-    linkMsg: "플레이크가 처음이신가요?",
-    linkTitle: "회원가입",
-    link: "/join",
-  },
-  join: {
-    title: "회원가입",
-    linkMsg: "이미 회원이신가요?",
-    linkTitle: "로그인",
-    link: "/login",
-  },
-} as const;
 
 const LoginJoinLayout = ({
   children,

@@ -5,21 +5,8 @@ import { useForm } from "react-hook-form";
 import LoginJoinLayout from "@/components/layout/LoginJoinLayout";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { LOGIN_INPUTS } from "@/constants/loginJoin";
 
-const LOGIN_INPUTS = [
-  {
-    id: "email",
-    type: "email",
-    label: "아이디",
-    placeholder: "이메일을 입력해주세요.",
-  },
-  {
-    id: "password",
-    type: "password",
-    label: "비밀번호",
-    placeholder: "비밀번호를 입력해주세요.",
-  },
-] as const;
 interface IFormInput {
   email: string;
   password: string;
