@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import { FaCircleCheck } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
+import { MdWavingHand } from "react-icons/md";
 import { RxDividerVertical } from "react-icons/rx";
 
 import DateTimeTag from "../common/DateTimeTag";
@@ -94,6 +95,17 @@ const MainCardItem = ({
             </Link>
           </div>
         </div>
+        {!isOpend && (
+          <>
+            <div className="absolute flex h-full w-full flex-col items-center justify-center bg-black/80 text-sm text-white">
+              <span>마감된 챌린지에요,</span>
+              <span>다음 기회에 만나요 🙏</span>
+            </div>
+            <div className="absolute right-0 mr-6 mt-6 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+              <MdWavingHand className="scale-x-[-1] text-purple-600" />
+            </div>
+          </>
+        )}
       </div>
     </Link>
   );
