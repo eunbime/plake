@@ -18,23 +18,27 @@ const meta: Meta<typeof ReviewCardItem> = {
   },
   args: {
     review: {
-      id: "1",
-      teamId: "1",
+      id: 1,
+      teamId: 1,
       comment:
         "따듯하게 느껴지는 공간이에요 :) 평소에 달램 이용해보고 싶었는데 이렇게 같이 달램 생기니까 너무 좋아요! 프로그램이 더 많이 늘어났으면 좋겠어요.",
       score: 5,
       createdAt: "2025-03-12T08:49:03.060Z",
       User: {
-        id: "1",
+        id: 1,
         name: "김코드",
-        teamId: "1",
+        teamId: 1,
         image: "",
+        email: "test@test.com",
+        companyName: "테스트 회사",
+        createdAt: "2025-03-12T08:49:03.060Z",
+        updatedAt: "2025-03-12T08:49:03.060Z",
       },
       Gathering: {
         id: 1,
         name: "달램핏 오피스 스트레칭",
         location: "강남구",
-        teamId: "",
+        teamId: 1,
         type: GatheringType.MINDFULNESS,
         dateTime: "",
         registrationEnd: "",

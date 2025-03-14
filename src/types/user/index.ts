@@ -1,6 +1,10 @@
 export interface IUser {
-  id: string;
+  teamId: number;
+  id: number;
+  email: string;
   name: string;
-  teamId: string;
+  companyName: string;
   image: string;
+  createdAt: string;
+  updatedAt: string;
 }
