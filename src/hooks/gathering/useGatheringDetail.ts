@@ -6,7 +6,7 @@ import { GatheringType, IGathering } from "@/types/gathering";
 
 const initialData: IGathering = {
   id: 0,
-  teamId: "",
+  teamId: 0,
   name: "",
   type: GatheringType.MINDFULNESS,
   location: "",
