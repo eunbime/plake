@@ -13,9 +13,10 @@ import FavoriteButton from "../common/FavoriteButton";
 import ProgressBar from "../common/ProgressBar";
 
 interface IMainCardItemProps {
+  id: string;
   name: string;
   dateTime: Date;
-  registrationEnd?: Date;
+  registrationEnd: Date;
   location: string;
   participantCount: number;
   capacity: number;
@@ -23,6 +24,7 @@ interface IMainCardItemProps {
 }
 
 const MainCardItem = ({
+  id,
   name,
   dateTime,
   registrationEnd,
@@ -35,9 +37,11 @@ const MainCardItem = ({
   const isConfirmed = participantCount > MIN_PARTICIPANT_COUNT; //모임 개설 확정 여부
   const progressPercentage = (participantCount / capacity) * 100; //전체 모임 정원 중 모임 참여자의 비율
 
+  const isOpend = registrationEnd > new Date(); // 모임오픈 여부 (모임이 종료되지 않았을 경우: true)
+
   return (
-    <>
-      <div className="m-auto flex min-w-[343px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white md:flex-row lg:flex-row">
+    <Link href={`/gathering/${id}`}>
+      <div className="relative m-auto flex min-w-[343px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white md:flex-row lg:flex-row">
         <div className="relative h-[156px] w-full min-w-[280px] md:w-[280px] lg:w-[280px]">
           <Image
             src={image}
@@ -45,9 +49,7 @@ const MainCardItem = ({
             className="h-full w-full object-cover"
             fill
           ></Image>
-          {registrationEnd && (
-            <DeadlineTag registrationEndDate={registrationEnd} />
-          )}
+          {isOpend && <DeadlineTag registrationEnd={registrationEnd} />}
         </div>
         <div className="flex w-full flex-col items-center justify-center gap-7 p-4">
           <div className="flex w-full items-center justify-between">
@@ -93,7 +95,7 @@ const MainCardItem = ({
           </div>
         </div>
       </div>
-    </>
+    </Link>
   );
 };
 
