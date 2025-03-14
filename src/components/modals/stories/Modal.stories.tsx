@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 
-import Modal, { type ModalProps } from "@/components/providers/Modal";
+import Modal, { type ModalProps } from "@/components/modals/Modal";
 
 const meta: Meta<typeof Modal> = {
   title: "Components/Providers/Modal",
