@@ -2,11 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 type TLoginJoinLayoutProps = {
-  pageTitle: "login" | "join";
-  children: React.ReactNode;
+  page: "login" | "join";
 };
 
-const matchTitle = {
+const MATCH_TITLE = {
   login: {
     title: "로그인",
     linkMsg: "플레이크가 처음이신가요?",
@@ -19,12 +18,12 @@ const matchTitle = {
     linkTitle: "로그인",
     link: "/login",
   },
-};
+} as const;
 
 const LoginJoinLayout = ({
   children,
-  pageTitle,
-}: Readonly<TLoginJoinLayoutProps>) => {
+  page,
+}: React.PropsWithChildren<TLoginJoinLayoutProps>) => {
   return (
     <div className="base-wrap flex w-full flex-col items-center justify-center gap-1 px-4 py-9 md:px-16 lg:flex-row lg:justify-between lg:gap-24 xl:p-0">
       <div className="flex min-h-[240px] w-full max-w-[250px] flex-col text-center lg:max-w-[400px]">
@@ -49,18 +48,18 @@ const LoginJoinLayout = ({
       </div>
       <div className="w-full max-w-[510px] rounded-3xl bg-white px-4 py-8">
         <h1 className="mb-8 text-center text-xl font-semibold md:text-2xl">
-          {matchTitle[pageTitle].title}
+          {MATCH_TITLE[page].title}
         </h1>
         {children}
         <div className="text-center text-sm md:text-base">
           <span className="mr-1 text-gray-800">
-            {matchTitle[pageTitle].linkMsg}
+            {MATCH_TITLE[page].linkMsg}
           </span>
           <Link
-            href={matchTitle[pageTitle].link}
+            href={MATCH_TITLE[page].link}
             className="text-purple-600 underline"
           >
-            {matchTitle[pageTitle].linkTitle}
+            {MATCH_TITLE[page].linkTitle}
           </Link>
         </div>
       </div>

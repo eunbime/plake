@@ -15,13 +15,13 @@ import NavList from "./NavList";
 
 interface ISideBarProps {
   isOpen: boolean;
-  onToggle: () => void;
+  onToggleSideBar: () => void;
 }
 
-const SideBar = ({ isOpen, onToggle }: ISideBarProps) => {
+const SideBar = ({ isOpen, onToggleSideBar }: ISideBarProps) => {
   return (
-    <Sheet open={isOpen} onOpenChange={onToggle}>
-      <SheetTrigger onClick={onToggle}>
+    <Sheet open={isOpen} onOpenChange={onToggleSideBar}>
+      <SheetTrigger onClick={onToggleSideBar}>
         <RxHamburgerMenu
           size={20}
           color="black"
@@ -31,7 +31,7 @@ const SideBar = ({ isOpen, onToggle }: ISideBarProps) => {
       <SheetContent side={"left"} className="w-[200px] bg-white p-4">
         <SheetHeader>
           <SheetTitle>
-            <Link href="/" onClick={onToggle}>
+            <Link href="/" onClick={onToggleSideBar}>
               <Image
                 src="/images/logo.png"
                 alt="logo-image"
@@ -42,7 +42,7 @@ const SideBar = ({ isOpen, onToggle }: ISideBarProps) => {
           </SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <NavList onToggle={onToggle} />
+        <NavList onToggleSideBar={onToggleSideBar} />
       </SheetContent>
     </Sheet>
   );
