@@ -1,5 +1,6 @@
 import GatheringFilterSort from "@/components/common/GatheringFilterSort";
 import MainCardItem from "@/components/layout/MainCardItem";
+import SubTab from "@/components/navigations/SubTab";
 import Tab from "@/components/navigations/Tab";
 
 const cardData = {
@@ -13,11 +14,14 @@ const cardData = {
   image: "https://picsum.photos/200/300",
 };
 
+const subTabData = ["전체", "운동", "예술", "미식", "기타"];
+
 const Page = () => {
   return (
     <div>
       <div className="base-wrap">
         <Tab />
+        <SubTab tabList={subTabData} />
         <GatheringFilterSort />
         <MainCardItem
           key={cardData.id}
