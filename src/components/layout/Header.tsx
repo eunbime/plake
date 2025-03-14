@@ -17,7 +17,7 @@ import SideBar from "../navigations/SideBar";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // 임시 로그인 상태 state
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 임시 로그인 상태 state
   const toggleSideBar = () => {
     setIsOpen(!isOpen);
   };
@@ -60,7 +60,7 @@ const Header = () => {
           </Popover>
         ) : (
           <Link
-            href="/"
+            href="/login"
             className="hidden text-sm text-gray-700 hover:text-purple-600 md:block"
           >
             로그인
