@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import GatheringFilterSort from "@/components/common/GatheringFilterSort";
 import MainCardItem from "@/components/layout/MainCardItem";
 import SubTab from "@/components/navigations/SubTab";
@@ -20,7 +22,9 @@ const Page = () => {
   return (
     <div>
       <div className="base-wrap">
-        <Tab />
+        <Suspense>
+          <Tab />
+        </Suspense>
         <SubTab tabList={subTabData} />
         <GatheringFilterSort />
         <MainCardItem
