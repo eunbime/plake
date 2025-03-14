@@ -17,7 +17,7 @@ export interface IGathering {
   registrationEnd: string;
   capacity: number;
   participantCount: number;
-  image: string | null;
+  image: string;
   createdBy: number;
   canceledAt: string | null;
 }

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { GatheringType } from "@/types/gathering";
-
-import ReviewCardItem from "../ReviewCardItem";
+import ReviewCardItem from "@/components/layout/ReviewCardItem";
+import { GatheringType, IGathering } from "@/types/gathering";
 
 const meta: Meta<typeof ReviewCardItem> = {
   title: "Components/Layout/ReviewCardItem",
@@ -29,7 +28,7 @@ const meta: Meta<typeof ReviewCardItem> = {
         id: "1",
         name: "김코드",
         teamId: "1",
-        image: null,
+        image: "",
       },
       Gathering: {
         id: 1,
@@ -41,10 +40,10 @@ const meta: Meta<typeof ReviewCardItem> = {
         registrationEnd: "",
         capacity: 0,
         participantCount: 0,
-        image: null,
+        image: "",
         createdBy: 0,
         canceledAt: null,
-      },
+      } satisfies IGathering,
     },
   },
   decorators: [
