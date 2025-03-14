@@ -8,24 +8,24 @@ export enum GatheringType {
 }
 
 export interface IGathering {
-  id: number;
   teamId: string;
+  id: number;
   name: string;
   type: GatheringType;
-  location: string;
   dateTime: string;
   registrationEnd: string;
-  capacity: number;
+  location: string;
   participantCount: number;
-  image: string | null;
+  capacity: number;
+  image: string;
   createdBy: number;
   canceledAt: string | null;
 }
 
 export interface IParticipant {
   User: IUser;
-  userId: string;
+  userId: number;
   teamId: string;
-  gatheringId: string;
+  gatheringId: number;
   joinedAt: string;
 }
