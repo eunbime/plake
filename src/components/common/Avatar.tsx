@@ -3,7 +3,7 @@ import Image from "next/image";
 type TAvatarProps = {
   type: "default" | "editable";
   size: "small" | "default" | "large";
-  imgPath?: string;
+  imgPath?: string | null;
   handleAvatar?: () => void;
 };
 const AVATAR_SIZE = {
