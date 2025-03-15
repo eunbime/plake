@@ -1,26 +1,24 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import LoginJoinLayout from "@/components/layout/LoginJoinLayout";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { JOIN_INPUTS } from "@/constants/loginJoin";
-
-interface IFormInput {
-  name: string;
-  email: string;
-  company: string;
-  password: string;
-  passwordConfirm: string;
-}
+import { JoinFormInput, JoinFormSchema } from "@/schemas/loginJoinSchema";
 
 const Page = () => {
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<JoinFormInput>({
+    resolver: zodResolver(JoinFormSchema),
+  });
 
-  const onSubmit = (data: IFormInput) => {
-    console.log(data);
-  };
+  const onSubmit = (data: JoinFormInput) => console.log(data);
 
   return (
     <LoginJoinLayout page="join">
@@ -34,6 +32,7 @@ const Page = () => {
             label={input.label}
             disabled={false}
             placeholder={input.placeholder}
+            errorMsg={errors[input.id]?.message}
           />
         ))}
         <Button
