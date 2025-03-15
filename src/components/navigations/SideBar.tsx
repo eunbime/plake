@@ -10,18 +10,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/Sheet";
+import useSideBarStore from "@/stores/useSideBarStore";
 
+import Avatar from "../common/Avatar";
 import NavList from "./NavList";
 
-interface ISideBarProps {
-  isOpen: boolean;
-  onToggleSideBar: () => void;
-}
+const SideBar = () => {
+  const { isOpen, toggleSideBar } = useSideBarStore();
 
-const SideBar = ({ isOpen, onToggleSideBar }: ISideBarProps) => {
   return (
-    <Sheet open={isOpen} onOpenChange={onToggleSideBar}>
-      <SheetTrigger onClick={onToggleSideBar}>
+    <Sheet open={isOpen}>
+      <SheetTrigger onClick={toggleSideBar}>
         <RxHamburgerMenu
           size={20}
           color="black"
@@ -31,18 +30,21 @@ const SideBar = ({ isOpen, onToggleSideBar }: ISideBarProps) => {
       <SheetContent side={"left"} className="w-[200px] bg-white p-4">
         <SheetHeader>
           <SheetTitle>
-            <Link href="/" onClick={onToggleSideBar}>
-              <Image
-                src="/images/logo.png"
-                alt="logo-image"
-                width={70}
-                height={15}
-              />
-            </Link>
+            <div className="flex items-center justify-between">
+              <Link href="/" onClick={toggleSideBar}>
+                <Image
+                  src="/images/logo.png"
+                  alt="logo-image"
+                  width={70}
+                  height={15}
+                />
+              </Link>
+              <Avatar type="default" size="default" imgPath="" />
+            </div>
           </SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <NavList onToggleSideBar={onToggleSideBar} />
+        <NavList />
       </SheetContent>
     </Sheet>
   );
