@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import {
   Popover,
@@ -44,14 +43,9 @@ const PopoverMenu = () => {
 const Header = () => {
   const isLoggedIn = false; // 임시 로그인 상태 state
 
-  const [isOpen, setIsOpen] = useState(false);
-  const onToggleSideBar = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <header className="fixed left-0 top-0 z-50 flex h-[60px] w-full items-center justify-center bg-white md:justify-start">
-      <SideBar isOpen={isOpen} onToggleSideBar={onToggleSideBar} />
+      <SideBar />
       <div className="base-wrap flex justify-between">
         <div className="flex items-center">
           <Link href="/" className="md:mr-16">
