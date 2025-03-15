@@ -1,7 +1,8 @@
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { NAV_ITEMS } from "@/constants/nav";
+import { NAV_BUTTONS, NAV_ITEMS } from "@/constants/nav";
 import { cn } from "@/lib/utils";
 import useSideBarStore from "@/stores/useSideBarStore";
 
@@ -10,54 +11,32 @@ import { Button } from "../ui/Button";
 const NavButtonForMobile = () => {
   const { toggleSideBar } = useSideBarStore();
   const isLoggedIn = true; // 임시 로그인 상태 state
+  const tempLogout = () => {
+    // 임시 로그아웃 함수
+    console.log("User logged out");
+  };
 
   return (
     <div className="mb-11 mt-4 flex items-center justify-between md:hidden">
-      {isLoggedIn ? (
-        <>
+      {NAV_BUTTONS.filter(button => isLoggedIn === button.loggedInShow).map(
+        button => (
           <Button
+            key={button.href}
             size="sm"
-            className="w-20 border-2"
-            onClick={() => toggleSideBar(false)}
-            variant={"purple-outline"}
+            className={clsx("w-20", {
+              "border-2": button.variant === "purple-outline",
+            })}
+            onClick={() => {
+              toggleSideBar(false);
+              if (button.name === "로그아웃") tempLogout();
+            }}
+            variant={button.variant}
             asChild
-            aria-label="mypage-link-button"
+            aria-label={button.ariaLabel}
           >
-            <Link href="/mypage">마이페이지</Link>
+            <Link href={button.href}>{button.name}</Link>
           </Button>
-          <Button
-            size="sm"
-            className="w-20 font-semibold"
-            onClick={() => toggleSideBar(false)}
-            variant={"purple"}
-            aria-label="join-link-button"
-          >
-            로그아웃
-          </Button>
-        </>
-      ) : (
-        <>
-          <Button
-            size="sm"
-            className="w-20 border-2"
-            onClick={() => toggleSideBar(false)}
-            variant={"purple-outline"}
-            asChild
-            aria-label="login-link-button"
-          >
-            <Link href="/login">로그인</Link>
-          </Button>
-          <Button
-            size="sm"
-            className="w-20 font-semibold"
-            onClick={() => toggleSideBar(false)}
-            variant={"purple"}
-            asChild
-            aria-label="join-link-button"
-          >
-            <Link href="/join">회원가입</Link>
-          </Button>
-        </>
+        ),
       )}
     </div>
   );
