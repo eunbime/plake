@@ -19,8 +19,8 @@ const SideBar = () => {
   const { isOpen, toggleSideBar } = useSideBarStore();
 
   return (
-    <Sheet open={isOpen}>
-      <SheetTrigger onClick={toggleSideBar}>
+    <Sheet open={isOpen} onOpenChange={toggleSideBar}>
+      <SheetTrigger onClick={() => toggleSideBar(!isOpen)}>
         <RxHamburgerMenu
           size={20}
           color="black"
@@ -31,7 +31,7 @@ const SideBar = () => {
         <SheetHeader>
           <SheetTitle>
             <div className="flex items-center justify-between">
-              <Link href="/" onClick={toggleSideBar}>
+              <Link href="/" onClick={() => toggleSideBar(false)}>
                 <Image
                   src="/images/logo.png"
                   alt="logo-image"

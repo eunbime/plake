@@ -2,12 +2,12 @@ import { create } from "zustand";
 
 type SideBarStore = {
   isOpen: boolean;
-  toggleSideBar: () => void;
+  toggleSideBar: (flag: boolean) => void;
 };
 
 const useSideBarStore = create<SideBarStore>(set => ({
   isOpen: false,
-  toggleSideBar: () => set(prev => ({ isOpen: !prev.isOpen })),
+  toggleSideBar: (flag: boolean) => set({ isOpen: flag }),
 }));
 
 export default useSideBarStore;

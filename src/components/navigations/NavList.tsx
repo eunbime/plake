@@ -18,7 +18,7 @@ const NavButtonForMobile = () => {
           <Button
             size="sm"
             className="w-20 border-2"
-            onClick={toggleSideBar}
+            onClick={() => toggleSideBar(false)}
             variant={"purple-outline"}
             asChild
             aria-label="mypage-link-button"
@@ -28,7 +28,7 @@ const NavButtonForMobile = () => {
           <Button
             size="sm"
             className="w-20 font-semibold"
-            onClick={toggleSideBar}
+            onClick={() => toggleSideBar(false)}
             variant={"purple"}
             aria-label="join-link-button"
           >
@@ -40,7 +40,7 @@ const NavButtonForMobile = () => {
           <Button
             size="sm"
             className="w-20 border-2"
-            onClick={toggleSideBar}
+            onClick={() => toggleSideBar(false)}
             variant={"purple-outline"}
             asChild
             aria-label="login-link-button"
@@ -50,7 +50,7 @@ const NavButtonForMobile = () => {
           <Button
             size="sm"
             className="w-20 font-semibold"
-            onClick={toggleSideBar}
+            onClick={() => toggleSideBar(false)}
             variant={"purple"}
             asChild
             aria-label="join-link-button"
@@ -75,7 +75,7 @@ const NavItem = ({ isActive }: INavItemProps) => {
       {NAV_ITEMS.map(item => (
         <li key={item.href}>
           <Link
-            onClick={toggleSideBar}
+            onClick={() => toggleSideBar(false)}
             href={item.href}
             className={cn(
               "transition-colors hover:text-purple-600",
