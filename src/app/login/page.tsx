@@ -2,23 +2,26 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import LoginJoinLayout from "@/components/layout/LoginJoinLayout";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { LOGIN_INPUTS } from "@/constants/loginJoin";
-import { LoginFormInput, LoginFormSchema } from "@/schemas/loginJoinSchema";
+import { LoginFormSchema } from "@/schemas/loginJoinSchema";
+
+export type TLoginForm = z.infer<typeof LoginFormSchema>;
 
 const Page = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormInput>({
+  } = useForm<TLoginForm>({
     resolver: zodResolver(LoginFormSchema),
   });
 
-  const onSubmit = (data: LoginFormInput) => console.log(data);
+  const onSubmit = (data: TLoginForm) => console.log(data);
 
   return (
     <LoginJoinLayout page="login">
