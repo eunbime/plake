@@ -12,7 +12,7 @@ const LoginJoinLayout = ({
   page,
 }: React.PropsWithChildren<TLoginJoinLayoutProps>) => {
   return (
-    <div className="base-wrap flex w-full flex-col items-center justify-center gap-1 px-4 py-9 md:px-16 lg:flex-row lg:justify-between lg:gap-24 xl:p-0">
+    <div className="base-wrap flex w-full flex-col items-center justify-center gap-1 py-9 md:px-16 lg:flex-row lg:justify-between lg:gap-24 xl:px-0">
       <div className="flex min-h-[240px] w-full max-w-[250px] flex-col text-center lg:max-w-[400px]">
         <h1 className="text-xl font-semibold text-gray-800 md:text-2xl">
           Welcome to Plake!

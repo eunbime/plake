@@ -53,6 +53,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             INPUT_BASE_STYLE,
             className,
             errorMsg && "border-red-600",
+            errorMsg && "focus:border-red-600",
+            errorMsg && "hover:border-red-300",
           )}
           ref={ref}
           {...props}
