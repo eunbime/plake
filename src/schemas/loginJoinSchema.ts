@@ -17,6 +17,3 @@ export const JoinFormSchema = z
     message: "Passwords do not match",
     path: ["passwordConfirm"],
   });
-
-export type LoginFormInput = z.infer<typeof LoginFormSchema>;
-export type JoinFormInput = z.infer<typeof JoinFormSchema>;

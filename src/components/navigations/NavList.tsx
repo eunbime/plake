@@ -9,9 +9,9 @@ import useSideBarStore from "@/stores/useSideBarStore";
 import { Button } from "../ui/Button";
 
 const NavButtonForMobile = () => {
-  const { toggleSideBar } = useSideBarStore();
+  const { onToggleSideBar } = useSideBarStore();
   const isLoggedIn = true; // 임시 로그인 상태 state
-  const tempLogout = () => {
+  const logout = () => {
     // 임시 로그아웃 함수
     console.log("User logged out");
   };
@@ -27,8 +27,8 @@ const NavButtonForMobile = () => {
               "border-2": button.variant === "purple-outline",
             })}
             onClick={() => {
-              toggleSideBar(false);
-              if (button.name === "로그아웃") tempLogout();
+              onToggleSideBar(false);
+              if (button.name === "로그아웃") logout();
             }}
             variant={button.variant}
             asChild
@@ -47,29 +47,37 @@ interface INavItemProps {
 }
 
 const NavItem = ({ isActive }: INavItemProps) => {
-  const { toggleSideBar } = useSideBarStore();
+  const { onToggleSideBar } = useSideBarStore();
+  const favoriteLength = [1, 2, 3, 4, 5].length; // 임시 찜한 모임 카운트 state
 
   return (
-    <ul className="flex flex-col gap-6 font-semibold md:flex-row md:gap-6">
+    <ul className="flex flex-col gap-6 font-semibold md:flex-row md:gap-10">
       {NAV_ITEMS.map(item => (
-        <li key={item.href}>
+        <li key={item.href} className="relative">
           <Link
-            onClick={() => toggleSideBar(false)}
+            onClick={() => onToggleSideBar(false)}
             href={item.href}
             className={cn(
               "transition-colors hover:text-purple-600",
-              isActive!(item.href)
+              isActive(item.href)
                 ? "font-bold text-purple-600"
                 : "text-gray-700",
             )}
+            aria-current={isActive(item.href) ? "page" : "false"}
           >
             {item.name}
           </Link>
+          {item.href === "/favorites" && favoriteLength > 0 && (
+            <span className="absolute ml-[1.5px] rounded-3xl bg-purple-300 px-[6px] py-0 text-xs font-bold text-white">
+              {favoriteLength}
+            </span>
+          )}
         </li>
       ))}
     </ul>
   );
 };
+
 interface INavListProps {
   activePath?: string; // 스토리북 환경에서 테스트하기 위한 path prop
 }
