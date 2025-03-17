@@ -58,11 +58,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <QueryProvider>
-          <Header />
-          <main className="global-layout-wrapper">{children}</main>
-        </QueryProvider>
-        <Footer />
-        <QueryProvider>
           <ModalProvider />
           <Header />
           <main className="global-layout-wrapper">{children}</main>

@@ -10,6 +10,10 @@ const meta: Meta<typeof MainCardItem> = {
     layout: "fullscreen",
     componentSubtitle: "모임 목록 카드",
     artTypes: {
+      id: {
+        control: { type: "text" },
+        description: "모임 아이디",
+      },
       name: {
         control: { type: "text" },
         description: "모임 이름",
@@ -52,19 +56,52 @@ export default meta;
 type Story = StoryObj<typeof MainCardItem>;
 
 export const Default: Story = {
-  args: {
-    name: "달램핏 오피스 스트레칭",
-    dateTime: new Date(),
-    registrationEnd: new Date(),
-    location: "강남구",
-    participantCount: 6,
-    capacity: 20,
-    image: "https://picsum.photos/200/300",
+  render: () => {
+    const date = new Date();
+
+    return (
+      <MainCardItem
+        id={"1"}
+        name={"달램핏 오피스 스트레칭"}
+        dateTime={date}
+        registrationEnd={new Date(date.setMonth(date.getMonth() + 1))}
+        location={"강남구"}
+        participantCount={6}
+        capacity={20}
+        image={"https://picsum.photos/200/300"}
+      />
+    );
   },
   parameters: {
     docs: {
       description: {
-        story: "PC 화면에서의 카드 컴포넌트 모습입니다.",
+        story: "마감되지 않은 카드의 모습입니다.",
+      },
+    },
+  },
+};
+
+export const ClosedCardItem: Story = {
+  render: () => {
+    const date = new Date();
+
+    return (
+      <MainCardItem
+        id={"1"}
+        name={"달램핏 오피스 스트레칭"}
+        dateTime={date}
+        registrationEnd={new Date(date.setDate(date.getDay() - 1))}
+        location={"강남구"}
+        participantCount={6}
+        capacity={20}
+        image={"https://picsum.photos/200/300"}
+      />
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "마감된 카드 예시입니다.",
       },
     },
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Dropdown from "@/components/common/Dropdown";
 import DateTimePicker from "@/components/modals/create-gathering-modal/DateTimePicker";
@@ -15,10 +15,6 @@ const labelTitleStyle = "text-base font-semibold text-gray-800";
 
 const CreateGatheringModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setIsOpen(true);
-  }, []);
 
   return (
     <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="모임 만들기">
