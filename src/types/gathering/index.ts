@@ -29,3 +29,9 @@ export interface IParticipant {
   gatheringId: number;
   joinedAt: string;
 }
+
+export interface IMyGathering extends IGathering {
+  joinedAt: string;
+  isCompleted: boolean;
+  isReviewed: boolean;
+}
