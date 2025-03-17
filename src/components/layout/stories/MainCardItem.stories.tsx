@@ -61,7 +61,7 @@ export const Default: Story = {
 
     return (
       <MainCardItem
-        id={"1"}
+        id={1}
         name={"달램핏 오피스 스트레칭"}
         dateTime={date}
         registrationEnd={new Date(date.setMonth(date.getMonth() + 1))}
@@ -87,7 +87,7 @@ export const ClosedCardItem: Story = {
 
     return (
       <MainCardItem
-        id={"1"}
+        id={1}
         name={"달램핏 오피스 스트레칭"}
         dateTime={date}
         registrationEnd={new Date(date.setDate(date.getDay() - 1))}
