@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/Button";
 import { useCancelGathering } from "@/hooks/gathering/useCancelGathering";
-import { useGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+import { useSuspenseGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
 import { useJoinGathering } from "@/hooks/gathering/useJoinGathering";
 import { useIsParticipant } from "@/hooks/gathering/useParticipants";
 
@@ -18,7 +18,7 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
 
   const {
     data: { createdBy },
-  } = useGatheringDetail(id);
+  } = useSuspenseGatheringDetail(id);
   const { handleJoinGathering, handleLeaveGathering } = useJoinGathering(
     id,
     currentUserId,

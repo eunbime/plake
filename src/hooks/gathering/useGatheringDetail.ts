@@ -1,23 +1,8 @@
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { APIError } from "@/types/error";
-import { GatheringType, IGathering } from "@/types/gathering";
-
-const initialData: IGathering = {
-  id: 0,
-  teamId: 0,
-  name: "",
-  type: GatheringType.MINDFULNESS,
-  location: "",
-  dateTime: "",
-  registrationEnd: "",
-  capacity: 0,
-  participantCount: 0,
-  image: "",
-  createdBy: 0,
-  canceledAt: null,
-};
+import { IGathering } from "@/types/gathering";
 
 export const getGathering = async (id: string): Promise<IGathering> => {
   const response = await fetch(
@@ -33,38 +18,24 @@ export const getGathering = async (id: string): Promise<IGathering> => {
   return data;
 };
 
+const gatheringDetailQueryOption = (id: string) => ({
+  queryKey: [QUERY_KEYS.GATHERING.detail(id)],
+  queryFn: () => getGathering(id),
+  throwOnError: true,
+  retry: false,
+});
+
 export const useGatheringDetail = (id: string) => {
-  try {
-    return useQuery<IGathering>({
-      queryKey: [QUERY_KEYS.GATHERING.detail(id)],
-      queryFn: () => getGathering(id),
-      initialData,
-      throwOnError: true,
-      retry: false,
-    });
-  } catch (error) {
-    if (error instanceof APIError) {
-      throw error;
-    }
-    throw new Error(`모임 상세 데이터를 가져오지 못했습니다`);
-  }
+  return useQuery(gatheringDetailQueryOption(id));
+};
+
+export const useSuspenseGatheringDetail = (id: string) => {
+  return useSuspenseQuery(gatheringDetailQueryOption(id));
 };
 
 export const prefetchGatheringDetail = async (
   id: string,
   queryClient: QueryClient,
 ) => {
-  try {
-    return queryClient.prefetchQuery<IGathering>({
-      queryKey: [QUERY_KEYS.GATHERING.detail(id)],
-      queryFn: () => getGathering(id),
-      initialData,
-      retry: false,
-    });
-  } catch (error) {
-    if (error instanceof APIError) {
-      throw error;
-    }
-    throw new Error(`모임 초기 데이터를 가져오지 못했습니다`);
-  }
+  return queryClient.prefetchQuery(gatheringDetailQueryOption(id));
 };
