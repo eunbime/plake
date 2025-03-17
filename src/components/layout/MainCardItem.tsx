@@ -14,7 +14,7 @@ import FavoriteButton from "../common/FavoriteButton";
 import ProgressBar from "../common/ProgressBar";
 
 interface IMainCardItemProps {
-  id: string;
+  id: number;
   name: string;
   dateTime: Date;
   registrationEnd: Date;
