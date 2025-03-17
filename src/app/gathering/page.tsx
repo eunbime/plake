@@ -29,6 +29,7 @@ const Page = () => {
         <GatheringFilterSort />
         <MainCardItem
           key={cardData.id}
+          id={cardData.id}
           name={cardData.name}
           dateTime={cardData.dateTime}
           registrationEnd={cardData.registrationEnd}

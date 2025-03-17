@@ -7,7 +7,7 @@ import FavoriteButton from "@/components/common/FavoriteButton";
 import ProgressBar from "@/components/common/ProgressBar";
 import ParticipantAvatarStack from "@/components/gathering-detail/ParticipantAvatarStack";
 import { GATHERING } from "@/constants/gathering";
-import { useGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+import { useSuspenseGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
 
 interface IGatheringDetailInformationProps {
   id: string;
@@ -16,7 +16,7 @@ interface IGatheringDetailInformationProps {
 const GatheringDetailInformation = ({
   id,
 }: IGatheringDetailInformationProps) => {
-  const { data } = useGatheringDetail(id);
+  const { data } = useSuspenseGatheringDetail(id);
   const { name, location, capacity, participantCount, dateTime } = data;
 
   const progress = (participantCount / capacity) * 100;
