@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Tab from "../Tab";
+import MainTab from "../MainTab";
 
-const meta: Meta<typeof Tab> = {
+const meta: Meta<typeof MainTab> = {
   title: "Components/Navigation/Tab",
-  component: Tab,
+  component: MainTab,
   tags: ["autodocs"],
   parameters: {
     componentSubtitle: "타입 탭",
@@ -18,6 +18,6 @@ const meta: Meta<typeof Tab> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Tab>;
+type Story = StoryObj<typeof MainTab>;
 
 export const Default: Story = {};
