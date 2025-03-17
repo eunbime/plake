@@ -1,6 +1,5 @@
+import Service from "@/services/Service";
 import { IGathering } from "@/types/gathering";
-
-import Service from "../Service";
 
 class GatheringService extends Service {
   getGatheringList() {
