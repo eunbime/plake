@@ -33,9 +33,9 @@ const MyCardItem = ({
         <div>
           {statusProps && (
             <div className="mb-2.5 flex gap-2">
-              {statusProps.map((status, index) => (
+              {statusProps.map((status, idx) => (
                 <div
-                  key={index}
+                  key={idx}
                   className={clsx(
                     "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium",
                     status.className,

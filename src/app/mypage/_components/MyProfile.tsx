@@ -3,7 +3,7 @@ import Image from "next/image";
 import Avatar from "@/components/common/Avatar";
 import { IUser } from "@/types/user";
 
-const defaultUser: IUser = {
+const mockUser: IUser = {
   teamId: 1,
   id: 123,
   email: "user@exaasdfasdfasdfasdmple.com",
@@ -15,10 +15,10 @@ const defaultUser: IUser = {
 };
 
 interface MyProfileProps {
-  user?: IUser;
+  user: IUser;
 }
 
-const MyProfile = ({ user = defaultUser }: MyProfileProps) => {
+const MyProfile = ({ user = mockUser }: MyProfileProps) => {
   const profileInfo = [
     { label: "company.", value: user.companyName },
     { label: "E-mail.", value: user.email },
