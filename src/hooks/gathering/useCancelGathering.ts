@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import useModalStore from "@/stores/useModalStore";
 import { APIError } from "@/types/error";
 
 const TOKEN = "token";
@@ -30,6 +31,7 @@ export const useCancelGatheringMutation = (
   isOrganizer: boolean,
 ) => {
   const queryClient = useQueryClient();
+  const { openAlert } = useModalStore();
 
   return useMutation({
     mutationFn: () => {
@@ -41,12 +43,10 @@ export const useCancelGatheringMutation = (
       });
     },
     onError: () => {
-      // TODO: 알림 모달 적용하기
-      if (isOrganizer) {
-        window.confirm("취소에 실패했습니다.");
-      } else {
-        window.confirm("주최자가 아니면 취소할 수 없습니다.");
-      }
+      const errorMessage = isOrganizer
+        ? "취소에 실패했습니다."
+        : "주최자가 아니면 취소할 수 없습니다.";
+      openAlert(errorMessage);
     },
   });
 };
@@ -57,11 +57,12 @@ export const useCancelGathering = (id: string, isOrganizer: boolean) => {
     isOrganizer,
   );
 
+  const { openConfirm } = useModalStore();
+
   const handleCancelGathering = () => {
-    // TODO: 확인 모달 적용하기
-    if (window.confirm("정말 취소하시겠습니까?")) {
+    openConfirm("정말 취소하시겠습니까?", () => {
       cancelGathering();
-    }
+    });
   };
 
   return { handleCancelGathering };
