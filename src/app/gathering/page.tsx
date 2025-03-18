@@ -1,8 +1,10 @@
 import { Suspense } from "react";
 
+import FetchBoundary from "@/components/boundary/FetchBoundary";
 import GatheringFilterSort from "@/components/common/GatheringFilterSort";
 import MainCardList from "@/components/layout/MainCardList";
 import FilterTab from "@/components/navigations/FilterTab";
+import MainCardListSkeleton from "@/components/skeletons/MainCardListSkeleton";
 
 const Page = () => {
   return (
@@ -11,7 +13,9 @@ const Page = () => {
         <FilterTab />
       </Suspense>
       <GatheringFilterSort />
-      <MainCardList />
+      <FetchBoundary fallback={<MainCardListSkeleton />}>
+        <MainCardList />
+      </FetchBoundary>
     </div>
   );
 };
