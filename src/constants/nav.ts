@@ -34,3 +34,9 @@ export const NAV_BUTTONS = [
     loggedInShow: true,
   },
 ] as const;
+
+export const MYPAGE_NAV_ITEMS = [
+  { name: "나의 모임", href: "/mypage" },
+  { name: "나의 리뷰", href: "/mypage/reviews" },
+  { name: "내가 만든 모임", href: "/mypage/gathering" },
+] as const;

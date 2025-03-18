@@ -29,3 +29,5 @@ export interface IParticipant {
   gatheringId: number;
   joinedAt: string;
 }
+
+export * from "./my-card";
