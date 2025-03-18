@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import Avatar from "@/components/common/Avatar";
-import Modal from "@/components/modals/Modal";
+import Modal from "@/components/modals/LocalModal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { IUser } from "@/types/user";
