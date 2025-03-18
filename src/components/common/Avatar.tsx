@@ -10,7 +10,7 @@ type TAvatarProps = {
 const AVATAR_SIZE = {
   small: 25,
   default: 35,
-  large: 55,
+  large: 56,
 } as const;
 
 const Avatar = ({ type, size, imgPath, onClickAvatar }: TAvatarProps) => {

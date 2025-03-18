@@ -1,33 +1,38 @@
-"use client";
-
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { SUB_TAB } from "@/constants/ui";
 import { cn } from "@/lib/utils";
 
-interface ITabProps {
-  tabList: Array<string>;
+interface ISubTabProps {
+  onClickTab: (value: string) => void;
+  isOffline: boolean;
 }
 
-const SubTab = ({ tabList }: ITabProps) => {
-  const [activeTabIdx, setActiveTabIdx] = useState<number>(0);
+const SubTab = ({ onClickTab, isOffline }: ISubTabProps) => {
+  const [activeSubTabIdx, setActiveSubTabIdx] = useState<number>(0);
 
   return (
-    <nav className="align-center mb-6 flex gap-2">
-      {tabList.map((tab, i) => (
+    <div className="align-center mb-6 flex gap-2">
+      {SUB_TAB[isOffline ? "OFFLINE" : "ONLINE"].map((tab, i) => (
         <Button
-          key={`subTab-${i}`}
+          key={i}
           variant="default"
+          aria-label="서브 주제 탭"
           className={cn(
             "rounded-xl px-4 py-2.5",
-            activeTabIdx !== i && "bg-gray-200 text-black hover:bg-gray-200/90",
+            activeSubTabIdx !== i &&
+              "bg-gray-200 text-black hover:bg-gray-200/90",
           )}
-          onClick={() => setActiveTabIdx(i)}
+          onClick={() => {
+            onClickTab(tab.value);
+            setActiveSubTabIdx(i);
+          }}
         >
-          {tab}
+          {tab.name}
         </Button>
       ))}
-    </nav>
+    </div>
   );
 };
 
