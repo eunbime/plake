@@ -2,31 +2,19 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
-import { FaUser } from "react-icons/fa6";
+import { FaCheck, FaUser } from "react-icons/fa6";
 
 import { Button } from "@/components/ui/Button";
-import { IMyGathering } from "@/types/gathering";
-
-interface MyCardItemProps {
-  gathering: IMyGathering;
-  direction?: "mypage" | "reviews" | "gathering";
-  buttonProps: {
-    label: string;
-    variant: "purple" | "purple-outline";
-    onClick: () => void;
-  };
-}
+import { MyCardItemProps } from "@/types/gathering/my-card";
 
 const MyCardItem = ({
   gathering,
   direction = "reviews",
+  statusProps,
   buttonProps,
 }: MyCardItemProps) => {
   return (
-    <Link
-      href={"/mypage"}
-      className="flex w-full flex-col gap-4 border sm:flex-row"
-    >
+    <Link href={"/mypage"} className="flex w-full flex-col gap-4 sm:flex-row">
       <div className="relative h-[156px] w-full min-w-[280px] sm:w-[280px]">
         <Image
           src={gathering.image}
@@ -40,12 +28,27 @@ const MyCardItem = ({
       <div
         className={clsx(
           "flex min-w-0 flex-col justify-between sm:h-auto sm:flex-1",
-          direction === "mypage" && "h-[172px]",
-          direction === "reviews" && "h-[144px]",
+          direction === "mypage" && "h-[156px]",
+          direction !== "gathering" && "h-[144px]",
         )}
       >
         <div>
-          {/* 여기에 "나의 모임(/myage)" 페이지의 태그를 작성합니다 */}
+          {direction === "mypage" && (
+            <div className="mb-2.5 flex gap-2">
+              {statusProps.map((status, index) => (
+                <div
+                  key={index}
+                  className={clsx(
+                    "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium",
+                    status.className,
+                  )}
+                >
+                  {status.label === "개설 확정" && <FaCheck size={12} />}
+                  {status.label}
+                </div>
+              ))}
+            </div>
+          )}
 
           <div
             className={clsx(

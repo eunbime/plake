@@ -30,8 +30,4 @@ export interface IParticipant {
   joinedAt: string;
 }
 
-export interface IMyGathering extends IGathering {
-  joinedAt: string;
-  isCompleted: boolean;
-  isReviewed: boolean;
-}
+export * from "./my-card";

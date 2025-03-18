@@ -1,14 +1,15 @@
 "use client";
 
-import { GatheringType, IMyGathering } from "@/types/gathering";
+import clsx from "clsx";
+
+import {
+  ButtonProps,
+  GatheringType,
+  IMyGathering,
+  StatusProps,
+} from "@/types/gathering";
 
 import MyCardItem from "./MyCardItem";
-
-interface ButtonProps {
-  label: string;
-  variant: "purple" | "purple-outline";
-  onClick: () => void;
-}
 
 const mockMyGatherings: IMyGathering[] = [
   {
@@ -19,7 +20,7 @@ const mockMyGatherings: IMyGathering[] = [
     dateTime: "2025-04-20T08:00:00Z",
     registrationEnd: "2025-04-18T23:59:59Z",
     location: "서울숲 공원",
-    participantCount: 20,
+    participantCount: 4,
     capacity: 25,
     image: "/images/profile-background.png",
     createdBy: 2,
@@ -48,6 +49,30 @@ const mockMyGatherings: IMyGathering[] = [
 ];
 
 const MyCardList = () => {
+  const getStatusProps = (gathering: IMyGathering): StatusProps[] => {
+    if (gathering.isCompleted) {
+      return [{ label: "이용 완료", className: "bg-gray-100 text-gray-500" }];
+    } else {
+      if (gathering.participantCount >= 5) {
+        return [
+          { label: "이용 예정", className: "bg-purple-100 text-purple-600" },
+          {
+            label: "개설 확정",
+            className: "border border-purple-200 text-purple-500",
+          },
+        ];
+      } else {
+        return [
+          { label: "이용 예정", className: "bg-purple-100 text-purple-600" },
+          {
+            label: "개설 대기",
+            className: "border border-gray-200 text-gray-500",
+          },
+        ];
+      }
+    }
+  };
+
   const getButtonProps = (gathering: IMyGathering): ButtonProps => {
     if (!gathering.isCompleted) {
       return {
@@ -74,13 +99,22 @@ const MyCardList = () => {
 
   return (
     <div>
-      {mockMyGatherings.map(gathering => (
-        <MyCardItem
+      {mockMyGatherings.map((gathering, index) => (
+        <div
           key={gathering.id}
-          gathering={gathering}
-          direction="mypage"
-          buttonProps={getButtonProps(gathering)}
-        />
+          className={clsx(
+            "py-6",
+            index !== mockMyGatherings.length - 1 &&
+              "border-b-2 border-dashed border-gray-200",
+          )}
+        >
+          <MyCardItem
+            gathering={gathering}
+            direction="gathering"
+            buttonProps={getButtonProps(gathering)}
+            statusProps={getStatusProps(gathering)}
+          />
+        </div>
       ))}
     </div>
   );
