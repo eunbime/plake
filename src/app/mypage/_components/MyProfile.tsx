@@ -15,7 +15,7 @@ const mockUser: IUser = {
 };
 
 interface MyProfileProps {
-  user: IUser;
+  user?: IUser;
 }
 
 const MyProfile = ({ user = mockUser }: MyProfileProps) => {
