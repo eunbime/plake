@@ -6,7 +6,7 @@ import MainTab from "@/components/navigations/MainTab";
 import SubTab from "@/components/navigations/SubTab";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 
-const FilterTabWrapper = () => {
+const FilterTab = () => {
   const { setSearchParams } = useCustomSearchParams();
 
   const [isOffline, setIsOffline] = useState<boolean>(true);
@@ -35,4 +35,4 @@ const FilterTabWrapper = () => {
   );
 };
 
-export default FilterTabWrapper;
+export default FilterTab;

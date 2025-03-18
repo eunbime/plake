@@ -2,14 +2,13 @@ import { Suspense } from "react";
 
 import GatheringFilterSort from "@/components/common/GatheringFilterSort";
 import MainCardList from "@/components/layout/MainCardList";
-
-import FilterTabWrapper from "./_component/FilterTab";
+import FilterTab from "@/components/navigations/FilterTab";
 
 const Page = () => {
   return (
     <div className="base-wrap">
       <Suspense>
-        <FilterTabWrapper />
+        <FilterTab />
       </Suspense>
       <GatheringFilterSort />
       <MainCardList />
