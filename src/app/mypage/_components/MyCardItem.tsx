@@ -9,7 +9,6 @@ import { MyCardItemProps } from "@/types/gathering/my-card";
 
 const MyCardItem = ({
   gathering,
-  direction = "reviews",
   statusProps,
   buttonProps,
 }: MyCardItemProps) => {
@@ -28,12 +27,11 @@ const MyCardItem = ({
       <div
         className={clsx(
           "flex min-w-0 flex-col justify-between sm:h-auto sm:flex-1",
-          direction === "mypage" && "h-[156px]",
-          direction !== "gathering" && "h-[144px]",
+          buttonProps && "h-[152px]",
         )}
       >
         <div>
-          {direction === "mypage" && (
+          {statusProps && (
             <div className="mb-2.5 flex gap-2">
               {statusProps.map((status, index) => (
                 <div
@@ -53,13 +51,13 @@ const MyCardItem = ({
           <div
             className={clsx(
               "mb-1.5 flex flex-wrap truncate",
-              direction === "mypage" ? "items-center" : "flex-col gap-2",
+              statusProps ? "items-center" : "flex-col gap-2",
             )}
           >
             <p
               className={clsx(
                 "truncate text-lg font-semibold text-gray-900",
-                direction === "mypage" && "after:px-2 after:content-['|']",
+                statusProps && "after:px-2 after:content-['|']",
               )}
             >
               {gathering.name}
@@ -77,7 +75,7 @@ const MyCardItem = ({
           </div>
         </div>
 
-        {direction !== "gathering" && (
+        {buttonProps && (
           <Button
             variant={buttonProps.variant}
             className="h-10 w-[120px]"

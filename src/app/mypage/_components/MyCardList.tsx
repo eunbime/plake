@@ -2,12 +2,7 @@
 
 import clsx from "clsx";
 
-import {
-  ButtonProps,
-  GatheringType,
-  IMyGathering,
-  StatusProps,
-} from "@/types/gathering";
+import { DirectionType, GatheringType, IMyGathering } from "@/types/gathering";
 
 import MyCardItem from "./MyCardItem";
 
@@ -48,8 +43,10 @@ const mockMyGatherings: IMyGathering[] = [
   },
 ];
 
-const MyCardList = () => {
-  const getStatusProps = (gathering: IMyGathering): StatusProps[] => {
+const MyCardList = ({ direction }: { direction: DirectionType }) => {
+  const getStatusProps = (gathering: IMyGathering) => {
+    if (direction !== "mypage") return null;
+
     if (gathering.isCompleted) {
       return [{ label: "이용 완료", className: "bg-gray-100 text-gray-500" }];
     } else {
@@ -73,24 +70,26 @@ const MyCardList = () => {
     }
   };
 
-  const getButtonProps = (gathering: IMyGathering): ButtonProps => {
+  const getButtonProps = (gathering: IMyGathering) => {
+    if (direction === "gathering") return null;
+
     if (!gathering.isCompleted) {
       return {
         label: "예약 취소하기",
-        variant: "purple-outline",
+        variant: "purple-outline" as const,
         onClick: () => console.log(`예약 취소 요청: ${gathering.id}`),
       };
     } else {
       if (gathering.isReviewed) {
         return {
           label: "내가 쓴 리뷰 보기",
-          variant: "purple",
+          variant: "purple" as const,
           onClick: () => console.log(`내가 쓴 리뷰 보기: ${gathering.id}`),
         };
       } else {
         return {
           label: "리뷰 작성하기",
-          variant: "purple",
+          variant: "purple" as const,
           onClick: () => console.log(`리뷰 작성하기: ${gathering.id}`),
         };
       }
@@ -110,7 +109,6 @@ const MyCardList = () => {
         >
           <MyCardItem
             gathering={gathering}
-            direction="gathering"
             buttonProps={getButtonProps(gathering)}
             statusProps={getStatusProps(gathering)}
           />

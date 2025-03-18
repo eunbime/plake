@@ -1,17 +1,19 @@
 import { IGathering } from ".";
 
+export type DirectionType = "mypage" | "reviews" | "gathering";
+
 export interface IMyGathering extends IGathering {
   joinedAt: string;
   isCompleted: boolean;
   isReviewed: boolean;
 }
 
-export interface StatusProps {
+interface StatusProps {
   label: string;
   className: string;
 }
 
-export interface ButtonProps {
+interface ButtonProps {
   label: string;
   variant: "purple" | "purple-outline";
   onClick: () => void;
@@ -19,7 +21,6 @@ export interface ButtonProps {
 
 export interface MyCardItemProps {
   gathering: IMyGathering;
-  direction: "mypage" | "reviews" | "gathering";
-  statusProps: StatusProps[];
-  buttonProps: ButtonProps;
+  statusProps: StatusProps[] | null;
+  buttonProps: ButtonProps | null;
 }

@@ -3,7 +3,7 @@ import MyCardList from "./_components/MyCardList";
 const Page = () => {
   return (
     <div>
-      <MyCardList />
+      <MyCardList direction={"mypage"} />
     </div>
   );
 };
