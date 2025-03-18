@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import useModalStore from "@/stores/useModalStore";
 import { APIError } from "@/types/error";
 
 const TOKEN = "token";
@@ -36,7 +37,7 @@ export const useJoinGatheringMutation = (
 ) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-
+  const { openConfirm } = useModalStore();
   return useMutation({
     mutationFn: () => joinGathering(id, "join", "POST"),
     onSuccess: () => {
@@ -45,10 +46,10 @@ export const useJoinGatheringMutation = (
       });
     },
     onError: () => {
-      // TODO: 확인 모달 적용하기
       if (!currentUserId) {
-        window.alert("로그인 후 참여할 수 있습니다.");
-        router.push("/login");
+        openConfirm("로그인 후 참여할 수 있습니다. 이동하시겠습니까?", () => {
+          router.push("/login");
+        });
       }
     },
   });
@@ -56,6 +57,7 @@ export const useJoinGatheringMutation = (
 
 export const useLeaveGatheringMutation = (id: string) => {
   const queryClient = useQueryClient();
+  const { openAlert } = useModalStore();
 
   return useMutation({
     mutationFn: () => joinGathering(id, "leave", "DELETE"),
@@ -65,7 +67,7 @@ export const useLeaveGatheringMutation = (id: string) => {
       });
     },
     onError: () => {
-      window.alert("참여 취소에 실패했습니다.");
+      openAlert("참여 취소에 실패했습니다.");
     },
   });
 };
