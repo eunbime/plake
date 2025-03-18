@@ -74,7 +74,12 @@ const Modal = ({
         onClick={e => e.stopPropagation()}
         aria-modal="true"
       >
-        <div className="mb-5 flex items-center justify-between">
+        <div
+          className={clsx(
+            "mb-5 flex",
+            title ? "items-center justify-between" : "justify-end",
+          )}
+        >
           {title && (
             <h2 className="text-lg font-bold text-gray-900">{title}</h2>
           )}
