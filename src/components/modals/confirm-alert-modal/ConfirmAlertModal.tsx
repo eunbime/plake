@@ -2,7 +2,7 @@ import Modal from "../Modal";
 
 const ConfirmAlertModal = () => {
   return (
-    <Modal isOpen={true} onClose={() => {}}>
+    <Modal isOpen={false} onClose={() => {}}>
       <div>ConfirmAlertModal</div>
     </Modal>
   );

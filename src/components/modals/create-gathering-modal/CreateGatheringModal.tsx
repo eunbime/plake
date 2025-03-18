@@ -1,57 +1,129 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import Dropdown from "@/components/common/Dropdown";
-import DateTimePicker from "@/components/modals/create-gathering-modal/DateTimePicker";
 import ImageUploader from "@/components/modals/create-gathering-modal/ImageUploader";
 import ServiceSelector from "@/components/modals/create-gathering-modal/ServiceSelector";
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
+import { GATHERING_FORM } from "@/constants/gathering";
+import { CreateGatheringFormSchema } from "@/schemas/gatheringSchema";
+
+import DateTimeAndEndTimePicker from "./DateTimeAndEndTimePicker";
 
 const labelTitleStyle = "text-base font-semibold text-gray-800";
 
 const CreateGatheringModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(isOpen);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<z.infer<typeof CreateGatheringFormSchema>>({
+    mode: "onChange",
+    defaultValues: GATHERING_FORM,
+    resolver: zodResolver(CreateGatheringFormSchema),
+  });
+
+  const imageValue = watch("image");
+  const typeValue = watch("type");
+  const dateTimeValue = watch("dateTime");
+
+  const onSubmit = (data: z.infer<typeof CreateGatheringFormSchema>) => {
+    console.log(data);
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="모임 만들기">
-      <div className="flex flex-col justify-between gap-10">
+    <Modal isOpen={true} onClose={() => setIsOpen(false)} title="모임 만들기">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col justify-between gap-10"
+      >
         <div className="flex flex-col gap-4">
           <Input
             label="모임 이름"
             type="text"
             id="gathering-name"
             placeholder="모임 이름을 입력해주세요."
+            {...register("name")}
+            errorMsg={errors.name?.message}
           />
+
           <div className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>장소</Label>
-            <Dropdown type="form" placeholder="장소를 선택해주세요." />
+            <Dropdown
+              type="form"
+              placeholder="장소를 선택해주세요."
+              setValue={value => setValue("location", value)}
+            />
+            {errors.location && (
+              <span className="text-sm text-red-500">
+                {errors.location.message}
+              </span>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>이미지</Label>
-            <ImageUploader />
+            <ImageUploader
+              setValue={value => setValue("image", value)}
+              value={imageValue}
+            />
+            {errors.image && (
+              <span className="text-sm text-red-500">
+                {errors.image.message}
+              </span>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>선택 서비스</Label>
-            <ServiceSelector />
+            <ServiceSelector
+              setValue={value => setValue("type", value)}
+              value={typeValue}
+            />
+            {errors.type && (
+              <span className="text-sm text-red-500">
+                {errors.type.message}
+              </span>
+            )}
           </div>
-          <DateTimePicker />
+          <DateTimeAndEndTimePicker
+            setDateTimeValue={(value: string) => setValue("dateTime", value)}
+            setRegistrationEndValue={(value: string) =>
+              setValue("registrationEnd", value)
+            }
+            dateTimeValue={dateTimeValue}
+          />
+          {(errors.dateTime || errors.registrationEnd) && (
+            <span className="text-sm text-red-500">
+              {errors?.dateTime?.message || errors?.registrationEnd?.message}
+            </span>
+          )}
           <div>
             <Input
               type="number"
               id="gathering-capacity"
               label="모임 정원"
               placeholder="모임 정원을 입력해주세요. (5~20)"
+              {...register("capacity", { valueAsNumber: true })}
+              errorMsg={errors.capacity?.message}
             />
           </div>
         </div>
-        <Button variant="purple" className="w-full">
+        <Button variant="purple" className="w-full" type="submit">
           확인
         </Button>
-      </div>
+      </form>
     </Modal>
   );
 };

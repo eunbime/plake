@@ -22,6 +22,7 @@ interface IDropdownProps {
   placeholder?: string;
   type?: "default" | "sort" | "form";
   onSelect?: () => void;
+  setValue?: (value: string) => void;
 }
 
 const locationOption = [
@@ -41,6 +42,7 @@ const Dropdown = ({
   placeholder,
   type = "default",
   onSelect,
+  setValue,
 }: IDropdownProps) => {
   return (
     <Select>
@@ -62,7 +64,10 @@ const Dropdown = ({
             key={`option-${i}`}
             value={option.value}
             className="h-[32px] cursor-pointer rounded-xl px-2 py-1.5 pl-2 text-sm focus:bg-purple-100"
-            onClick={onSelect}
+            onClick={() => {
+              setValue?.(option.value);
+              onSelect?.();
+            }}
           >
             {option.label}
           </SelectItem>
