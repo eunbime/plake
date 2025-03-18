@@ -1,4 +1,8 @@
-import { QueryClient, useInfiniteQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useInfiniteQuery,
+  useSuspenseInfiniteQuery,
+} from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { APIError } from "@/types/error";
@@ -15,42 +19,25 @@ const getReviewList = async (): Promise<IReview[]> => {
   return data.data;
 };
 
+const reviewListQueryOption = () => ({
+  queryKey: [QUERY_KEYS.REVIEW.list],
+  queryFn: getReviewList,
+  initialPageParam: 1,
+  throwOnError: true,
+  retry: false,
+  getNextPageParam: (lastPage: IReview[], pages: IReview[][]) => {
+    return lastPage.length > 0 ? pages.length + 1 : undefined;
+  },
+});
+
 export const useReviewList = () => {
-  try {
-    return useInfiniteQuery<IReview[]>({
-      queryKey: [QUERY_KEYS.REVIEW.list],
-      queryFn: getReviewList,
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, pages) => {
-        return lastPage.length > 0 ? pages.length + 1 : undefined;
-      },
-      select: data => ({
-        pages: data.pages,
-        pageParams: data.pageParams,
-      }),
-      throwOnError: true,
-      retry: false,
-    });
-  } catch (error) {
-    if (error instanceof APIError) {
-      throw error;
-    }
-    throw new Error(`리뷰 목록을 가져오지 못했습니다: ${error}`);
-  }
+  return useInfiniteQuery(reviewListQueryOption());
 };
 
-export const prefetchReviewList = async (queryClient: QueryClient) => {
-  try {
-    return queryClient.prefetchInfiniteQuery({
-      queryKey: [QUERY_KEYS.REVIEW.list],
-      queryFn: getReviewList,
-      initialPageParam: 1,
-      retry: false,
-    });
-  } catch (error) {
-    if (error instanceof APIError) {
-      throw error;
-    }
-    throw new Error(`리뷰 초기 목록을 가져오지 못했습니다: ${error}`);
-  }
+export const useSuspenseReviewList = () => {
+  return useSuspenseInfiniteQuery(reviewListQueryOption());
+};
+
+export const prefetchReviewList = (queryClient: QueryClient) => {
+  return queryClient.prefetchInfiniteQuery(reviewListQueryOption());
 };

@@ -42,6 +42,11 @@ const meta: Meta<typeof MainCardItem> = {
         control: { type: "string" },
         description: "모임 이미지 url",
       },
+      firstPage: {
+        control: { type: "boolean" },
+        description:
+          "첫번째 페이지인 경우 true를 반환. (Next Image 최적화를 위해 첫번째 페이지에서만 priority를 설정)",
+      },
     },
     docs: {
       description: {
@@ -61,7 +66,7 @@ export const Default: Story = {
 
     return (
       <MainCardItem
-        id={"1"}
+        id={1}
         name={"달램핏 오피스 스트레칭"}
         dateTime={date}
         registrationEnd={new Date(date.setMonth(date.getMonth() + 1))}
@@ -69,6 +74,7 @@ export const Default: Story = {
         participantCount={6}
         capacity={20}
         image={"https://picsum.photos/200/300"}
+        firstPage={true}
       />
     );
   },
@@ -87,7 +93,7 @@ export const ClosedCardItem: Story = {
 
     return (
       <MainCardItem
-        id={"1"}
+        id={1}
         name={"달램핏 오피스 스트레칭"}
         dateTime={date}
         registrationEnd={new Date(date.setDate(date.getDay() - 1))}
@@ -95,6 +101,7 @@ export const ClosedCardItem: Story = {
         participantCount={6}
         capacity={20}
         image={"https://picsum.photos/200/300"}
+        firstPage={true}
       />
     );
   },

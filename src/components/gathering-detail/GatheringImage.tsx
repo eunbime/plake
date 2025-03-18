@@ -3,14 +3,14 @@
 import Image from "next/image";
 
 import DeadlineTag from "@/components/common/DeadlineTag";
-import { useGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+import { useSuspenseGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
 
 interface IGatheringImageProps {
   id: string;
 }
 
 const GatheringImage = ({ id }: IGatheringImageProps) => {
-  const { data } = useGatheringDetail(id);
+  const { data } = useSuspenseGatheringDetail(id);
 
   return (
     <figure className="relative min-h-[270px] flex-1 overflow-hidden rounded-3xl bg-gray-300">
