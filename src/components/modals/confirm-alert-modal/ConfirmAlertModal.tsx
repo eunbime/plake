@@ -2,22 +2,15 @@ import clsx from "clsx";
 
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/Button";
+import useModalStore from "@/stores/useModalStore";
 
-interface IConfirmAlertModalProps {
-  type: "alert" | "confirm";
-  title: string;
-  onClose: () => void;
-  onConfirm: () => void;
-}
+const ConfirmAlertModal = () => {
+  const { isOpen, onClose, type, title, onConfirm } = useModalStore(
+    state => state,
+  );
 
-const ConfirmAlertModal = ({
-  type = "confirm",
-  title,
-  onClose,
-  onConfirm,
-}: IConfirmAlertModalProps) => {
   return (
-    <Modal isOpen={true} onClose={() => {}}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex w-full flex-col items-center gap-6">
         <p className="font-medium text-gray-900">{title}</p>
         <div
@@ -36,7 +29,11 @@ const ConfirmAlertModal = ({
               취소
             </Button>
           )}
-          <Button variant="purple" className="w-[120px]" onClick={onConfirm}>
+          <Button
+            variant="purple"
+            className="w-[120px]"
+            onClick={() => onConfirm()}
+          >
             확인
           </Button>
         </div>
