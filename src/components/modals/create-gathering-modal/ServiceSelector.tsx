@@ -1,5 +1,7 @@
 import clsx from "clsx";
+import { useState } from "react";
 
+import SubTab from "@/components/navigations/SubTab";
 import { Label } from "@/components/ui/Label";
 import { SERVICE_LIST } from "@/constants/gathering";
 
@@ -15,17 +17,19 @@ const serviceList = [
 ];
 
 interface ServiceSelectorProps {
-  setValue: (value: string) => void;
-  value: string;
+  setTypeValue: (value: string) => void;
 }
 
-const ServiceSelector = ({ setValue, value }: ServiceSelectorProps) => {
+const ServiceSelector = ({ setTypeValue }: ServiceSelectorProps) => {
+  const [selectedService, setSelectedService] = useState<string>(
+    SERVICE_LIST.OFFLINE.value,
+  );
   const handleServiceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, id } = e.target;
     if (checked) {
-      setValue(id);
+      setSelectedService(id);
     } else {
-      setValue("");
+      setSelectedService("");
     }
   };
   return (
@@ -36,21 +40,21 @@ const ServiceSelector = ({ setValue, value }: ServiceSelectorProps) => {
             key={service.id}
             className={clsx(
               "flex flex-1 items-center gap-2 rounded-lg bg-gray-50 px-4 py-3",
-              value === service.id && "bg-gray-900",
+              selectedService === service.id && "bg-gray-900",
             )}
           >
             <input
               type="checkbox"
               id={service.id}
               onChange={handleServiceChange}
-              checked={value === service.id}
+              checked={selectedService === service.id}
               className="cursor-pointer"
             />
             <Label
               htmlFor={service.id}
               className={clsx(
                 "cursor-pointer text-base font-medium",
-                value === service.id && "text-white",
+                selectedService === service.id && "text-white",
               )}
             >
               {service.label}
@@ -58,7 +62,10 @@ const ServiceSelector = ({ setValue, value }: ServiceSelectorProps) => {
           </div>
         ))}
       </div>
-      {/* <SubTab tabList={TAB_LIST} /> */}
+      <SubTab
+        onClickTab={setTypeValue}
+        isOffline={selectedService === SERVICE_LIST.OFFLINE.value}
+      />
     </>
   );
 };

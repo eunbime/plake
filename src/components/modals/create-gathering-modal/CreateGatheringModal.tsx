@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -20,10 +19,6 @@ import DateTimeAndEndTimePicker from "./DateTimeAndEndTimePicker";
 const labelTitleStyle = "text-base font-semibold text-gray-800";
 
 const CreateGatheringModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  console.log(isOpen);
-
   const {
     register,
     handleSubmit,
@@ -37,15 +32,21 @@ const CreateGatheringModal = () => {
   });
 
   const imageValue = watch("image");
-  const typeValue = watch("type");
   const dateTimeValue = watch("dateTime");
+  const registrationEndValue = watch("registrationEnd");
 
   const onSubmit = (data: z.infer<typeof CreateGatheringFormSchema>) => {
+    // TODO: API 호출
     console.log(data);
   };
 
   return (
-    <Modal isOpen={true} onClose={() => setIsOpen(false)} title="모임 만들기">
+    <Modal
+      variant="mobileFull"
+      isOpen={true}
+      onClose={() => {}}
+      title="모임 만들기"
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-between gap-10"
@@ -65,7 +66,7 @@ const CreateGatheringModal = () => {
             <Dropdown
               type="form"
               placeholder="장소를 선택해주세요."
-              setValue={value => setValue("location", value)}
+              onSelect={value => setValue("location", value)}
             />
             {errors.location && (
               <span className="text-sm text-red-500">
@@ -87,10 +88,7 @@ const CreateGatheringModal = () => {
           </div>
           <div className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>선택 서비스</Label>
-            <ServiceSelector
-              setValue={value => setValue("type", value)}
-              value={typeValue}
-            />
+            <ServiceSelector setTypeValue={value => setValue("type", value)} />
             {errors.type && (
               <span className="text-sm text-red-500">
                 {errors.type.message}
@@ -98,11 +96,12 @@ const CreateGatheringModal = () => {
             )}
           </div>
           <DateTimeAndEndTimePicker
-            setDateTimeValue={(value: string) => setValue("dateTime", value)}
-            setRegistrationEndValue={(value: string) =>
+            setDateTimeValue={value => setValue("dateTime", value)}
+            setRegistrationEndValue={value =>
               setValue("registrationEnd", value)
             }
             dateTimeValue={dateTimeValue}
+            registrationEndValue={registrationEndValue}
           />
           {(errors.dateTime || errors.registrationEnd) && (
             <span className="text-sm text-red-500">

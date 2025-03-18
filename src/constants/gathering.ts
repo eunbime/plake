@@ -10,7 +10,6 @@ export const GATHERING_FORM = {
   location: "",
   image: "",
   type: "",
-  subType: "",
   dateTime: "",
   registrationEnd: "",
   capacity: 0,
