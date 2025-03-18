@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import Avatar from "@/components/common/Avatar";
-import Modal from "@/components/modals/LocalModal";
+import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { IUser } from "@/types/user";
@@ -35,7 +35,12 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="프로필 수정하기">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="프로필 수정하기"
+      isGlobal={false}
+    >
       <div className="mt-1 flex flex-col gap-6">
         <div className="w-[56px]">
           <label htmlFor="image-upload" className="relative cursor-pointer">
