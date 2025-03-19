@@ -12,7 +12,7 @@ import GatheringInformation from "./_components/GatheringInformation";
 import GatheringReviewBoard from "./_components/GatheringReviewBoard";
 
 export default async function GatheringDetailPage() {
-  const id = "2196"; // 임시 params id
+  const id = "2284"; // 임시 params id
 
   const queryClient = new QueryClient();
 

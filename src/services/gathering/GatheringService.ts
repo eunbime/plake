@@ -6,8 +6,12 @@ class GatheringService extends Service {
     const data = this.http.get<IGathering[]>("/gatherings");
     return data;
   }
+  getGatheringDetail(id: string) {
+    const data = this.http.get<IGathering>(`/gatherings/${id}`);
+    return data;
+  }
 }
 
-const gateringService = new GatheringService();
+const gatheringService = new GatheringService();
 
-export default gateringService;
+export default gatheringService;

@@ -14,7 +14,7 @@ interface IFloatingBarProps {
 
 const FloatingBar = ({ id }: IFloatingBarProps) => {
   const pathname = usePathname();
-  const currentUserId = 1601; // 임시 currentUserId: 1601(주최자), 1602(참여자)
+  const currentUserId = 1667; // 임시 currentUserId: 1667(주최자), 1602(참여자)
 
   const {
     data: { createdBy },

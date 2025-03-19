@@ -1,5 +1,6 @@
 "use client";
 
+import dayjs from "dayjs";
 import { FaCircleCheck } from "react-icons/fa6";
 
 import DateTimeTag from "@/components/common/DateTimeTag";
@@ -31,7 +32,7 @@ const GatheringDetailInformation = ({
             <p className="text-lg font-semibold">{name}</p>
             <p className="text-sm font-medium text-gray-700">{location}</p>
           </div>
-          <DateTimeTag date={new Date(dateTime)} />
+          <DateTimeTag date={dayjs(dateTime)} />
         </div>
         <div>
           <FavoriteButton isFavorite={false} onToggle={() => {}} />
