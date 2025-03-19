@@ -13,6 +13,8 @@ interface InputProps extends React.ComponentProps<"input"> {
   type: "text" | "password" | "email" | "number" | "tel";
   id: string;
   label: string;
+  labelCustom?: string;
+  value?: string;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
@@ -26,6 +28,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       type,
       id,
       label,
+      labelCustom,
+      value,
       placeholder,
       required,
       disabled,
@@ -44,7 +48,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="relative">
-        <Label htmlFor={id} className="text-sm font-semibold text-gray-900">
+        <Label
+          htmlFor={id}
+          className={cn("text-sm font-semibold text-gray-900", labelCustom)}
+        >
           {label}
         </Label>
         <input
@@ -58,6 +65,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
           id={id}
+          value={value}
           placeholder={placeholder}
           required={required}
           disabled={disabled}

@@ -1,19 +1,28 @@
 import Image from "next/image";
 
+import { cn } from "@/lib/utils";
+
 type TAvatarProps = {
   type: "default" | "editable";
   size: "small" | "default" | "large";
   imgPath?: string;
+  disableClick?: boolean;
   onClickAvatar?: () => void;
 };
 
 const AVATAR_SIZE = {
   small: 25,
   default: 35,
-  large: 55,
+  large: 56,
 } as const;
 
-const Avatar = ({ type, size, imgPath, onClickAvatar }: TAvatarProps) => {
+const Avatar = ({
+  type,
+  size,
+  imgPath,
+  disableClick,
+  onClickAvatar,
+}: TAvatarProps) => {
   const selectedSize = AVATAR_SIZE[size];
 
   return (
@@ -25,18 +34,18 @@ const Avatar = ({ type, size, imgPath, onClickAvatar }: TAvatarProps) => {
         aria-label={`avatar-${type}`}
       >
         <Image
-          className="cursor-pointer"
+          className={cn(!disableClick && "cursor-pointer")}
           src={imgPath || "/images/avatar_default.png"}
           alt={`avatar-${type}`}
           width={selectedSize}
           height={selectedSize}
-          style={{ objectFit: "fill" }}
+          style={{ objectFit: "cover", width: "100%", height: "100%" }}
           loading="lazy"
         />
       </div>
       {type === "editable" && (
         <Image
-          className="absolute bottom-0 right-[-3px] z-10 overflow-visible"
+          className="absolute bottom-0 right-[-3px] z-10 cursor-pointer overflow-visible"
           src={"/images/edit-icon.png"}
           alt="edit-icon"
           aria-label="edit-icon"

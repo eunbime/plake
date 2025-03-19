@@ -5,11 +5,15 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - main
+      - dev
 
 jobs:
   code-quality-checks:
     name: Quality Checks
     runs-on: ubuntu-latest
+
+    env:
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL}}
 
     steps:
       - name: Checkout repository

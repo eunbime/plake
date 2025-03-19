@@ -1,21 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import CreateGatheringModal from "../modals/create-gathering-modal/CreateGatheringModal";
+import ConfirmAlertModal from "@/components/modals/confirm-alert-modal/ConfirmAlertModal";
+import CreateGatheringModal from "@/components/modals/create-gathering-modal/CreateGatheringModal";
 
 const ModalProvider = () => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
-
   return (
     <>
       <CreateGatheringModal />
+      <ConfirmAlertModal />
     </>
   );
 };
