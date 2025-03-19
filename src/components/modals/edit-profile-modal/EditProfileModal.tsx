@@ -62,7 +62,7 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
   }, 500);
 
   const onSubmit = (data: TEditProfileForm) => {
-    // 프로필 업데이터 API 호출
+    // TODO: 프로필 업데이터 API 호출
     console.log("프로필 수정 데이터:", { avatarImage, ...data });
     onClose();
   };
