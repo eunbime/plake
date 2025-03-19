@@ -11,6 +11,7 @@ export interface ModalProps {
   children: React.ReactNode;
   variant?: "default" | "alert" | "mobileFull";
   title?: string;
+  isGlobal?: boolean;
 }
 
 const Modal = ({
@@ -19,6 +20,7 @@ const Modal = ({
   children,
   variant = "default",
   title,
+  isGlobal = true,
 }: ModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -54,14 +56,9 @@ const Modal = ({
 
   if (!isOpen || !isMounted) return null;
 
-  const modalRoot = document.getElementById("modal-root");
-  if (!modalRoot) return null;
-
-  return createPortal(
+  const modalContent = (
     <div
-      className={clsx(
-        "fixed inset-0 z-50 flex min-w-[375px] items-center justify-center bg-black/50",
-      )}
+      className="fixed inset-0 z-50 flex min-w-[375px] items-center justify-center bg-black/50"
       onClick={handleBackgroundClick}
     >
       <div
@@ -89,10 +86,16 @@ const Modal = ({
         </div>
         {children}
       </div>
-    </div>,
-
-    modalRoot,
+    </div>
   );
+
+  if (isGlobal) {
+    const modalRoot = document.getElementById("modal-root");
+    if (!modalRoot) return null;
+    return createPortal(modalContent, modalRoot);
+  }
+
+  return modalContent;
 };
 
 export default Modal;
