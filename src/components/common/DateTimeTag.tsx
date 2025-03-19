@@ -20,7 +20,7 @@ const DateTimeTag = ({ size = "medium", date }: IDateTimeTagProps) => {
   const timeText = date.format("HH:mm");
 
   return (
-    <div className="flex gap-2" role="group" aria-label="날짜 및 시간">
+    <div className="flex gap-2">
       <time aria-label="날짜" className={clsx("text-black", baseStyle(size))}>
         {dateText}
       </time>
