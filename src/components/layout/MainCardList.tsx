@@ -1,11 +1,11 @@
 "use client";
 
-import { useGateringList } from "@/hooks/gathering/useGatheringList";
+import { useSuspenseGatheringList } from "@/hooks/gathering/useGatheringList";
 
 import MainCardItem from "./MainCardItem";
 
 const MainCardList = () => {
-  const { data } = useGateringList();
+  const { data } = useSuspenseGatheringList();
 
   return (
     <div className="flex flex-col items-center justify-center gap-6">

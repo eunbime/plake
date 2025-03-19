@@ -62,6 +62,7 @@ export default function RootLayout({
           <Header />
           <main className="global-layout-wrapper">{children}</main>
           <Footer />
+          <aside id="modal-root" />
         </QueryProvider>
       </body>
     </html>

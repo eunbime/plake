@@ -1,7 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { IoCloseOutline } from "react-icons/io5";
 
 export interface ModalProps {
@@ -19,6 +20,12 @@ const Modal = ({
   variant = "default",
   title,
 }: ModalProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -39,15 +46,18 @@ const Modal = ({
     };
   }, [isOpen, handleKeyDown]);
 
-  if (!isOpen) return null;
-
   const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
-  return (
+  if (!isOpen || !isMounted) return null;
+
+  const modalRoot = document.getElementById("modal-root");
+  if (!modalRoot) return null;
+
+  return createPortal(
     <div
       className={clsx(
         "fixed inset-0 z-50 flex min-w-[375px] items-center justify-center bg-black/50",
@@ -64,18 +74,24 @@ const Modal = ({
         onClick={e => e.stopPropagation()}
         aria-modal="true"
       >
-        <div className="mb-5 flex items-center justify-between">
+        <div
+          className={clsx(
+            "mb-5 flex",
+            title ? "items-center justify-between" : "justify-end",
+          )}
+        >
           {title && (
             <h2 className="text-lg font-bold text-gray-900">{title}</h2>
           )}
-
           <button className="text-gray-700" onClick={onClose}>
             <IoCloseOutline size={24} />
           </button>
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+
+    modalRoot,
   );
 };
 
