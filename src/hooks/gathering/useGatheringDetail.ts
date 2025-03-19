@@ -1,26 +1,11 @@
 import { QueryClient, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { APIError } from "@/types/error";
-import { IGathering } from "@/types/gathering";
-
-export const getGathering = async (id: string): Promise<IGathering> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/gatherings/${id}`,
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new APIError(data.message, data.code, response.status);
-  }
-
-  return data;
-};
+import gatheringService from "@/services/gathering/GatheringService";
 
 const gatheringDetailQueryOption = (id: string) => ({
   queryKey: [QUERY_KEYS.GATHERING.detail(id)],
-  queryFn: () => getGathering(id),
+  queryFn: () => gatheringService.getGatheringDetail(id),
   throwOnError: true,
   retry: false,
 });

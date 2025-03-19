@@ -70,7 +70,7 @@ const MainCardItem = ({
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <DateTimeTag date={dateTime} />
+                  <DateTimeTag date={dayjs(dateTime)} />
                 </div>
               </div>
               <FavoriteButton isFavorite={false} onToggle={() => {}} />

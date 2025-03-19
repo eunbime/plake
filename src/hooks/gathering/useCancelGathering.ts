@@ -1,30 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import gatheringService from "@/services/gathering/GatheringService";
 import useModalStore from "@/stores/useModalStore";
-import { APIError } from "@/types/error";
-
-const TOKEN = "token";
-
-const cancelGathering = async (id: string) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/gatherings/${id}/cancel`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-      },
-    },
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new APIError(data.message, data.code, response.status);
-  }
-
-  return data;
-};
 
 export const useCancelGatheringMutation = (
   id: string,
@@ -34,9 +13,7 @@ export const useCancelGatheringMutation = (
   const { openAlert } = useModalStore();
 
   return useMutation({
-    mutationFn: () => {
-      return cancelGathering(id);
-    },
+    mutationFn: () => gatheringService.deleteGathering(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GATHERING.all],
@@ -44,7 +21,7 @@ export const useCancelGatheringMutation = (
     },
     onError: () => {
       const errorMessage = isOrganizer
-        ? "취소에 실패했습니다."
+        ? "잠시 후 다시 시도해주세요."
         : "주최자가 아니면 취소할 수 없습니다.";
       openAlert(errorMessage);
     },
@@ -56,12 +33,13 @@ export const useCancelGathering = (id: string, isOrganizer: boolean) => {
     id,
     isOrganizer,
   );
-
   const { openConfirm } = useModalStore();
+  const router = useRouter();
 
   const handleCancelGathering = () => {
     openConfirm("정말 취소하시겠습니까?", () => {
       cancelGathering();
+      router.push("/gatherings");
     });
   };
 

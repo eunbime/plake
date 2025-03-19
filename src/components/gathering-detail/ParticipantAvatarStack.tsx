@@ -13,6 +13,10 @@ const ParticipantAvatarStack = ({ id }: IParticipantAvatarStackProps) => {
 
   const slicedData = data?.slice(0, 4);
 
+  if (data?.length === 0) {
+    return null;
+  }
+
   return (
     <div className="flex -space-x-3">
       {slicedData?.map(({ User }: { User: IUser }) => (

@@ -5,28 +5,16 @@ import {
 } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { APIError } from "@/types/error";
-import { IReview } from "@/types/review";
-
-const getReviewList = async (): Promise<IReview[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews`);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new APIError(data.message, data.code, response.status);
-  }
-
-  return data.data;
-};
+import reviewService, { ReviewResponse } from "@/services/review/ReviewService";
 
 const reviewListQueryOption = () => ({
   queryKey: [QUERY_KEYS.REVIEW.list],
-  queryFn: getReviewList,
+  queryFn: reviewService.getReviewList,
   initialPageParam: 1,
   throwOnError: true,
   retry: false,
-  getNextPageParam: (lastPage: IReview[], pages: IReview[][]) => {
-    return lastPage.length > 0 ? pages.length + 1 : undefined;
+  getNextPageParam: (lastPage: ReviewResponse) => {
+    return lastPage.data.length === 0 ? undefined : lastPage.data.length + 1;
   },
 });
 
