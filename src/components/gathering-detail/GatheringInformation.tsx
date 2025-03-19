@@ -26,10 +26,10 @@ const GatheringDetailInformation = ({
 
   return (
     <article className="flex h-[270px] flex-1 flex-col gap-6 rounded-3xl border-2 border-gray-200 bg-white px-1 py-6">
-      <section className="mb-5 flex justify-between gap-2 px-6">
+      <section className="flex min-h-[110px] justify-between gap-2 px-6">
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <p className="text-lg font-semibold">{name}</p>
+            <p className="line-clamp-2 pr-3 text-lg font-semibold">{name}</p>
             <p className="text-sm font-medium text-gray-700">{location}</p>
           </div>
           <DateTimeTag date={dayjs(dateTime)} />

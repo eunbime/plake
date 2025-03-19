@@ -11,8 +11,16 @@ import { prefetchReviewList } from "@/hooks/review/useReviewList";
 import GatheringInformation from "./_components/GatheringInformation";
 import GatheringReviewBoard from "./_components/GatheringReviewBoard";
 
-export default async function GatheringDetailPage() {
-  const id = "2284"; // 임시 params id
+interface GatheringDetailPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function GatheringDetailPage({
+  params,
+}: GatheringDetailPageProps) {
+  const { id } = params;
 
   const queryClient = new QueryClient();
 
