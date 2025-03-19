@@ -18,10 +18,10 @@ const formSchema = z.object({
 export const CreateGatheringFormSchema = formSchema.refine(
   data => {
     if (!data.dateTime || !data.registrationEnd) return true;
-    return new Date(data.registrationEnd) > new Date(data.dateTime);
+    return new Date(data.registrationEnd) < new Date(data.dateTime);
   },
   {
-    message: "마감 날짜는 모집 날짜보다 이후여야 합니다.",
+    message: "마감 날짜는 모집 날짜보다 이전이어야 합니다.",
     path: ["registrationEnd"],
   },
 );
