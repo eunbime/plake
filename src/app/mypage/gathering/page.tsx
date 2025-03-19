@@ -1,6 +1,11 @@
+import EmptyState from "../_components/EmptyState";
+
 const Page = () => {
-  // 작업 예정
-  return <div>gathering page</div>;
+  return (
+    <>
+      <EmptyState message="아직 만든 모임이 없어요" />
+    </>
+  );
 };
 
 export default Page;

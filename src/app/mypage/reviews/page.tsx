@@ -1,6 +1,11 @@
+import EmptyState from "../_components/EmptyState";
+
 const Page = () => {
-  // 작업 예정
-  return <div>review page</div>;
+  return (
+    <>
+      <EmptyState message="" />
+    </>
+  );
 };
 
 export default Page;
