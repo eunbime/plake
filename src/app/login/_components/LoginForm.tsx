@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/Input";
 import { LOGIN_INPUTS } from "@/constants/loginJoin";
 import useDebounce from "@/hooks/useDebounce";
 import { LoginFormSchema } from "@/schemas/loginJoinSchema";
+import useUserStore from "@/stores/useUserStore";
 
 import {
   IRegisterWithValidation,
@@ -38,28 +39,21 @@ const LoginForm = () => {
   const router = useRouter();
 
   const [state, formAction] = useFormState(userSignInAction, null);
+  const { setUserState } = useUserStore();
 
   useEffect(() => {
-    if (state && !state.status) {
+    if (state && !state.status && !state.user) {
       const error: TErrorMsg = JSON.parse(state.error);
 
-      if (error.code === "SERVER_ERROR") return alert(error.message);
-
-      const errorField =
-        error.code === "INVALID_CREDENTIALS" ? "password" : "email";
-
-      setError(
-        errorField,
-        {
-          type: "validate",
-          message: error.message,
-        },
-        { shouldFocus: true },
-      );
-    } else if (state && state.status) {
+      // alert -> modal 교체
+      if (error.code === "SERVER_ERROR" || error.code === "INVALID_TOKEN") {
+        return alert(error.message);
+      }
+    } else if (state && state.status && state.user) {
+      setUserState(state.user);
       router.push("/");
     }
-  }, [state, setError, router]);
+  }, [state, setError, router, setUserState]);
 
   const onSubmit = handleSubmit(data => {
     const formData = new FormData();

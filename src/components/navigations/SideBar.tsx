@@ -5,7 +5,6 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -42,7 +41,6 @@ const SideBar = () => {
               <Avatar type="default" size="default" imgPath="" />
             </div>
           </SheetTitle>
-          <SheetDescription></SheetDescription>
         </SheetHeader>
         <NavList />
       </SheetContent>

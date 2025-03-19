@@ -8,20 +8,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/Popover";
+import { useHydrateUserStore } from "@/hooks/useHydrateUserStore";
+import useLogout from "@/hooks/useLogout";
+import useUserStore from "@/stores/useUserStore";
 
 import Avatar from "../common/Avatar";
+import LoadingSpinner from "../common/LoadingSpinner";
 import NavList from "../navigations/NavList";
 import SideBar from "../navigations/SideBar";
 
 const PopoverMenu = () => {
-  const handleLogout = () => {
-    console.log("logout");
-  };
+  const { user } = useUserStore();
+  const { logout } = useLogout();
 
   return (
     <Popover>
       <PopoverTrigger className="hidden md:block">
-        <Avatar type="default" size="default" />
+        <Avatar type="default" size="default" imgPath={user?.image} />
       </PopoverTrigger>
       <PopoverContent align="end" sideOffset={1} className="w-28 p-0">
         <ul>
@@ -30,7 +33,7 @@ const PopoverMenu = () => {
           </li>
           <li
             className="cursor-pointer px-4 py-2 text-sm text-gray-800 hover:text-purple-700"
-            onClick={handleLogout}
+            onClick={logout}
           >
             로그아웃
           </li>
@@ -41,7 +44,8 @@ const PopoverMenu = () => {
 };
 
 const Header = () => {
-  const isLoggedIn = false; // 임시 로그인 상태 state
+  const isHydrating = useHydrateUserStore();
+  const { isLoggedIn } = useUserStore();
 
   return (
     <header className="fixed left-0 top-0 z-50 flex h-[60px] w-full items-center justify-center bg-white md:justify-start">
@@ -60,7 +64,11 @@ const Header = () => {
             <NavList />
           </div>
         </div>
-        {isLoggedIn ? (
+        {isHydrating ? (
+          <div className="flex h-10 w-10 items-center justify-center">
+            <LoadingSpinner size="sm" />
+          </div>
+        ) : isLoggedIn ? (
           <PopoverMenu />
         ) : (
           <Link
