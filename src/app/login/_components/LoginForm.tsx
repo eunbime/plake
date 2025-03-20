@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,7 +28,7 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors },
     trigger,
     setError,
   } = useForm<TLoginForm>({
@@ -38,8 +38,10 @@ const LoginForm = () => {
   });
 
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [state, formAction] = useFormState(userSignInAction, null);
+
   const { setUserState } = useUserStore();
   const { openAlert } = useModalStore();
 
@@ -59,13 +61,15 @@ const LoginForm = () => {
           { shouldFocus: true },
         );
       }
+      setIsSubmitting(false);
     } else if (state && state.status && state.user) {
       setUserState(state.user);
-      router.push("/");
+      router.replace("/");
     }
   }, [state, setError, router, setUserState, openAlert]);
 
   const onSubmit = handleSubmit(data => {
+    setIsSubmitting(true);
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -106,7 +110,7 @@ const LoginForm = () => {
           id={input.id}
           type={input.type}
           label={input.label}
-          disabled={false}
+          disabled={isSubmitting}
           placeholder={input.placeholder}
           errorMsg={errors[input.id]?.message}
         />
@@ -116,8 +120,9 @@ const LoginForm = () => {
         type="submit"
         className="mb-6 mt-10 h-[40px] text-sm font-semibold md:text-base"
         aria-label="login-btn"
+        disabled={isSubmitting}
       >
-        {isLoading ? <LoadingSpinner size="xs" /> : "로그인"}
+        {isSubmitting ? <LoadingSpinner size="xs" /> : "로그인"}
       </Button>
     </form>
   );

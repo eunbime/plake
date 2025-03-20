@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,7 +31,7 @@ const JoinForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors },
     trigger,
     setError,
   } = useForm<TJoinForm>({
@@ -43,7 +43,7 @@ const JoinForm = () => {
   const router = useRouter();
 
   const [state, formAction] = useFormState(userSignUpAction, null);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { openAlert } = useModalStore();
 
   useEffect(() => {
@@ -61,9 +61,11 @@ const JoinForm = () => {
         },
         { shouldFocus: true },
       );
+
+      setIsSubmitting(false);
     } else if (state && state.status) {
       openAlert("회원가입이 완료되었습니다.");
-      router.push("/login");
+      router.replace("/login");
     }
   }, [state, setError, router, openAlert]);
 
@@ -90,6 +92,7 @@ const JoinForm = () => {
   }, 1000);
 
   const onSubmit = handleSubmit(data => {
+    setIsSubmitting(true);
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -108,7 +111,7 @@ const JoinForm = () => {
           id={input.id}
           type={input.type}
           label={input.label}
-          disabled={isLoading}
+          disabled={isSubmitting}
           placeholder={input.placeholder}
           errorMsg={errors[input.id as keyof TJoinForm]?.message}
         />
@@ -118,9 +121,9 @@ const JoinForm = () => {
         type="submit"
         className="mb-6 mt-10 h-[40px] text-sm font-semibold md:text-base"
         aria-label="join-btn"
-        disabled={isLoading}
+        disabled={isSubmitting}
       >
-        {isLoading ? <LoadingSpinner size="xs" /> : "회원가입"}
+        {isSubmitting ? <LoadingSpinner size="xs" /> : "회원가입"}
       </Button>
     </form>
   );
