@@ -1,23 +1,25 @@
+import { useState } from "react";
+
 import { Button } from "@/components/ui/Button";
 
 interface ImageUploaderProps {
-  setValue: (value: string) => void;
-  value: string;
+  setValue: (value: FormData) => void;
 }
 
-const ImageUploader = ({ setValue, value }: ImageUploaderProps) => {
+const ImageUploader = ({ setValue }: ImageUploaderProps) => {
+  const [fileName, setFileName] = useState<string>();
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setValue(reader.result as string);
-    };
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("image", file);
+    setValue(formData);
+    setFileName(file.name);
   };
 
-  const imageDescription = value ? value : "이미지를 첨부해주세요.";
+  const imageDescription = fileName ? fileName : "이미지를 첨부해주세요.";
 
   return (
     <div className="flex items-center gap-3">
@@ -30,6 +32,7 @@ const ImageUploader = ({ setValue, value }: ImageUploaderProps) => {
         type="file"
         className="hidden"
         id="image-file"
+        accept="image/*"
         onChange={handleImageChange}
       />
       <Button

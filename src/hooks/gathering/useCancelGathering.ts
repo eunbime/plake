@@ -10,7 +10,7 @@ export const useCancelGatheringMutation = (
   isOrganizer: boolean,
 ) => {
   const queryClient = useQueryClient();
-  const { openAlert } = useModalStore();
+  const openAlert = useModalStore(state => state.openAlert);
 
   return useMutation({
     mutationFn: () => gatheringService.deleteGathering(id),
@@ -33,7 +33,7 @@ export const useCancelGathering = (id: string, isOrganizer: boolean) => {
     id,
     isOrganizer,
   );
-  const { openConfirm } = useModalStore();
+  const openConfirm = useModalStore(state => state.openConfirm);
   const router = useRouter();
 
   const handleCancelGathering = () => {
