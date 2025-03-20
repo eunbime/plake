@@ -1,11 +1,10 @@
 "use server";
 
-import { cookies } from "next/headers";
-
 import { IUser } from "@/types/user";
+import { getCookieOfToken } from "@/utils/cookieToken";
 
 const userCheckAction = async () => {
-  const TOKEN = cookies().get("authToken")?.value;
+  const TOKEN = await getCookieOfToken();
 
   try {
     const response = await fetch(

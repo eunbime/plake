@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/Input";
 import { JOIN_INPUTS } from "@/constants/loginJoin";
 import useDebounce from "@/hooks/useDebounce";
 import { JoinFormSchema } from "@/schemas/loginJoinSchema";
+import useModalStore from "@/stores/useModalStore";
 
 type TJoinForm = z.infer<typeof JoinFormSchema>;
 export type TErrorMsg = {
@@ -43,6 +44,8 @@ const JoinForm = () => {
 
   const [state, formAction] = useFormState(userSignUpAction, null);
 
+  const { openAlert } = useModalStore();
+
   useEffect(() => {
     if (state && !state.status) {
       const error: TErrorMsg = JSON.parse(state.error);
@@ -59,10 +62,10 @@ const JoinForm = () => {
         { shouldFocus: true },
       );
     } else if (state && state.status) {
-      alert("회원가입이 완료되었습니다.");
+      openAlert("회원가입이 완료되었습니다.");
       router.push("/login");
     }
-  }, [state, setError, router]);
+  }, [state, setError, router, openAlert]);
 
   const registerWithValidation = (
     name: keyof TJoinForm,
