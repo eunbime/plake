@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useShallow } from "zustand/shallow";
 
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/Button";
@@ -6,7 +7,13 @@ import useModalStore from "@/stores/useModalStore";
 
 const ConfirmAlertModal = () => {
   const { isOpen, onClose, type, title, onConfirm } = useModalStore(
-    state => state,
+    useShallow(state => ({
+      isOpen: state.isOpen,
+      onClose: state.onClose,
+      type: state.type,
+      title: state.title,
+      onConfirm: state.onConfirm,
+    })),
   );
 
   return (

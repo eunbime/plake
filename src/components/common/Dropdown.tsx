@@ -26,14 +26,10 @@ interface IDropdownProps {
 
 const locationOption = [
   { value: "all", label: "지역 전체" },
-  { value: "gangnam", label: "강남구" },
-  { value: "seocho", label: "서초구" },
-  { value: "gangbuk", label: "강북구" },
-  { value: "mapo", label: "마포구" },
-  { value: "yongsan", label: "용산구" },
-  { value: "guro", label: "구로구" },
-  { value: "gwanak", label: "관악구" },
-  { value: "yeongdeungpo", label: "영등포구" },
+  { value: "건대입구", label: "건대입구" },
+  { value: "을지로3가", label: "을지로3가" },
+  { value: "신림", label: "신림" },
+  { value: "홍대입구", label: "홍대입구" },
 ];
 
 const Dropdown = ({

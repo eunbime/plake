@@ -2,7 +2,6 @@
 
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { IoCloseOutline } from "react-icons/io5";
 
 export interface ModalProps {
@@ -11,7 +10,6 @@ export interface ModalProps {
   children: React.ReactNode;
   variant?: "default" | "alert" | "mobileFull";
   title?: string;
-  isGlobal?: boolean;
 }
 
 const Modal = ({
@@ -20,7 +18,6 @@ const Modal = ({
   children,
   variant = "default",
   title,
-  isGlobal = true,
 }: ModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -56,7 +53,7 @@ const Modal = ({
 
   if (!isOpen || !isMounted) return null;
 
-  const modalContent = (
+  return (
     <div
       className="fixed inset-0 z-50 flex min-w-[375px] items-center justify-center bg-black/50"
       onClick={handleBackgroundClick}
@@ -88,14 +85,6 @@ const Modal = ({
       </div>
     </div>
   );
-
-  if (isGlobal) {
-    const modalRoot = document.getElementById("modal-root");
-    if (!modalRoot) return null;
-    return createPortal(modalContent, modalRoot);
-  }
-
-  return modalContent;
 };
 
 export default Modal;
