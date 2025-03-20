@@ -24,12 +24,10 @@ const DateTimePicker = ({
   setRegistrationEndValue,
 }: IDateTimePickerProps) => {
   const { calendarProps, selectedDate, selectDate } = useCalendar({
-    disabledDate:
-      type === "dateTime"
-        ? new Date()
-        : dateTimeValue
-          ? new Date(dateTimeValue)
-          : new Date(),
+    disabledAfterDate:
+      type === "registrationEnd" && dateTimeValue
+        ? new Date(dateTimeValue)
+        : undefined,
   });
   const calendarRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
