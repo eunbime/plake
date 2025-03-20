@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useShallow } from "zustand/shallow";
 
 import { NAV_BUTTONS, NAV_ITEMS } from "@/constants/nav";
 import useLogout from "@/hooks/useLogout";
@@ -12,7 +13,9 @@ import { Button } from "../ui/Button";
 
 const NavButtonForMobile = () => {
   const { onToggleSideBar } = useSideBarStore();
-  const { isLoggedIn } = useUserStore();
+  const { isLoggedIn } = useUserStore(
+    useShallow(state => ({ isLoggedIn: state.isLoggedIn })),
+  );
   const { logout } = useLogout();
 
   return (

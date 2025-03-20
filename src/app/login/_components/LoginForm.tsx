@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/Input";
 import { LOGIN_INPUTS } from "@/constants/loginJoin";
 import useDebounce from "@/hooks/useDebounce";
 import { LoginFormSchema } from "@/schemas/loginJoinSchema";
+import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
 
 import {
@@ -40,20 +41,29 @@ const LoginForm = () => {
 
   const [state, formAction] = useFormState(userSignInAction, null);
   const { setUserState } = useUserStore();
+  const { openAlert } = useModalStore();
 
   useEffect(() => {
     if (state && !state.status && !state.user) {
       const error: TErrorMsg = JSON.parse(state.error);
 
-      // alert -> modal 교체
       if (error.code === "SERVER_ERROR" || error.code === "INVALID_TOKEN") {
-        return alert(error.message);
+        return openAlert(error.message);
+      } else {
+        setError(
+          "email",
+          {
+            type: "validate",
+            message: error.message,
+          },
+          { shouldFocus: true },
+        );
       }
     } else if (state && state.status && state.user) {
       setUserState(state.user);
       router.push("/");
     }
-  }, [state, setError, router, setUserState]);
+  }, [state, setError, router, setUserState, openAlert]);
 
   const onSubmit = handleSubmit(data => {
     const formData = new FormData();

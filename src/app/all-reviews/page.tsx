@@ -1,12 +1,10 @@
-import { getCookieOfToken } from "@/utils/cookieToken";
+import TokenValidator from "@/components/auth/TokenValidator";
 
 const Page = async () => {
-  const token = await getCookieOfToken();
-  console.log("token: ", token ? "token ok" : "undefined");
   return (
     <div>
+      <TokenValidator />
       <h1>Welcome to the All Reviews Page merge Test</h1>
-      <p>{token}</p>
     </div>
   );
 };

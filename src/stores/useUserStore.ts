@@ -29,6 +29,7 @@ const useUserStore = create<State<IUser> & Action>()(
       setHydrated: (state: boolean) => set({ isHydrated: state }),
     }),
     {
+      // 로컬 스토리지에 user, isLoggedIn만 저장
       name: STORAGE_KEY,
       partialize: state => ({
         user: state.user,

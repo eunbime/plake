@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useShallow } from "zustand/shallow";
 
 import {
   Sheet,
@@ -10,13 +11,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/Sheet";
 import useSideBarStore from "@/stores/useSideBarStore";
+import useUserStore from "@/stores/useUserStore";
 
 import Avatar from "../common/Avatar";
 import NavList from "./NavList";
 
 const SideBar = () => {
   const { isOpen, onToggleSideBar } = useSideBarStore();
-
+  const { user } = useUserStore(useShallow(state => ({ user: state.user })));
   return (
     <Sheet open={isOpen} onOpenChange={onToggleSideBar}>
       <SheetTrigger onClick={() => onToggleSideBar(!isOpen)}>
@@ -38,7 +40,7 @@ const SideBar = () => {
                   height={15}
                 />
               </Link>
-              <Avatar type="default" size="default" imgPath="" />
+              <Avatar type="default" size="default" imgPath={user?.image} />
             </div>
           </SheetTitle>
         </SheetHeader>
