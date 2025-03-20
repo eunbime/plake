@@ -58,12 +58,12 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <QueryProvider>
-          <ModalProvider />
           <Header />
           <main className="global-layout-wrapper">{children}</main>
           <Footer />
-          <aside id="modal-root" />
+          <ModalProvider />
         </QueryProvider>
+        <aside id="modal-root" />
       </body>
     </html>
   );

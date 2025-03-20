@@ -1,4 +1,4 @@
-import { isSameMonth, subMonths } from "date-fns";
+import { addMonths, isSameMonth } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useState } from "react";
 
@@ -6,11 +6,12 @@ import { CalendarProps } from "@/components/ui/Calendar";
 
 interface IUseCalendar {
   defaultDate?: Date;
-  disabledDate?: Date;
+  disabledAfterDate?: Date;
 }
 
 export const useCalendar = (props?: IUseCalendar) => {
   const defaultDate = props?.defaultDate ?? new Date();
+  const disabledBeforeDate = new Date();
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     defaultDate,
@@ -26,17 +27,22 @@ export const useCalendar = (props?: IUseCalendar) => {
     onSelect: handleDateChange,
     month: selectedDate,
     onMonthChange: (month: Date) => {
-      if (props?.disabledDate) {
-        const oneMonthBefore = subMonths(props.disabledDate, 1);
-        if (month <= oneMonthBefore || isSameMonth(month, props.disabledDate)) {
-          setSelectedDate(props.disabledDate);
+      if (props?.disabledAfterDate) {
+        const oneMonthAfter = addMonths(props.disabledAfterDate, 1);
+        if (
+          month >= oneMonthAfter ||
+          isSameMonth(month, props.disabledAfterDate)
+        ) {
+          setSelectedDate(props.disabledAfterDate);
           return;
         }
       }
       setSelectedDate(month);
     },
     defaultMonth: defaultDate,
-    disabled: props?.disabledDate ? { before: props.disabledDate } : undefined,
+    disabled: props?.disabledAfterDate
+      ? { before: disabledBeforeDate, after: props.disabledAfterDate }
+      : { before: disabledBeforeDate },
     locale: ko,
   };
 

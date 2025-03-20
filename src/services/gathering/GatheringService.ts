@@ -1,3 +1,4 @@
+import { CreateGatheringFormType } from "@/schemas/gatheringSchema";
 import Service from "@/services/Service";
 import { IGathering } from "@/types/gathering";
 
@@ -13,6 +14,10 @@ class GatheringService extends Service {
   }
   getGatheringDetail(id: string) {
     const data = this.http.get<IGathering>(`/gatherings/${id}`);
+    return data;
+  }
+  createGathering(formData: CreateGatheringFormType) {
+    const data = this.http.post("/gatherings", formData);
     return data;
   }
   deleteGathering(id: string) {

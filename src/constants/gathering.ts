@@ -1,3 +1,5 @@
+import { CreateGatheringFormType } from "@/schemas/gatheringSchema";
+
 export const GATHERING = {
   CAPACITY: {
     MIN: 5,
@@ -5,10 +7,10 @@ export const GATHERING = {
   },
 } as const;
 
-export const GATHERING_FORM = {
+export const GATHERING_FORM: CreateGatheringFormType = {
   name: "",
   location: "",
-  image: "",
+  image: new FormData(),
   type: "",
   dateTime: "",
   registrationEnd: "",
@@ -24,4 +26,15 @@ export const SERVICE_LIST = {
     value: "online",
     name: "온라인",
   },
+} as const;
+
+export const SUB_SERVICE_LIST = {
+  OFFLINE: [
+    { name: "운동", value: "DALLAEMFIT" },
+    { name: "미식", value: "OFFICE_STRETCHING" },
+  ],
+  ONLINE: [
+    { name: "게임", value: "MINDFULNESS" },
+    { name: "코딩", value: "WORKATION" },
+  ],
 } as const;
