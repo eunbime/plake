@@ -23,3 +23,8 @@ export const SUB_TAB = {
     { name: "코딩", value: "coding" },
   ],
 } as const;
+
+export const MY_REVIEW_TAB = [
+  { name: "작성 가능한 리뷰", value: "writable" },
+  { name: "작성한 리뷰", value: "written" },
+] as const;
