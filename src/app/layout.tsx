@@ -62,8 +62,8 @@ export default function RootLayout({
           <main className="global-layout-wrapper">{children}</main>
           <Footer />
           <ModalProvider />
-          <aside id="modal-root" />
         </QueryProvider>
+        <aside id="modal-root" />
       </body>
     </html>
   );

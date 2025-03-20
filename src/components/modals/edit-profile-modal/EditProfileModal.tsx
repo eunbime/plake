@@ -68,12 +68,7 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="프로필 수정하기"
-      isGlobal={false}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} title="프로필 수정하기">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mt-1 flex flex-col gap-6"

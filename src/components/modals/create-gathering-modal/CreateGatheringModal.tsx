@@ -2,9 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import Dropdown from "@/components/common/Dropdown";
+import DateTimeAndEndTimePicker from "@/components/modals/create-gathering-modal/DateTimeAndEndTimePicker";
 import ImageUploader from "@/components/modals/create-gathering-modal/ImageUploader";
 import ServiceSelector from "@/components/modals/create-gathering-modal/ServiceSelector";
 import Modal from "@/components/modals/Modal";
@@ -12,9 +12,11 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { GATHERING_FORM } from "@/constants/gathering";
-import { CreateGatheringFormSchema } from "@/schemas/gatheringSchema";
-
-import DateTimeAndEndTimePicker from "./DateTimeAndEndTimePicker";
+import { useCreateGathering } from "@/hooks/gathering/useCreateGathering";
+import {
+  CreateGatheringFormSchema,
+  CreateGatheringFormType,
+} from "@/schemas/gatheringSchema";
 
 const labelTitleStyle = "text-base font-semibold text-gray-800";
 
@@ -25,25 +27,25 @@ const CreateGatheringModal = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<z.infer<typeof CreateGatheringFormSchema>>({
+  } = useForm<CreateGatheringFormType>({
     mode: "onChange",
     defaultValues: GATHERING_FORM,
     resolver: zodResolver(CreateGatheringFormSchema),
   });
 
-  const imageValue = watch("image");
   const dateTimeValue = watch("dateTime");
   const registrationEndValue = watch("registrationEnd");
 
-  const onSubmit = (data: z.infer<typeof CreateGatheringFormSchema>) => {
-    // TODO: API 호출
-    console.log(data);
+  const { handleCreateGathering, isPending } = useCreateGathering();
+
+  const onSubmit = (data: CreateGatheringFormType) => {
+    handleCreateGathering(data);
   };
 
   return (
     <Modal
       variant="mobileFull"
-      isOpen={true}
+      isOpen={false}
       onClose={() => {}}
       title="모임 만들기"
     >
@@ -76,10 +78,7 @@ const CreateGatheringModal = () => {
           </div>
           <div className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>이미지</Label>
-            <ImageUploader
-              setValue={value => setValue("image", value)}
-              value={imageValue}
-            />
+            <ImageUploader setValue={value => setValue("image", value)} />
             {errors.image && (
               <span className="text-sm text-red-500">
                 {errors.image.message}
@@ -120,7 +119,7 @@ const CreateGatheringModal = () => {
           </div>
         </div>
         <Button variant="purple" className="w-full" type="submit">
-          확인
+          {isPending ? "생성중..." : "확인"}
         </Button>
       </form>
     </Modal>
