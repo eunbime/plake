@@ -35,7 +35,6 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
     resolver: zodResolver(EditProfileSchema),
     defaultValues: {
       company: user.companyName,
-      email: user.email,
     },
   });
 
@@ -45,10 +44,9 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
 
       reset({
         company: user.companyName,
-        email: user.email,
       });
     }
-  }, [isOpen, user, setValue]);
+  }, [isOpen, user, setValue, reset]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -101,17 +99,12 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
         />
 
         <Input
-          {...register("email")}
           label="이메일"
           labelCustom="block text-base mb-3"
           type="email"
           id="email"
-          placeholder="이메일을 입력해주세요"
-          errorMsg={errors.email?.message}
-          onChange={e => {
-            register("email").onChange(e);
-            debouncedValidation("email");
-          }}
+          value={user.email}
+          disabled
         />
 
         <div className="flex gap-4">
