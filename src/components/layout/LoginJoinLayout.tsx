@@ -30,6 +30,7 @@ const LoginJoinLayout = ({
             height={0}
             sizes="(max-width: 588px) 100vw"
             style={{ width: "100%", height: "auto" }}
+            priority
           />
         </figure>
       </div>

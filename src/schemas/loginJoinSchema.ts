@@ -29,7 +29,7 @@ export const JoinFormSchema = z
       .max(10, { message: "10자 이하로 입력해주세요." }),
 
     email: emailRegex,
-    company: nameRegex
+    companyName: nameRegex
       .min(1, { message: "회사명을 입력해주세요." })
       .max(20, { message: "20자 이하로 입력해주세요." }),
     password: passwordRegex,

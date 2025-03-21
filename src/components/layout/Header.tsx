@@ -2,35 +2,45 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/Popover";
+import { useHydrateUserStore } from "@/hooks/auth/useHydrateUserStore";
+import useLogout from "@/hooks/auth/useLogout";
+import useUserStore from "@/stores/useUserStore";
 
 import Avatar from "../common/Avatar";
+import LoadingSpinner from "../common/LoadingSpinner";
 import NavList from "../navigations/NavList";
 import SideBar from "../navigations/SideBar";
 
 const PopoverMenu = () => {
-  const handleLogout = () => {
-    console.log("logout");
-  };
-
+  const { user } = useUserStore(useShallow(state => ({ user: state.user })));
+  const { logout } = useLogout();
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger className="hidden md:block">
-        <Avatar type="default" size="default" />
+        <Avatar type="default" size="default" imgPath={user?.image} />
       </PopoverTrigger>
       <PopoverContent align="end" sideOffset={1} className="w-28 p-0">
         <ul>
           <li className="px-4 py-2 text-sm text-gray-800 hover:text-purple-700">
-            <Link href="/">마이페이지</Link>
+            <Link href="/mypage" onClick={() => setIsOpen(false)}>
+              마이페이지
+            </Link>
           </li>
           <li
             className="cursor-pointer px-4 py-2 text-sm text-gray-800 hover:text-purple-700"
-            onClick={handleLogout}
+            onClick={() => {
+              logout();
+              setIsOpen(false);
+            }}
           >
             로그아웃
           </li>
@@ -41,7 +51,10 @@ const PopoverMenu = () => {
 };
 
 const Header = () => {
-  const isLoggedIn = false; // 임시 로그인 상태 state
+  const isHydrating = useHydrateUserStore();
+  const { isLoggedIn } = useUserStore(
+    useShallow(state => ({ isLoggedIn: state.isLoggedIn })),
+  );
 
   return (
     <header className="fixed left-0 top-0 z-50 flex h-[60px] w-full items-center justify-center bg-white md:justify-start">
@@ -60,7 +73,11 @@ const Header = () => {
             <NavList />
           </div>
         </div>
-        {isLoggedIn ? (
+        {isHydrating ? (
+          <div className="flex h-10 w-10 items-center justify-center">
+            <LoadingSpinner size="sm" />
+          </div>
+        ) : isLoggedIn ? (
           <PopoverMenu />
         ) : (
           <Link
