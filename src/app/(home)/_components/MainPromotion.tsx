@@ -17,7 +17,17 @@ const MainPromotion = ({ type }: IMainPromotionProps) => {
       )}
     >
       <div className="relative flex-1 overflow-hidden rounded-2xl bg-gray-200">
-        <Image src="" alt="promotion" fill objectFit="cover" />
+        <Image
+          src={
+            type === "offline"
+              ? "https://picsum.photos/500/700"
+              : "https://picsum.photos/500/700"
+          }
+          alt="promotion"
+          fill
+          className="object-cover"
+          sizes="80vw"
+        />
       </div>
       <div className="flex flex-1 flex-col items-center justify-center gap-14 whitespace-pre-wrap text-center text-3xl font-bold leading-10 md:text-4xl md:font-extrabold md:leading-[60px]">
         {type === "offline" ? (

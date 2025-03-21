@@ -2,12 +2,14 @@ import Image from "next/image";
 
 const MainBanner = () => {
   return (
-    <section className="relative h-[50vh] w-full overflow-hidden bg-gray-500 md:h-[90vh]">
+    <section className="relative h-[50vh] w-full overflow-hidden md:h-[90vh]">
       <Image
         src="/images/main_banner.jpg"
         alt="main_banner"
         fill
-        objectFit="cover"
+        sizes="100vw"
+        className="object-cover"
+        priority
       />
       <div className="base-wrap absolute bottom-0 left-0 right-0 flex h-full flex-col justify-end gap-5 p-10 px-5 text-3xl font-bold text-white md:py-28 md:text-5xl md:font-extrabold">
         <p>{"지친 일상을 잠시 멈추고"}</p>
