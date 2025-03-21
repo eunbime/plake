@@ -1,10 +1,17 @@
 import Rating from "@/components/common/Rating";
+import { IMainReview } from "@/constants/review";
 
-const MainReviewItem = () => {
+interface IMainReviewItemProps {
+  review: IMainReview;
+}
+
+const MainReviewItem = ({ review }: IMainReviewItemProps) => {
   return (
     <div className="flex h-[300px] w-full flex-col items-center justify-center gap-5 rounded-lg bg-white">
-      <p className="text-2xl text-gray-900">{"context"}</p>
-      <Rating rating={4} />
+      <p className="whitespace-pre-wrap text-center text-2xl text-gray-900">
+        {review.content}
+      </p>
+      <Rating rating={review.rating} />
     </div>
   );
 };
