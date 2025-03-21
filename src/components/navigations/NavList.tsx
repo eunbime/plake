@@ -1,20 +1,22 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useShallow } from "zustand/shallow";
 
 import { NAV_BUTTONS, NAV_ITEMS } from "@/constants/nav";
+import useLogout from "@/hooks/auth/useLogout";
 import { cn } from "@/lib/utils";
 import useSideBarStore from "@/stores/useSideBarStore";
+import useUserStore from "@/stores/useUserStore";
 
 import { Button } from "../ui/Button";
 
 const NavButtonForMobile = () => {
   const { onToggleSideBar } = useSideBarStore();
-  const isLoggedIn = true; // 임시 로그인 상태 state
-  const logout = () => {
-    // 임시 로그아웃 함수
-    console.log("User logged out");
-  };
+  const { isLoggedIn } = useUserStore(
+    useShallow(state => ({ isLoggedIn: state.isLoggedIn })),
+  );
+  const { logout } = useLogout();
 
   return (
     <div className="mb-11 mt-4 flex items-center justify-between md:hidden">

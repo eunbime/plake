@@ -46,11 +46,11 @@ const Avatar = ({
       {type === "editable" && (
         <Image
           className="absolute bottom-0 right-[-3px] z-10 cursor-pointer overflow-visible"
-          src={"/images/edit-icon.png"}
+          src={"/images/image-edit.png"}
           alt="edit-icon"
           aria-label="edit-icon"
-          width={selectedSize / 2}
-          height={selectedSize / 2}
+          width={selectedSize / 2 - 8}
+          height={selectedSize / 2 - 8}
         />
       )}
     </div>

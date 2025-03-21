@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { forwardRef, useState } from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
@@ -9,6 +10,16 @@ import { Label } from "./Label";
 
 const INPUT_BASE_STYLE =
   "flex h-11 w-full rounded-xl border-2 border-transparent bg-gray-50 px-[10px] py-4 text-sm text-gray-800 placeholder:text-gray-400 hover:border-purple-300 focus:border-purple-600 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:text-base" as const;
+// 공통 애니메이션 설정
+const shakeAnimation = {
+  x: [0, -5, 5, -3, 3, 0],
+};
+
+const animationTransition = {
+  duration: 0.4,
+  ease: "easeInOut",
+};
+
 interface InputProps extends React.ComponentProps<"input"> {
   type: "text" | "password" | "email" | "number" | "tel";
   id: string;
@@ -21,6 +32,7 @@ interface InputProps extends React.ComponentProps<"input"> {
   errorMsg?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -47,7 +59,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <div className="relative">
+      <motion.div
+        className="relative"
+        animate={errorMsg ? shakeAnimation : {}}
+        transition={animationTransition}
+        key={`input-wrapper-${errorMsg}`}
+      >
         <Label
           htmlFor={id}
           className={cn("text-sm font-semibold text-gray-900", labelCustom)}
@@ -59,9 +76,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             INPUT_BASE_STYLE,
             className,
-            errorMsg && "border-red-600",
-            errorMsg && "focus:border-red-600",
-            errorMsg && "hover:border-red-300",
+            errorMsg &&
+              "border-red-600 hover:border-red-300 focus:border-red-600",
           )}
           ref={ref}
           {...props}
@@ -78,7 +94,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute right-[10px] top-9 bg-gray-50 pl-2"
+            className="absolute right-[10px] top-9 bg-gray-50 pl-2 outline-none"
           >
             {showPassword ? (
               <IoEyeOutline className="h-5 w-5 text-gray-900" />
@@ -89,11 +105,17 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {errorMsg && (
-          <p className="mt-2 text-sm font-semibold text-red-600" role="alert">
+          <motion.p
+            className="mt-2 text-sm font-semibold text-red-600"
+            role="alert"
+            animate={shakeAnimation}
+            transition={animationTransition}
+            key={`error-${errorMsg}`}
+          >
             {errorMsg}
-          </p>
+          </motion.p>
         )}
-      </div>
+      </motion.div>
     );
   },
 );

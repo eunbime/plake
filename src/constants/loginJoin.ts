@@ -27,7 +27,7 @@ export const JOIN_INPUTS = [
     placeholder: "이메일을 입력해주세요.",
   },
   {
-    id: "company",
+    id: "companyName",
     type: "text",
     label: "회사명",
     placeholder: "회사명을 입력해주세요.",
