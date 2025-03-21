@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 
+import MyProfile from "@/app/mypage/_components/MyProfile";
 import NavTab from "@/components/navigations/NavTab";
-
-import MyProfile from "./_components/MyProfile";
 
 interface LayoutProps {
   children: ReactNode;
