@@ -8,7 +8,8 @@ import FetchBoundary from "@/components/boundary/FetchBoundary";
 import { prefetchDeadlineImminentGatherings } from "@/hooks/gathering/useDeadlineImminentGatherings";
 import { prefetchPopularGatherings } from "@/hooks/gathering/usePopularGatherings";
 
-import MainCarousel from "./MainCarousel";
+import DeadLineCarousel from "./DeadLineCarousel";
+import PopularCarousel from "./PopularCarousel";
 
 const MainCarouselContainer = async () => {
   const queryClient = new QueryClient();
@@ -21,11 +22,19 @@ const MainCarouselContainer = async () => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <section className="flex flex-col gap-20">
-        <FetchBoundary fallback={<div>Loading...</div>}>
-          <MainCarousel type="popular" />
+        <FetchBoundary
+          fallback={
+            <div className="h-[100px] w-full bg-red-500">Loading...</div>
+          }
+        >
+          <PopularCarousel />
         </FetchBoundary>
-        <FetchBoundary fallback={<div>Loading...</div>}>
-          <MainCarousel type="deadline" />
+        <FetchBoundary
+          fallback={
+            <div className="h-[100px] w-full bg-red-500">Loading...</div>
+          }
+        >
+          <DeadLineCarousel />
         </FetchBoundary>
       </section>
     </HydrationBoundary>

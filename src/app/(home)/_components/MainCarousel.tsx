@@ -7,21 +7,16 @@ import { A11y, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import CarouselArrowButton from "@/components/ui/CarouselArrowButton";
-import { useSuspenseDeadlineImminentGatherings } from "@/hooks/gathering/useDeadlineImminentGatherings";
-import { useSuspensePopularGatherings } from "@/hooks/gathering/usePopularGatherings";
+import { IGathering } from "@/types/gathering";
 
 import MainCarouselItem from "./MainCarouselItem";
 
 interface IMainCarouselProps {
   type: "popular" | "deadline";
+  data: IGathering[];
 }
 
-const MainCarousel = ({ type }: IMainCarouselProps) => {
-  const { data: popularData } = useSuspensePopularGatherings();
-  const { data: deadlineData } = useSuspenseDeadlineImminentGatherings();
-
-  const data = type === "popular" ? popularData : deadlineData;
-
+const MainCarousel = ({ type, data }: IMainCarouselProps) => {
   return (
     <section className="flex w-full flex-col gap-5">
       <p className="text-2xl font-bold text-gray-900">
