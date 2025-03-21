@@ -16,7 +16,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { JoinFormSchema } from "@/schemas/loginJoinSchema";
 import useModalStore from "@/stores/useModalStore";
 
-type TJoinForm = z.infer<typeof JoinFormSchema>;
+export type TJoinForm = z.infer<typeof JoinFormSchema>;
 export type TErrorMsg = {
   code: string;
   message: string;

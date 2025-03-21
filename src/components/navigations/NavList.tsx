@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 
 import { NAV_BUTTONS, NAV_ITEMS } from "@/constants/nav";
-import useLogout from "@/hooks/useLogout";
+import useLogout from "@/hooks/auth/useLogout";
 import { cn } from "@/lib/utils";
 import useSideBarStore from "@/stores/useSideBarStore";
 import useUserStore from "@/stores/useUserStore";

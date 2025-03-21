@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import useLogout from "@/hooks/useLogout";
+import useLogout from "@/hooks/auth/useLogout";
 import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
 import { getCookieOfToken } from "@/utils/cookieToken";
@@ -30,7 +30,7 @@ const TokenValidator = () => {
     isModalShowing = true;
 
     // 로그아웃 및 리디렉션
-    openAlert("로그인이 필요한 서비스입니다. 로그인 페이지로 이동합니다.");
+    openAlert("로그인이 필요한 서비스입니다. 로그인 후 이용해주세요.");
     logout();
     router.replace("/login");
 

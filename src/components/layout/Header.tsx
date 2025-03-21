@@ -10,8 +10,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/Popover";
-import { useHydrateUserStore } from "@/hooks/useHydrateUserStore";
-import useLogout from "@/hooks/useLogout";
+import { useHydrateUserStore } from "@/hooks/auth/useHydrateUserStore";
+import useLogout from "@/hooks/auth/useLogout";
 import useUserStore from "@/stores/useUserStore";
 
 import Avatar from "../common/Avatar";
