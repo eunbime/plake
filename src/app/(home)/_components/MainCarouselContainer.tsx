@@ -1,11 +1,34 @@
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+
+import FetchBoundary from "@/components/boundary/FetchBoundary";
+import { prefetchDeadlineImminentGatherings } from "@/hooks/gathering/useDeadlineImminentGatherings";
+import { prefetchPopularGatherings } from "@/hooks/gathering/usePopularGatherings";
+
 import MainCarousel from "./MainCarousel";
 
-const MainCarouselContainer = () => {
+const MainCarouselContainer = async () => {
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    prefetchPopularGatherings(queryClient),
+    prefetchDeadlineImminentGatherings(queryClient),
+  ]);
+
   return (
-    <section className="flex flex-col gap-20">
-      <MainCarousel type="popular" />
-      <MainCarousel type="deadline" />
-    </section>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <section className="flex flex-col gap-20">
+        <FetchBoundary fallback={<div>Loading...</div>}>
+          <MainCarousel type="popular" />
+        </FetchBoundary>
+        <FetchBoundary fallback={<div>Loading...</div>}>
+          <MainCarousel type="deadline" />
+        </FetchBoundary>
+      </section>
+    </HydrationBoundary>
   );
 };
 
