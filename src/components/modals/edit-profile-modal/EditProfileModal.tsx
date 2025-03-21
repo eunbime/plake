@@ -1,19 +1,13 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import Avatar from "@/components/common/Avatar";
 import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import useDebounce from "@/hooks/useDebounce";
-import { EditProfileSchema } from "@/schemas/profileSchema";
+import { useUpdateUser } from "@/hooks/auth/useUpdateUser";
 import { IUser } from "@/types/user";
-
-type TEditProfileForm = z.infer<typeof EditProfileSchema>;
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -22,58 +16,44 @@ interface EditProfileModalProps {
 }
 
 const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
-  const [avatarImage, setAvatarImage] = useState(user.image);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    trigger,
-    reset,
-  } = useForm<TEditProfileForm>({
-    resolver: zodResolver(EditProfileSchema),
-    defaultValues: {
-      company: user.companyName,
-    },
-  });
+  const [companyName, setCompanyName] = useState(user.companyName);
+  const [avatarImage, setAvatarImage] = useState<string>(user.image);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { handleUpdateUser } = useUpdateUser();
 
   useEffect(() => {
     if (isOpen) {
+      setCompanyName(user.companyName);
       setAvatarImage(user.image);
-
-      reset({
-        company: user.companyName,
-      });
+      setSelectedFile(null);
     }
-  }, [isOpen, user, setValue, reset]);
+  }, [isOpen, user]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      setSelectedFile(file);
       setAvatarImage(URL.createObjectURL(file));
     }
   };
 
-  const debouncedValidation = useDebounce(fieldName => {
-    trigger(fieldName);
-  }, 500);
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("companyName", companyName);
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
 
-  const onSubmit = (data: TEditProfileForm) => {
-    // TODO: 프로필 업데이터 API 호출
-    console.log("프로필 수정 데이터:", { avatarImage, ...data });
+    handleUpdateUser(formData);
     onClose();
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="프로필 수정하기">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-1 flex flex-col gap-6"
-      >
+      <div className="mt-1 flex flex-col gap-6">
         <div className="w-[56px]">
           <label htmlFor="image-upload" className="relative cursor-pointer">
-            <Avatar size={"large"} type={"editable"} imgPath={avatarImage} />
+            <Avatar size="large" type="editable" imgPath={avatarImage} />
             <input
               type="file"
               id="image-upload"
@@ -85,17 +65,13 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
         </div>
 
         <Input
-          {...register("company")}
           label="회사"
           labelCustom="block text-base mb-3"
           type="text"
           id="companyName"
           placeholder="회사를 입력해주세요"
-          errorMsg={errors.company?.message}
-          onChange={e => {
-            register("company").onChange(e);
-            debouncedValidation("companyName");
-          }}
+          value={companyName}
+          onChange={e => setCompanyName(e.target.value)}
         />
 
         <Input
@@ -111,16 +87,19 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
           <Button
             variant="purple-outline"
             className="h-[44px] w-full"
-            type="button"
             onClick={onClose}
           >
             취소
           </Button>
-          <Button variant="purple" className="h-[44px] w-full" type="submit">
+          <Button
+            variant="purple"
+            className="h-[44px] w-full"
+            onClick={handleSubmit}
+          >
             수정하기
           </Button>
         </div>
-      </form>
+      </div>
     </Modal>
   );
 };

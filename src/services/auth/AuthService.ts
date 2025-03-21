@@ -25,8 +25,8 @@ class AuthService extends Service {
     return data;
   }
 
-  updateUser({ companyName, image }: { companyName: string; image: string }) {
-    const data = this.http.put("/auths/user", { companyName, image });
+  updateUser(formData: FormData) {
+    const data = this.http.put("/auths/user", formData);
     return data;
   }
 }

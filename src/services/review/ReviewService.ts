@@ -1,21 +1,28 @@
 import Service from "@/services/Service";
 import { IReview } from "@/types/review";
+import { getCookieOfToken } from "@/utils/cookieToken";
 
 export interface ReviewResponse {
   data: IReview[];
 }
 
 class ReviewService extends Service {
+  constructor(token?: string) {
+    super();
+    this.setToken(token || "");
+  }
+
   getReviewList = () => {
-    const data = this.http.get<ReviewResponse>("/reviews");
-    return data;
+    return this.http.get<ReviewResponse>("/reviews");
   };
-  createReview() {
+
+  createReview = () => {
     const data = this.http.post("/reviews", {});
     return data;
-  }
+  };
 }
 
-const reviewService = new ReviewService();
-
-export default reviewService;
+export async function createReviewService() {
+  const token = await getCookieOfToken();
+  return new ReviewService(token);
+}

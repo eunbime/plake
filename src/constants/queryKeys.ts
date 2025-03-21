@@ -1,10 +1,10 @@
-const AUTH_ALL = ["auth"] as const;
+const USER_ALL = ["user"] as const;
 const GATHERING_ALL = ["gathering"] as const;
 const REVIEW_ALL = ["review"] as const;
 
 export const QUERY_KEYS = {
-  AUTH: {
-    all: AUTH_ALL,
+  USER: {
+    all: USER_ALL,
   },
   GATHERING: {
     all: GATHERING_ALL,
