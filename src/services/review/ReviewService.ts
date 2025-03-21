@@ -10,6 +10,10 @@ class ReviewService extends Service {
     const data = this.http.get<ReviewResponse>("/reviews");
     return data;
   };
+  createReview() {
+    const data = this.http.post("/reviews", {});
+    return data;
+  }
 }
 
 const reviewService = new ReviewService();
