@@ -10,24 +10,20 @@ interface IMainPromotionProps {
 
 const MainPromotion = ({ type }: IMainPromotionProps) => {
   return (
-    <div
+    <section
       className={clsx(
-        "flex h-[450px] w-full",
-        type === "offline" ? "flex-row" : "flex-row-reverse",
+        "sm:[900px] flex h-[700px] w-full flex-col md:h-[450px]",
+        type === "offline" ? "md:flex-row" : "md:flex-row-reverse",
       )}
     >
       <div className="relative flex-1 overflow-hidden rounded-2xl bg-gray-200">
         <Image src="" alt="promotion" fill objectFit="cover" />
       </div>
-      <div className="flex flex-1 flex-col items-center justify-center gap-14 text-center text-4xl font-extrabold leading-[60px]">
+      <div className="flex flex-1 flex-col items-center justify-center gap-14 whitespace-pre-wrap text-center text-3xl font-bold leading-10 md:text-4xl md:font-extrabold md:leading-[60px]">
         {type === "offline" ? (
-          <p>
-            {"많은 사람들과 모여"} <br /> {"시간을 보내고 싶으신가요?"}
-          </p>
+          <p>{"많은 사람들과 모여 \n 시간을 보내고 싶으신가요?"}</p>
         ) : (
-          <p>
-            {"원하는 주제의 모임을"} <br /> {"집에서 편하게 즐겨보세요"}
-          </p>
+          <p>{"원하는 주제의 모임을 \n 집에서 편하게 즐겨보세요"}</p>
         )}
         <Link href="/gathering">
           <Button variant="purple" className="px-12 py-8 text-2xl font-bold">
@@ -37,7 +33,7 @@ const MainPromotion = ({ type }: IMainPromotionProps) => {
           </Button>
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 

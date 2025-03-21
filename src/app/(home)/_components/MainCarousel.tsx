@@ -17,11 +17,11 @@ interface IMainCarouselProps {
 
 const MainCarousel = ({ type }: IMainCarouselProps) => {
   return (
-    <div className="flex w-full flex-col gap-10">
+    <section className="flex w-full flex-col gap-5">
       <p className="text-2xl font-bold text-gray-900">
         {type === "popular" ? "현재 인기 많은 모임" : "마감 임박한 모임"}
       </p>
-      <div className="flex h-[350px]">
+      <div className="flex">
         <Swiper
           modules={[Navigation, A11y]}
           slidesPerView={2.5}
@@ -45,7 +45,7 @@ const MainCarousel = ({ type }: IMainCarouselProps) => {
           ))}
         </Swiper>
       </div>
-    </div>
+    </section>
   );
 };
 
