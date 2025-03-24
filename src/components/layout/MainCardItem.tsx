@@ -22,7 +22,7 @@ interface IMainCardItemProps {
   location: string;
   participantCount: number;
   capacity: number;
-  image: string;
+  image: string | null;
   firstPage: boolean;
 }
 
@@ -50,11 +50,11 @@ const MainCardItem = ({
         <div className="relative m-auto flex min-w-[343px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white md:flex-row lg:flex-row">
           <div className="relative h-[156px] w-full min-w-[280px] md:w-[280px] lg:w-[280px]">
             <Image
-              src={image}
-              alt={name}
+              src={image || "/images/gathering_default.png"}
+              alt={image ? name : "모임 기본 이미지"}
               className="h-full w-full object-cover"
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              sizes="(max-width: 768px) 50vw"
               priority={firstPage}
             ></Image>
             {isOpend && <DeadlineTag registrationEnd={registrationEnd} />}
