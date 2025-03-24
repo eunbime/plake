@@ -1,5 +1,6 @@
 import { TJoinForm } from "@/app/join/_components/JoinForm";
 import { TLoginForm } from "@/app/login/_components/LoginForm";
+import { IUpdateUser } from "@/types/user";
 import { getCookieOfToken } from "@/utils/cookieToken";
 
 import Service from "../Service";
@@ -26,7 +27,7 @@ class AuthService extends Service {
   }
 
   updateUser(formData: FormData) {
-    const data = this.http.put("/auths/user", formData);
+    const data = this.http.put<IUpdateUser>("/auths/user", formData);
     return data;
   }
 }

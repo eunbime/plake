@@ -1,11 +1,7 @@
-const USER_ALL = ["user"] as const;
 const GATHERING_ALL = ["gathering"] as const;
 const REVIEW_ALL = ["review"] as const;
 
 export const QUERY_KEYS = {
-  USER: {
-    all: USER_ALL,
-  },
   GATHERING: {
     all: GATHERING_ALL,
     list: [...GATHERING_ALL, "list"] as const,
