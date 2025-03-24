@@ -16,7 +16,7 @@ const MyCardItem = ({
     <Link href={"/mypage"} className="flex w-full flex-col gap-4 sm:flex-row">
       <div className="relative h-[156px] w-full min-w-[280px] sm:w-[280px]">
         <Image
-          src={gathering.image}
+          src={gathering.image || "/images/gathering_default.png"}
           alt={gathering.name}
           className="h-full w-full rounded-3xl object-cover"
           fill

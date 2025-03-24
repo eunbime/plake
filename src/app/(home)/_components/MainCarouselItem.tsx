@@ -17,7 +17,7 @@ const MainCarouselItem = ({ gathering }: IMainCarouselItemProps) => {
     >
       <div className="relative h-[150px] overflow-hidden rounded-lg md:h-[200px] lg:h-[250px]">
         <Image
-          src={gathering.image}
+          src={gathering.image || "/images/gathering_default.png"}
           alt="carousel-item"
           fill
           sizes="60vw"
