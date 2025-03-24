@@ -11,7 +11,7 @@ import Modal from "@/components/modals/Modal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { GATHERING_FORM } from "@/constants/gathering";
+import { GATHERING_FORM, SERVICE_LIST } from "@/constants/gathering";
 import { useCreateGathering } from "@/hooks/gathering/useCreateGathering";
 import {
   CreateGatheringFormSchema,
@@ -35,17 +35,19 @@ const CreateGatheringModal = () => {
 
   const dateTimeValue = watch("dateTime");
   const registrationEndValue = watch("registrationEnd");
+  const locationValue = watch("location");
 
   const { handleCreateGathering, isPending } = useCreateGathering();
 
   const onSubmit = (data: CreateGatheringFormType) => {
+    // console.log(data);
     handleCreateGathering(data);
   };
 
   return (
     <Modal
       variant="mobileFull"
-      isOpen={false}
+      isOpen={true}
       onClose={() => {}}
       title="모임 만들기"
     >
@@ -64,18 +66,32 @@ const CreateGatheringModal = () => {
           />
 
           <div className="flex flex-col gap-2">
-            <Label className={labelTitleStyle}>장소</Label>
-            <Dropdown
-              type="form"
-              placeholder="장소를 선택해주세요."
-              onSelect={value => setValue("location", value)}
+            <Label className={labelTitleStyle}>선택 서비스</Label>
+            <ServiceSelector
+              setTypeValue={value => setValue("type", value)}
+              setLocationValue={value => setValue("location", value)}
             />
-            {errors.location && (
+            {errors.type && (
               <span className="text-sm text-red-500">
-                {errors.location.message}
+                {errors.type.message}
               </span>
             )}
           </div>
+          {locationValue !== SERVICE_LIST.ONLINE.location && (
+            <div className="flex flex-col gap-2">
+              <Label className={labelTitleStyle}>장소</Label>
+              <Dropdown
+                type="form"
+                placeholder="장소를 선택해주세요."
+                onSelect={value => setValue("location", value)}
+              />
+              {errors.location && (
+                <span className="text-sm text-red-500">
+                  {errors.location.message}
+                </span>
+              )}
+            </div>
+          )}
           <div className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>이미지</Label>
             <ImageUploader setValue={value => setValue("image", value)} />
@@ -85,15 +101,7 @@ const CreateGatheringModal = () => {
               </span>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <Label className={labelTitleStyle}>선택 서비스</Label>
-            <ServiceSelector setTypeValue={value => setValue("type", value)} />
-            {errors.type && (
-              <span className="text-sm text-red-500">
-                {errors.type.message}
-              </span>
-            )}
-          </div>
+
           <DateTimeAndEndTimePicker
             setDateTimeValue={value => setValue("dateTime", value)}
             setRegistrationEndValue={value =>

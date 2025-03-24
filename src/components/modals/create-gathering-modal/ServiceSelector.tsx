@@ -7,9 +7,13 @@ import { SERVICE_LIST } from "@/constants/gathering";
 
 interface ServiceSelectorProps {
   setTypeValue: (value: string) => void;
+  setLocationValue: (value: string) => void;
 }
 
-const ServiceSelector = ({ setTypeValue }: ServiceSelectorProps) => {
+const ServiceSelector = ({
+  setTypeValue,
+  setLocationValue,
+}: ServiceSelectorProps) => {
   const [selectedService, setSelectedService] = useState<string>(
     SERVICE_LIST.OFFLINE.value,
   );
@@ -17,6 +21,12 @@ const ServiceSelector = ({ setTypeValue }: ServiceSelectorProps) => {
 
   const handleServiceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = e.target;
+    if (id === SERVICE_LIST.ONLINE.value) {
+      setLocationValue(SERVICE_LIST.ONLINE.location);
+      setTypeValue(SERVICE_LIST.ONLINE.type);
+    } else {
+      setLocationValue("");
+    }
     setSelectedService(id);
     setSelectedSubService(undefined);
   };
@@ -57,11 +67,12 @@ const ServiceSelector = ({ setTypeValue }: ServiceSelectorProps) => {
           </div>
         ))}
       </div>
-      <SubServiceSelector
-        selectedSubService={selectedSubService}
-        onClickTab={handleSubServiceChange}
-        isOffline={selectedService === SERVICE_LIST.OFFLINE.value}
-      />
+      {selectedService === SERVICE_LIST.OFFLINE.value && (
+        <SubServiceSelector
+          selectedSubService={selectedSubService}
+          onClickTab={handleSubServiceChange}
+        />
+      )}
     </>
   );
 };
