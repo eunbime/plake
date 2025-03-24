@@ -46,7 +46,7 @@ const MainCardItem = ({
 
   return (
     <>
-      <Link href={`/gathering/${id}`} className="w-full">
+      <Link href={`/gathering/detail/${id}`} className="w-full">
         <div className="relative m-auto flex min-w-[343px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white md:flex-row lg:flex-row">
           <div className="relative h-[156px] w-full min-w-[280px] md:w-[280px] lg:w-[280px]">
             <Image
@@ -65,8 +65,8 @@ const MainCardItem = ({
                 <div className="flex items-center justify-center">
                   <p className="text-lg font-semibold text-gray-800">{name}</p>
                   <RxDividerVertical className="text-gray-900" />
-                  <span className="ml-[3px] text-sm text-gray-700">
-                    {location}
+                  <span className="ml-[3px] min-w-16 text-sm text-gray-700">
+                    {location === "홍대입구" ? "온라인" : location}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -102,8 +102,8 @@ const MainCardItem = ({
           {!isOpend && (
             <>
               <div className="absolute flex h-full w-full flex-col items-center justify-center bg-black/80 text-sm text-white">
-                <span>마감된 챌린지에요,</span>
-                <span>다음 기회에 만나요 🙏</span>
+                <span>{"마감된 챌린지에요,"}</span>
+                <span>{"다음 기회에 만나요 🙏"}</span>
               </div>
               <div className="absolute right-0 mr-6 mt-6 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
                 <MdWavingHand className="scale-x-[-1] text-purple-600" />
