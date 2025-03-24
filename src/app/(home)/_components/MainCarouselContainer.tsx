@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 
 import FetchBoundary from "@/components/boundary/FetchBoundary";
+import MainCarouselSkeleton from "@/components/skeletons/MainCarouselSkeleton";
 import { prefetchDeadlineImminentGatherings } from "@/hooks/gathering/useDeadlineImminentGatherings";
 import { prefetchPopularGatherings } from "@/hooks/gathering/usePopularGatherings";
 
@@ -22,18 +23,10 @@ const MainCarouselContainer = async () => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <section className="flex flex-col gap-20">
-        <FetchBoundary
-          fallback={
-            <div className="h-[100px] w-full bg-red-500">Loading...</div>
-          }
-        >
+        <FetchBoundary fallback={<MainCarouselSkeleton />}>
           <PopularCarousel />
         </FetchBoundary>
-        <FetchBoundary
-          fallback={
-            <div className="h-[100px] w-full bg-red-500">Loading...</div>
-          }
-        >
+        <FetchBoundary fallback={<MainCarouselSkeleton />}>
           <DeadLineCarousel />
         </FetchBoundary>
       </section>
