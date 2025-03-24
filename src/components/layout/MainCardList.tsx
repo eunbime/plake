@@ -1,14 +1,27 @@
 "use client";
 
-import { useSuspenseGatheringList } from "@/hooks/gathering/useGatheringList";
+import { usePathname } from "next/navigation";
+
+import { ONLINE_TAB } from "@/constants/gathering";
+import useConvertToQueryStr from "@/hooks/gathering/useConvertToQueryStr";
+import { useGatheringList } from "@/hooks/gathering/useGatheringList";
+import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 
 import MainCardItem from "./MainCardItem";
 
 const MainCardList = () => {
-  const { data } = useSuspenseGatheringList();
+  const pathname = usePathname();
+
+  const { searchParamsObj } = useCustomSearchParams();
+  const params = useConvertToQueryStr(searchParamsObj);
+
+  const { data } = useGatheringList(
+    pathname === ONLINE_TAB ? "online" : "offline",
+    params,
+  );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6">
+    <div className="mb-8 flex flex-col items-center justify-center gap-6">
       {data?.pages.map((page, pageNum) =>
         page.map(card => (
           <MainCardItem
