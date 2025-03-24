@@ -26,7 +26,7 @@ const MainCarousel = ({ type, data }: IMainCarouselProps) => {
         <Swiper
           modules={[Navigation, A11y]}
           slidesPerView={2.5}
-          spaceBetween={5}
+          spaceBetween={2}
           breakpoints={{
             768: {
               slidesPerView: 3.5,
@@ -40,7 +40,10 @@ const MainCarousel = ({ type, data }: IMainCarouselProps) => {
           <CarouselArrowButton direction="prev" />
           <CarouselArrowButton direction="next" />
           {data.map(gathering => (
-            <SwiperSlide key={gathering.id}>
+            <SwiperSlide
+              key={gathering.id}
+              className="!ml-[15px] !w-[150px] md:!w-[240px] lg:!w-[260px]"
+            >
               <MainCarouselItem gathering={gathering} />
             </SwiperSlide>
           ))}
