@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 
 const MainCardItemSkeleton = () => {
   return (
-    <div className="m-auto flex min-w-[343px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white md:flex-row lg:flex-row">
+    <div className="m-auto flex w-full min-w-[343px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white md:flex-row lg:flex-row">
       <div className="relative h-[156px] w-full min-w-[280px] md:w-[280px] lg:w-[280px]">
         <Skeleton className="h-full w-full" />
       </div>
