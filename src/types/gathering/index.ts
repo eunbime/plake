@@ -8,7 +8,7 @@ export enum GatheringType {
 }
 
 export interface IGathering {
-  teamId: string;
+  teamId: number;
   id: number;
   name: string;
   type: GatheringType;
@@ -17,15 +17,26 @@ export interface IGathering {
   location: string;
   participantCount: number;
   capacity: number;
-  image: string | null;
+  image: string;
   createdBy: number;
   canceledAt: string | null;
 }
 
 export interface IParticipant {
   User: IUser;
+  teamId: number;
   userId: number;
-  teamId: string;
   gatheringId: number;
   joinedAt: string;
 }
+
+export type FilterParamsObj = {
+  location?: string;
+  date?: string;
+  sort?: string;
+  sortBy?: string;
+  type?: string;
+  sortOrder?: string;
+};
+
+export * from "./my-card";
