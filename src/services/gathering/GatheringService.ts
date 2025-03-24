@@ -8,7 +8,7 @@ class GatheringService extends Service {
     this.setToken("");
   }
 
-  getGatheringList(type: string, params?: string) {
+  getGatheringList(type?: string, params?: string) {
     const isOnline = type === "online";
     const onlineFilter = isOnline ? "?location=홍대입구" : "";
     const filterParams = isOnline ? onlineFilter + `&${params}` : `?${params}`;
