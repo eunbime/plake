@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
 interface ImageUploaderProps {
-  setValue: (value: FormData) => void;
+  setValue: (value: File) => void;
 }
 
 const ImageUploader = ({ setValue }: ImageUploaderProps) => {
@@ -13,10 +13,16 @@ const ImageUploader = ({ setValue }: ImageUploaderProps) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("image", file);
-    setValue(formData);
+    setValue(file);
     setFileName(file.name);
+
+    // const reader = new FileReader();
+    // reader.onloadend = () => {
+    //   const base64String = reader.result as string;
+
+    //   console.log(base64String);
+    // };
+    // reader.readAsDataURL(file);
   };
 
   const imageDescription = fileName ? fileName : "이미지를 첨부해주세요.";

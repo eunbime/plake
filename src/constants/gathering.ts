@@ -10,7 +10,7 @@ export const GATHERING = {
 export const GATHERING_FORM: CreateGatheringFormType = {
   name: "",
   location: "",
-  image: new FormData(),
+  image: new File([], ""),
   type: "",
   dateTime: "",
   registrationEnd: "",
@@ -26,7 +26,7 @@ export const SERVICE_LIST = {
     value: "online",
     name: "온라인",
     location: "홍대입구",
-    type: "DALLEMFIT",
+    type: "DALLAEMFIT",
   },
 } as const;
 

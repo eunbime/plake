@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import Dropdown from "@/components/common/Dropdown";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DateTimeAndEndTimePicker from "@/components/modals/create-gathering-modal/DateTimeAndEndTimePicker";
 import ImageUploader from "@/components/modals/create-gathering-modal/ImageUploader";
 import ServiceSelector from "@/components/modals/create-gathering-modal/ServiceSelector";
@@ -19,6 +20,7 @@ import {
 } from "@/schemas/gatheringSchema";
 
 const labelTitleStyle = "text-base font-semibold text-gray-800";
+const errorMsgStyle = "text-sm font-semibold text-red-600";
 
 const CreateGatheringModal = () => {
   const {
@@ -27,7 +29,7 @@ const CreateGatheringModal = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<CreateGatheringFormType>({
+  } = useForm({
     mode: "onChange",
     defaultValues: GATHERING_FORM,
     resolver: zodResolver(CreateGatheringFormSchema),
@@ -40,7 +42,6 @@ const CreateGatheringModal = () => {
   const { handleCreateGathering, isPending } = useCreateGathering();
 
   const onSubmit = (data: CreateGatheringFormType) => {
-    // console.log(data);
     handleCreateGathering(data);
   };
 
@@ -72,9 +73,7 @@ const CreateGatheringModal = () => {
               setLocationValue={value => setValue("location", value)}
             />
             {errors.type && (
-              <span className="text-sm text-red-500">
-                {errors.type.message}
-              </span>
+              <span className={errorMsgStyle}>{errors.type.message}</span>
             )}
           </div>
           {locationValue !== SERVICE_LIST.ONLINE.location && (
@@ -86,9 +85,7 @@ const CreateGatheringModal = () => {
                 onSelect={value => setValue("location", value)}
               />
               {errors.location && (
-                <span className="text-sm text-red-500">
-                  {errors.location.message}
-                </span>
+                <span className={errorMsgStyle}>{errors.location.message}</span>
               )}
             </div>
           )}
@@ -96,9 +93,7 @@ const CreateGatheringModal = () => {
             <Label className={labelTitleStyle}>이미지</Label>
             <ImageUploader setValue={value => setValue("image", value)} />
             {errors.image && (
-              <span className="text-sm text-red-500">
-                {errors.image.message}
-              </span>
+              <span className={errorMsgStyle}>{errors.image.message}</span>
             )}
           </div>
 
@@ -111,7 +106,7 @@ const CreateGatheringModal = () => {
             registrationEndValue={registrationEndValue}
           />
           {(errors.dateTime || errors.registrationEnd) && (
-            <span className="text-sm text-red-500">
+            <span className={errorMsgStyle}>
               {errors?.dateTime?.message || errors?.registrationEnd?.message}
             </span>
           )}
@@ -127,7 +122,7 @@ const CreateGatheringModal = () => {
           </div>
         </div>
         <Button variant="purple" className="w-full" type="submit">
-          {isPending ? "생성중..." : "확인"}
+          {isPending ? <LoadingSpinner size="xs" /> : "확인"}
         </Button>
       </form>
     </Modal>
