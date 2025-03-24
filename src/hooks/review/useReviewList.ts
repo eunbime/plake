@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import reviewService, { ReviewResponse } from "@/services/review/ReviewService";
+import { ReviewResponse, reviewService } from "@/services/review/ReviewService";
 
 const reviewListQueryOption = () => ({
   queryKey: [QUERY_KEYS.REVIEW.list],

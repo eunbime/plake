@@ -2,9 +2,8 @@
 
 import clsx from "clsx";
 
+import MyCardItem from "@/app/mypage/_components/MyCardItem";
 import { DirectionType, GatheringType, IMyGathering } from "@/types/gathering";
-
-import MyCardItem from "./MyCardItem";
 
 const mockMyGatherings: IMyGathering[] = [
   {
