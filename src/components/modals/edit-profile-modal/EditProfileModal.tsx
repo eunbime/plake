@@ -17,7 +17,7 @@ interface EditProfileModalProps {
 
 const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
   const [companyName, setCompanyName] = useState(user.companyName);
-  const [avatarImage, setAvatarImage] = useState<string>(user.image);
+  const [avatarImage, setAvatarImage] = useState(user.image); // UI 미리보기 용 이미지 URL
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { handleUpdateUser } = useUpdateUser();
 

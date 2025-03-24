@@ -2,8 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 
-import EmptyState from "../_components/EmptyState";
-import ReviewTab from "../_components/ReviewTab";
+import EmptyState from "@/app/mypage/_components/EmptyState";
+import ReviewTab from "@/app/mypage/_components/ReviewTab";
 
 const Page = () => {
   const searchParams = useSearchParams();
