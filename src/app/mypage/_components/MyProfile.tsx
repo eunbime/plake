@@ -9,7 +9,7 @@ import MyProfileSkeleton from "@/components/skeletons/MyProfileSkeleton";
 import useUserStore from "@/stores/useUserStore";
 
 const MyProfile = () => {
-  const { user } = useUserStore();
+  const user = useUserStore(state => state.user);
   const [isOpen, setIsOpen] = useState(false);
 
   const profileInfo = [
