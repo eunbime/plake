@@ -25,8 +25,16 @@ const MainCarousel = ({ type, data }: IMainCarouselProps) => {
       <div className="flex">
         <Swiper
           modules={[Navigation, A11y]}
-          slidesPerView={2.5}
+          slidesPerView={2}
           spaceBetween={2}
+          breakpoints={{
+            500: {
+              slidesPerView: 3,
+            },
+            1200: {
+              slidesPerView: 4,
+            },
+          }}
           className="relative"
         >
           <CarouselArrowButton direction="prev" />
