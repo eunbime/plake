@@ -7,9 +7,7 @@ interface HTTPInstance {
 
 class HttpClient implements HTTPInstance {
   private static instance: HttpClient;
-
   private baseURL: string;
-
   public token?: string;
 
   constructor() {
@@ -34,19 +32,21 @@ class HttpClient implements HTTPInstance {
     config?: RequestInit,
   ): Promise<R> {
     try {
-      const headers: HeadersInit & { Authorization?: string } = {
-        "Content-Type": "application/json",
-        ...config?.headers,
-      };
+      const isFormData = data instanceof FormData;
+      const headers = new Headers(config?.headers);
 
       if (this.token) {
-        headers.Authorization = `Bearer ${this.token}`;
+        headers.set("Authorization", `Bearer ${this.token}`);
+      }
+
+      if (!isFormData) {
+        headers.set("Content-Type", "application/json");
       }
 
       const response = await fetch(this.baseURL + url, {
         method,
         headers,
-        body: data ? JSON.stringify(data) : undefined,
+        body: isFormData ? data : data ? JSON.stringify(data) : undefined,
         ...config,
       });
 

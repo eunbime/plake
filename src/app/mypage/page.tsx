@@ -1,11 +1,11 @@
-import MyCardList from "./_components/MyCardList";
+import EmptyState from "@/app/mypage/_components/EmptyState";
 
 const Page = () => {
-  // 작업 예정
   return (
-    <div>
-      <MyCardList direction={"mypage"} />
-    </div>
+    <>
+      {/* 추가 예정 */}
+      <EmptyState message="신청한 모임이 아직 없어요" />
+    </>
   );
 };
 

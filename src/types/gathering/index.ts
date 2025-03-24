@@ -30,4 +30,13 @@ export interface IParticipant {
   joinedAt: string;
 }
 
+export type FilterParamsObj = {
+  location?: string;
+  date?: string;
+  sort?: string;
+  sortBy?: string;
+  type?: string;
+  sortOrder?: string;
+};
+
 export * from "./my-card";

@@ -14,6 +14,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/gathering",
+        destination: "/gathering/offline",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
