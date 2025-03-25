@@ -5,7 +5,8 @@ import {
 } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { ReviewResponse, reviewService } from "@/services/review/ReviewService";
+import { reviewService } from "@/services/review/ReviewService";
+import { IReviewResponse } from "@/types/review";
 
 const reviewListQueryOption = () => ({
   queryKey: [QUERY_KEYS.REVIEW.list],
@@ -13,7 +14,7 @@ const reviewListQueryOption = () => ({
   initialPageParam: 1,
   throwOnError: true,
   retry: false,
-  getNextPageParam: (lastPage: ReviewResponse) => {
+  getNextPageParam: (lastPage: IReviewResponse) => {
     return lastPage.data.length === 0 ? undefined : lastPage.data.length + 1;
   },
 });

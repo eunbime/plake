@@ -4,10 +4,10 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-import FloatingBar from "@/components/gathering-detail/FloatingBar";
 import { prefetchGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
-import { prefetchReviewList } from "@/hooks/review/useReviewList";
+import { prefetchReviewsByGatheringId } from "@/hooks/review/useReviewsByGatheringId";
 
+import FloatingBar from "./_components/FloatingBar";
 import GatheringInformation from "./_components/GatheringInformation";
 import GatheringReviewBoard from "./_components/GatheringReviewBoard";
 
@@ -26,7 +26,7 @@ export default async function GatheringDetailPage({
 
   await Promise.all([
     prefetchGatheringDetail(id, queryClient),
-    prefetchReviewList(queryClient),
+    prefetchReviewsByGatheringId(id, queryClient),
   ]);
 
   return (
