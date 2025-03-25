@@ -26,7 +26,7 @@ export const SERVICE_LIST = {
     value: "online",
     name: "온라인",
     location: "홍대입구",
-    type: "DALLAEMFIT",
+    type: "WORKATION",
   },
 } as const;
 

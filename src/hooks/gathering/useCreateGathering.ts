@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { CreateGatheringFormType } from "@/schemas/gatheringSchema";
 import { createGatheringService } from "@/services/gathering/GatheringService";
 import useModalStore from "@/stores/useModalStore";
 
@@ -10,7 +9,7 @@ export const useCreateGathering = () => {
   const openAlert = useModalStore(state => state.openAlert);
 
   const { mutate: createGathering, isPending } = useMutation({
-    mutationFn: async (data: CreateGatheringFormType) => {
+    mutationFn: async (data: FormData) => {
       const service = await createGatheringService();
       return service.createGathering(data);
     },
@@ -25,7 +24,7 @@ export const useCreateGathering = () => {
     },
   });
 
-  const handleCreateGathering = (data: CreateGatheringFormType) => {
+  const handleCreateGathering = (data: FormData) => {
     createGathering(data);
   };
 

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaRegCalendar } from "react-icons/fa";
 
 import TimePicker from "@/components/modals/create-gathering-modal/TimePicker";
@@ -31,17 +31,37 @@ const DateTimePicker = ({
   });
   const calendarRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [displayValue, setDisplayValue] = useState<string>("");
+
+  useEffect(() => {
+    const value = type === "dateTime" ? dateTimeValue : registrationEndValue;
+    if (value) {
+      setDisplayValue(dayjs(value).format("YYYY-MM-DD hh:mm A"));
+    } else {
+      setDisplayValue("날짜를 선택해주세요");
+    }
+  }, [dateTimeValue, registrationEndValue, type]);
 
   useClickOutside(calendarRef, () => setIsOpen(false));
 
   const handleDateChange = (date: Date | undefined) => {
     if (date) {
       selectDate(date);
+      const formattedDate = date.toISOString();
       if (type === "dateTime") {
-        setDateTimeValue?.(date.toISOString());
+        setDateTimeValue?.(formattedDate);
       } else {
-        setRegistrationEndValue?.(date.toISOString());
+        setRegistrationEndValue?.(formattedDate);
       }
+    }
+  };
+
+  const handleTimeChange = (value: Date) => {
+    const formattedDate = value.toISOString();
+    if (type === "dateTime") {
+      setDateTimeValue?.(formattedDate);
+    } else {
+      setRegistrationEndValue?.(formattedDate);
     }
   };
 
@@ -51,15 +71,7 @@ const DateTimePicker = ({
         {type === "dateTime" ? "모임 날짜" : "마감 날짜"}
       </Label>
       <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-[10px]">
-        <span className="font-medium text-gray-400">
-          {type === "dateTime"
-            ? dateTimeValue
-              ? dayjs(dateTimeValue).format("YYYY-MM-DD hh:mm A")
-              : "날짜를 선택해주세요"
-            : registrationEndValue
-              ? dayjs(registrationEndValue).format("YYYY-MM-DD hh:mm A")
-              : "날짜를 선택해주세요"}
-        </span>
+        <span className="font-medium text-gray-400">{displayValue}</span>
         <FaRegCalendar
           className="cursor-pointer"
           onClick={() => setIsOpen(true)}
@@ -72,12 +84,7 @@ const DateTimePicker = ({
             <Calendar {...calendarProps} onSelect={handleDateChange} />
             <TimePicker
               selectedDate={selectedDate}
-              setValue={
-                type === "dateTime"
-                  ? (value: Date) => setDateTimeValue?.(value.toISOString())
-                  : (value: Date) =>
-                      setRegistrationEndValue?.(value.toISOString())
-              }
+              setValue={handleTimeChange}
             />
           </div>
         )}

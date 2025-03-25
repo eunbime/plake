@@ -7,7 +7,7 @@ interface ImageUploaderProps {
 }
 
 const ImageUploader = ({ setValue }: ImageUploaderProps) => {
-  const [fileName, setFileName] = useState<string>();
+  const [fileName, setFileName] = useState<string>("");
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -15,14 +15,6 @@ const ImageUploader = ({ setValue }: ImageUploaderProps) => {
 
     setValue(file);
     setFileName(file.name);
-
-    // const reader = new FileReader();
-    // reader.onloadend = () => {
-    //   const base64String = reader.result as string;
-
-    //   console.log(base64String);
-    // };
-    // reader.readAsDataURL(file);
   };
 
   const imageDescription = fileName ? fileName : "이미지를 첨부해주세요.";

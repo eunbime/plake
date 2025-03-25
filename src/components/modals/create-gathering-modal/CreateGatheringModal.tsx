@@ -27,6 +27,7 @@ const CreateGatheringModal = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm({
@@ -35,14 +36,21 @@ const CreateGatheringModal = () => {
     resolver: zodResolver(CreateGatheringFormSchema),
   });
 
-  const dateTimeValue = watch("dateTime");
-  const registrationEndValue = watch("registrationEnd");
   const locationValue = watch("location");
 
   const { handleCreateGathering, isPending } = useCreateGathering();
 
   const onSubmit = (data: CreateGatheringFormType) => {
-    handleCreateGathering(data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("location", data.location);
+    formData.append("image", data.image);
+    formData.append("type", data.type);
+    formData.append("dateTime", data.dateTime);
+    formData.append("registrationEnd", data.registrationEnd);
+    formData.append("capacity", data.capacity.toString());
+    console.log(formData);
+    handleCreateGathering(formData);
   };
 
   return (
@@ -102,8 +110,8 @@ const CreateGatheringModal = () => {
             setRegistrationEndValue={value =>
               setValue("registrationEnd", value)
             }
-            dateTimeValue={dateTimeValue}
-            registrationEndValue={registrationEndValue}
+            dateTimeValue={getValues("dateTime")}
+            registrationEndValue={getValues("registrationEnd")}
           />
           {(errors.dateTime || errors.registrationEnd) && (
             <span className={errorMsgStyle}>

@@ -10,7 +10,9 @@ const capacitySchema = z
 const formSchema = z.object({
   name: z.string().min(1, { message: "모임 이름을 입력해주세요." }),
   location: z.string().min(1, { message: "모임 장소를 선택해주세요." }),
-  image: z.instanceof(File, { message: "모임 이미지를 선택해주세요." }),
+  image: z.instanceof(File).refine(file => file.size > 0, {
+    message: "모임 이미지를 선택해주세요.",
+  }),
   type: z.string().min(1, { message: "모임 서비스를 선택해주세요." }),
   dateTime: z.string().min(1, { message: "모집 날짜를 선택해주세요." }),
   registrationEnd: z.string().min(1, { message: "마감 날짜를 선택해주세요." }),
