@@ -63,15 +63,16 @@ const DateTimePicker = ({
     } else {
       setRegistrationEndValue?.(formattedDate);
     }
+    setIsOpen(false);
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-2">
+    <section className="flex flex-1 flex-col gap-2">
       <Label className="text-sm font-semibold text-gray-800">
         {type === "dateTime" ? "모임 날짜" : "마감 날짜"}
       </Label>
       <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-[10px]">
-        <span className="font-medium text-gray-400">{displayValue}</span>
+        <time className="font-medium text-gray-400">{displayValue}</time>
         <FaRegCalendar
           className="cursor-pointer"
           onClick={() => setIsOpen(true)}
@@ -79,7 +80,7 @@ const DateTimePicker = ({
         {isOpen && (
           <div
             ref={calendarRef}
-            className="absolute bottom-20 left-0 z-10 flex w-full flex-col items-center justify-center gap-3 divide-x-0 divide-gray-200 rounded-2xl border border-gray-200 bg-white p-3 md:bottom-10 md:w-fit md:flex-row md:divide-x"
+            className="absolute bottom-0 left-0 z-10 flex w-full flex-col items-center justify-center gap-3 divide-x-0 divide-gray-200 rounded-2xl border border-gray-200 bg-white p-3 md:bottom-10 md:w-fit md:flex-row md:divide-x"
           >
             <Calendar
               {...calendarProps}
@@ -94,7 +95,7 @@ const DateTimePicker = ({
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -61,7 +61,7 @@ const CreateGatheringModal = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-between gap-10"
       >
-        <div className="flex flex-col gap-4">
+        <div className="relative flex flex-col gap-4">
           <Input
             label="모임 이름"
             type="text"
@@ -71,7 +71,7 @@ const CreateGatheringModal = () => {
             errorMsg={errors.name?.message}
           />
 
-          <div className="flex flex-col gap-2">
+          <section className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>선택 서비스</Label>
             <ServiceSelector
               setTypeValue={value => setValue("type", value)}
@@ -80,9 +80,9 @@ const CreateGatheringModal = () => {
             {errors.type && (
               <span className={errorMsgStyle}>{errors.type.message}</span>
             )}
-          </div>
+          </section>
           {location !== SERVICE_LIST.ONLINE.location && (
-            <div className="flex flex-col gap-2">
+            <section className="flex flex-col gap-2">
               <Label className={labelTitleStyle}>장소</Label>
               <Dropdown
                 type="form"
@@ -94,9 +94,9 @@ const CreateGatheringModal = () => {
               {errors.location && (
                 <span className={errorMsgStyle}>{errors.location.message}</span>
               )}
-            </div>
+            </section>
           )}
-          <div className="flex flex-col gap-2">
+          <section className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>이미지</Label>
             <ImageUploader
               setValue={value =>
@@ -106,7 +106,7 @@ const CreateGatheringModal = () => {
             {errors.image && (
               <span className={errorMsgStyle}>{errors.image.message}</span>
             )}
-          </div>
+          </section>
 
           <DateTimeAndEndTimePicker
             setDateTimeValue={value =>
@@ -123,7 +123,7 @@ const CreateGatheringModal = () => {
               {errors?.dateTime?.message || errors?.registrationEnd?.message}
             </span>
           )}
-          <div>
+          <section>
             <Input
               type="number"
               id="gathering-capacity"
@@ -132,7 +132,7 @@ const CreateGatheringModal = () => {
               {...register("capacity", { valueAsNumber: true })}
               errorMsg={errors.capacity?.message}
             />
-          </div>
+          </section>
         </div>
         <Button variant="purple" className="w-full" type="submit">
           {isPending ? <LoadingSpinner size="xs" /> : "확인"}
