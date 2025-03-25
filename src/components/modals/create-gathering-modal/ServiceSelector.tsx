@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useState } from "react";
+import { FaCheck } from "react-icons/fa";
 
 import SubServiceSelector from "@/components/modals/create-gathering-modal/SubServiceSelector";
 import { SERVICE_LIST } from "@/constants/gathering";
@@ -54,7 +55,11 @@ const ServiceSelector = ({
               name="serviceType"
               onChange={handleServiceChange}
               checked={selectedService === service.value}
+              className="peer relative h-4 w-4 appearance-none rounded-sm border border-gray-300 bg-white"
             />
+            <div className="absolute hidden translate-x-[2px] peer-checked:block">
+              <FaCheck size={12} className="text-purple-600" />
+            </div>
             <span
               className={clsx(
                 "text-base font-medium",
