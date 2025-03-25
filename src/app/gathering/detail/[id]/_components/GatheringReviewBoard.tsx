@@ -1,14 +1,13 @@
-import GatheringReviewList from "@/components/gathering-detail/GatheringReviewList";
+import FetchBoundary from "@/components/boundary/FetchBoundary";
 import GatheringReviewSkeleton from "@/components/skeletons/gathering-detail/GatheringReviewSkeleton";
 
-import GatheringReviewBoardWrapper from "./GatheringReviewBoardWrapper";
+import GatheringReviewList from "./GatheringReviewList";
 
 const GatheringReviewBoard = async () => {
-  const fallback = <GatheringReviewSkeleton />;
   return (
-    <GatheringReviewBoardWrapper fallback={fallback}>
+    <FetchBoundary fallback={<GatheringReviewSkeleton />}>
       <GatheringReviewList />
-    </GatheringReviewBoardWrapper>
+    </FetchBoundary>
   );
 };
 

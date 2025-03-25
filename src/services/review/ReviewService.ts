@@ -1,10 +1,6 @@
 import Service from "@/services/Service";
-import { IReview } from "@/types/review";
+import { IReviewResponse } from "@/types/review";
 import { getCookieOfToken } from "@/utils/cookieToken";
-
-export interface ReviewResponse {
-  data: IReview[];
-}
 
 class ReviewService extends Service {
   constructor(token?: string) {
@@ -13,7 +9,13 @@ class ReviewService extends Service {
   }
 
   getReviewList = () => {
-    return this.http.get<ReviewResponse>("/reviews");
+    return this.http.get<IReviewResponse>("/reviews");
+  };
+
+  getReviewsByGatheringId = (gatheringId: string) => {
+    return this.http.get<IReviewResponse>(
+      `/reviews?gatheringId=${gatheringId}`,
+    );
   };
 
   createReview = () => {

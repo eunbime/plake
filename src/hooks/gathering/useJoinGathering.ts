@@ -2,14 +2,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import gatheringService from "@/services/gathering/GatheringService";
+import { createGatheringService } from "@/services/gathering/GatheringService";
 import useModalStore from "@/stores/useModalStore";
 
 export const useJoinGatheringMutation = (id: string) => {
   const queryClient = useQueryClient();
   const openAlert = useModalStore(state => state.openAlert);
   return useMutation({
-    mutationFn: () => gatheringService.joinGathering(id),
+    mutationFn: async () => {
+      const service = await createGatheringService();
+      return service.joinGathering(id);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GATHERING.detail(id)],
@@ -26,7 +29,10 @@ export const useLeaveGatheringMutation = (id: string) => {
   const openAlert = useModalStore(state => state.openAlert);
 
   return useMutation({
-    mutationFn: () => gatheringService.leaveGathering(id),
+    mutationFn: async () => {
+      const service = await createGatheringService();
+      return service.leaveGathering(id);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GATHERING.detail(id)],
@@ -38,7 +44,7 @@ export const useLeaveGatheringMutation = (id: string) => {
   });
 };
 
-export const useJoinGathering = (id: string, currentUserId: number) => {
+export const useJoinGathering = (id: string, currentUserId?: number) => {
   const { mutate: joinGathering } = useJoinGatheringMutation(id);
   const { mutate: leaveGathering } = useLeaveGatheringMutation(id);
   const openConfirm = useModalStore(state => state.openConfirm);
