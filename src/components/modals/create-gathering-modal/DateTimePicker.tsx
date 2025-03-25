@@ -16,6 +16,8 @@ interface IDateTimePickerProps {
   setRegistrationEndValue?: (value: string) => void;
 }
 
+type DateTimeChangeType = "date" | "time";
+
 const DateTimePicker = ({
   type,
   dateTimeValue,
@@ -29,6 +31,7 @@ const DateTimePicker = ({
         ? new Date(dateTimeValue)
         : undefined,
   });
+
   const calendarRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [displayValue, setDisplayValue] = useState<string>("");
@@ -44,20 +47,17 @@ const DateTimePicker = ({
 
   useClickOutside(calendarRef, () => setIsOpen(false));
 
-  const handleDateChange = (date: Date | undefined) => {
-    if (date) {
-      selectDate(date);
-      const formattedDate = date.toISOString();
-      if (type === "dateTime") {
-        setDateTimeValue?.(formattedDate);
-      } else {
-        setRegistrationEndValue?.(formattedDate);
-      }
-    }
-  };
+  const handleDateTimeChange = (
+    date: Date | undefined,
+    changeType: DateTimeChangeType,
+  ) => {
+    if (!date) return;
 
-  const handleTimeChange = (value: Date) => {
-    const formattedDate = value.toISOString();
+    if (changeType === "date") {
+      selectDate(date);
+    }
+
+    const formattedDate = date.toISOString();
     if (type === "dateTime") {
       setDateTimeValue?.(formattedDate);
     } else {
@@ -81,10 +81,15 @@ const DateTimePicker = ({
             ref={calendarRef}
             className="absolute bottom-20 left-0 z-10 flex w-full flex-col items-center justify-center gap-3 divide-x-0 divide-gray-200 rounded-2xl border border-gray-200 bg-white p-3 md:bottom-10 md:w-fit md:flex-row md:divide-x"
           >
-            <Calendar {...calendarProps} onSelect={handleDateChange} />
+            <Calendar
+              {...calendarProps}
+              onSelect={(date: Date | undefined) =>
+                handleDateTimeChange(date, "date")
+              }
+            />
             <TimePicker
               selectedDate={selectedDate}
-              setValue={handleTimeChange}
+              setValue={value => handleDateTimeChange(value, "time")}
             />
           </div>
         )}

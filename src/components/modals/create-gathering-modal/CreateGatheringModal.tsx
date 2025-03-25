@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import Dropdown from "@/components/common/Dropdown";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -18,6 +18,7 @@ import {
   CreateGatheringFormSchema,
   CreateGatheringFormType,
 } from "@/schemas/gatheringSchema";
+import { createFormDataFromObject } from "@/utils/form";
 
 const labelTitleStyle = "text-base font-semibold text-gray-800";
 const errorMsgStyle = "text-sm font-semibold text-red-600";
@@ -28,7 +29,7 @@ const CreateGatheringModal = () => {
     handleSubmit,
     setValue,
     getValues,
-    watch,
+    control,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -36,20 +37,16 @@ const CreateGatheringModal = () => {
     resolver: zodResolver(CreateGatheringFormSchema),
   });
 
-  const locationValue = watch("location");
+  const location = useWatch({
+    control,
+    name: "location",
+    defaultValue: GATHERING_FORM.location,
+  });
 
   const { handleCreateGathering, isPending } = useCreateGathering();
 
   const onSubmit = (data: CreateGatheringFormType) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("location", data.location);
-    formData.append("image", data.image);
-    formData.append("type", data.type);
-    formData.append("dateTime", data.dateTime);
-    formData.append("registrationEnd", data.registrationEnd);
-    formData.append("capacity", data.capacity.toString());
-    console.log(formData);
+    const formData = createFormDataFromObject(data);
     handleCreateGathering(formData);
   };
 
@@ -84,13 +81,15 @@ const CreateGatheringModal = () => {
               <span className={errorMsgStyle}>{errors.type.message}</span>
             )}
           </div>
-          {locationValue !== SERVICE_LIST.ONLINE.location && (
+          {location !== SERVICE_LIST.ONLINE.location && (
             <div className="flex flex-col gap-2">
               <Label className={labelTitleStyle}>장소</Label>
               <Dropdown
                 type="form"
                 placeholder="장소를 선택해주세요."
-                onSelect={value => setValue("location", value)}
+                onSelect={value =>
+                  setValue("location", value, { shouldValidate: true })
+                }
               />
               {errors.location && (
                 <span className={errorMsgStyle}>{errors.location.message}</span>
@@ -99,16 +98,22 @@ const CreateGatheringModal = () => {
           )}
           <div className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>이미지</Label>
-            <ImageUploader setValue={value => setValue("image", value)} />
+            <ImageUploader
+              setValue={value =>
+                setValue("image", value, { shouldValidate: true })
+              }
+            />
             {errors.image && (
               <span className={errorMsgStyle}>{errors.image.message}</span>
             )}
           </div>
 
           <DateTimeAndEndTimePicker
-            setDateTimeValue={value => setValue("dateTime", value)}
+            setDateTimeValue={value =>
+              setValue("dateTime", value, { shouldValidate: true })
+            }
             setRegistrationEndValue={value =>
-              setValue("registrationEnd", value)
+              setValue("registrationEnd", value, { shouldValidate: true })
             }
             dateTimeValue={getValues("dateTime")}
             registrationEndValue={getValues("registrationEnd")}

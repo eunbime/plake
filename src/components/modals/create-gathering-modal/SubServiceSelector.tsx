@@ -16,6 +16,7 @@ const SubServiceSelector = ({
     <div className="flex w-full gap-2">
       {SUB_SERVICE_LIST.OFFLINE.map(subService => (
         <Button
+          type="button"
           className={clsx(
             "w-full bg-gray-200 text-sm font-medium text-gray-900 hover:bg-opacity-90",
             selectedSubService === subService.value && "bg-gray-900 text-white",

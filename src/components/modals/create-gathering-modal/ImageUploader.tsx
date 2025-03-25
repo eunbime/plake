@@ -34,6 +34,7 @@ const ImageUploader = ({ setValue }: ImageUploaderProps) => {
         onChange={handleImageChange}
       />
       <Button
+        type="button"
         variant="purple-outline"
         onClick={() => document.getElementById("image-file")?.click()}
       >
