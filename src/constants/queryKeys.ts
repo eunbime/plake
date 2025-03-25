@@ -7,12 +7,15 @@ export const QUERY_KEYS = {
     list: [...GATHERING_ALL, "list"] as const,
     popular: [...GATHERING_ALL, "list", "popular"] as const,
     deadline: [...GATHERING_ALL, "list", "deadline"] as const,
-    detail: (id: string) => [...GATHERING_ALL, id] as const,
-    participants: (id: string) =>
-      [...GATHERING_ALL, id, "participants"] as const,
+    detail: (gatheringId: string) =>
+      [...GATHERING_ALL, { gatheringId }] as const,
+    participants: (gatheringId: string) =>
+      [...GATHERING_ALL, { gatheringId }, "participants"] as const,
   },
   REVIEW: {
     all: REVIEW_ALL,
     list: [...REVIEW_ALL, "list"] as const,
+    listByGatheringId: (gatheringId: string) =>
+      [...REVIEW_ALL, "list", { gatheringId }] as const,
   },
 };
