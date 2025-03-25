@@ -53,7 +53,7 @@ const CreateGatheringModal = () => {
   return (
     <Modal
       variant="mobileFull"
-      isOpen={true}
+      isOpen={false}
       onClose={() => {}}
       title="모임 만들기"
     >
