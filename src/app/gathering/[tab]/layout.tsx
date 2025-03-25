@@ -17,8 +17,8 @@ const GatheringLayout = ({ children }: { children: React.ReactNode }) => {
         <hr className="my-4 border-gray-200" />
         <GatheringFilterSort />
         {children}
+        <CreateGatheringModal />
       </div>
-      <CreateGatheringModal />
     </>
   );
 };

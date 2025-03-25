@@ -10,7 +10,7 @@ export const GATHERING = {
 export const GATHERING_FORM: CreateGatheringFormType = {
   name: "",
   location: "",
-  image: new FormData(),
+  image: new File([], ""),
   type: "",
   dateTime: "",
   registrationEnd: "",
@@ -25,17 +25,16 @@ export const SERVICE_LIST = {
   ONLINE: {
     value: "online",
     name: "온라인",
+    location: "홍대입구",
+    type: "WORKATION",
   },
 } as const;
 
 export const SUB_SERVICE_LIST = {
   OFFLINE: [
-    { name: "운동", value: "DALLAEMFIT" },
-    { name: "미식", value: "OFFICE_STRETCHING" },
-  ],
-  ONLINE: [
-    { name: "게임", value: "MINDFULNESS" },
-    { name: "코딩", value: "WORKATION" },
+    { name: "운동", value: "OFFICE_STRETCHING" },
+    { name: "미식", value: "MINDFULNESS" },
+    { name: "예술", value: "WORKATION" },
   ],
 } as const;
 

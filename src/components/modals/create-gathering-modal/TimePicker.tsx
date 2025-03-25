@@ -48,6 +48,7 @@ const TimePicker = ({ selectedDate, setValue }: ITimePickerProps) => {
           const hour = index === 0 ? 12 : index;
           return (
             <Button
+              type="button"
               variant={selectedHour === hour ? "purple" : "ghost"}
               key={index}
               onClick={() => {
@@ -63,6 +64,7 @@ const TimePicker = ({ selectedDate, setValue }: ITimePickerProps) => {
       <div className={baseStyle}>
         {Array.from({ length: 12 }, (_, index) => index * 5).map(minute => (
           <Button
+            type="button"
             variant={selectedMinute === minute ? "purple" : "ghost"}
             key={minute}
             onClick={() => {
@@ -76,6 +78,7 @@ const TimePicker = ({ selectedDate, setValue }: ITimePickerProps) => {
       </div>
       <div className={baseStyle}>
         <Button
+          type="button"
           variant={selectedAmPm === "PM" ? "purple" : "ghost"}
           onClick={() => {
             setSelectedAmPm("PM");
@@ -85,6 +88,7 @@ const TimePicker = ({ selectedDate, setValue }: ITimePickerProps) => {
           {"PM"}
         </Button>
         <Button
+          type="button"
           variant={selectedAmPm === "AM" ? "purple" : "ghost"}
           onClick={() => {
             setSelectedAmPm("AM");
