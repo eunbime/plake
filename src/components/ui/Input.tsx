@@ -63,7 +63,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         className="relative"
         animate={errorMsg ? shakeAnimation : {}}
         transition={animationTransition}
-        key={`input-wrapper-${errorMsg}`}
       >
         <Label
           htmlFor={id}
