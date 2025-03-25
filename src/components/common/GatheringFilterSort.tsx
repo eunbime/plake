@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 import Dropdown from "@/components/common/Dropdown";
 import FilterCalendar from "@/components/common/FilterCalendar";
-import { ONLINE_PATH } from "@/constants/gatheringFilterParams";
+import { OFFLINE_PATH } from "@/constants/gatheringFilterParams";
 import { SORT_OPTION } from "@/constants/ui";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 
@@ -15,7 +15,7 @@ const GatheringFilterSort = () => {
   return (
     <section className="mb-6 flex items-center justify-between">
       <div className="flex items-center justify-center gap-2">
-        {pathname === ONLINE_PATH && (
+        {pathname === OFFLINE_PATH && (
           <Dropdown onSelect={value => setSearchParams({ location: value })} />
         )}
         <FilterCalendar />
