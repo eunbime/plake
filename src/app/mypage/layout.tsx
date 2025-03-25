@@ -17,7 +17,7 @@ export default function MypageLayout({ children }: LayoutProps) {
           마이 페이지
         </h1>
         <MyProfile />
-        <section className="mt-4 flex min-h-[60vh] w-full flex-col border-t-2 border-gray-200 bg-white px-4 py-6 md:mt-6 md:p-6">
+        <section className="mt-4 flex min-h-[75vh] w-full flex-col border-t-2 border-gray-200 bg-white px-4 py-6 md:mt-6 md:p-6">
           <NavTab />
           {children}
         </section>

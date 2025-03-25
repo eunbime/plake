@@ -1,11 +1,19 @@
-import EmptyState from "@/app/mypage/_components/EmptyState";
+import MyCardList from "@/app/mypage/_components/MyCardList";
+import FetchBoundary from "@/components/boundary/FetchBoundary";
+import LoadingDots from "@/components/common/LoadingDots";
+import { getCookieOfToken } from "@/utils/cookieToken";
 
-const Page = () => {
+const Page = async () => {
+  const token = await getCookieOfToken();
+
+  // TODO: 로그인 alert 띄우기
+  if (!token) return null;
+
   return (
-    <>
-      {/* 추가 예정 */}
-      <EmptyState message="신청한 모임이 아직 없어요" />
-    </>
+    // TODO: MyCardSkeleton Component 제작 및 적용
+    <FetchBoundary fallback={<LoadingDots />}>
+      <MyCardList direction="mypage" token={token} />
+    </FetchBoundary>
   );
 };
 
