@@ -5,29 +5,16 @@ import { useState } from "react";
 
 import Avatar from "@/components/common/Avatar";
 import EditProfileModal from "@/components/modals/edit-profile-modal/EditProfileModal";
-import { IUser } from "@/types/user";
+import MyProfileSkeleton from "@/components/skeletons/MyProfileSkeleton";
+import useUserStore from "@/stores/useUserStore";
 
-const mockUser: IUser = {
-  teamId: 1,
-  id: 123,
-  email: "user@exaasdfasdfasdfasdmple.com",
-  name: "홍길동",
-  companyName: "코드잇",
-  image: "/images/avatar_default.png",
-  createdAt: "2025-03-17T02:20:53.293Z",
-  updatedAt: "2025-03-17T02:20:53.293Z",
-};
-
-interface MyProfileProps {
-  user?: IUser;
-}
-
-const MyProfile = ({ user = mockUser }: MyProfileProps) => {
+const MyProfile = () => {
+  const user = useUserStore(state => state.user);
   const [isOpen, setIsOpen] = useState(false);
 
   const profileInfo = [
-    { label: "company.", value: user.companyName },
-    { label: "E-mail.", value: user.email },
+    { label: "company.", value: user?.companyName || "" },
+    { label: "E-mail.", value: user?.email || "" },
   ];
 
   return (
@@ -43,7 +30,11 @@ const MyProfile = ({ user = mockUser }: MyProfileProps) => {
             height={47}
             style={{ width: "158px", height: "47px" }}
           />
-          <button className="z-10" onClick={() => setIsOpen(true)}>
+          <button
+            className="z-10"
+            onClick={() => setIsOpen(true)}
+            disabled={!user}
+          >
             <Image
               src="/images/edit-button.png"
               alt="수정"
@@ -55,32 +46,43 @@ const MyProfile = ({ user = mockUser }: MyProfileProps) => {
         <div className="absolute bottom-2 w-full border-b-2 border-purple-400 px-6"></div>
       </div>
 
-      <div className="flex h-[109px] gap-3 bg-white px-6">
-        <div className="mt-[-16px]">
-          <Avatar size={"large"} type={"default"} disableClick={true} />
+      {user ? (
+        <div className="flex h-[109px] gap-3 bg-white px-6">
+          <div className="mt-[-16px]">
+            <Avatar
+              size={"large"}
+              type={"default"}
+              disableClick={true}
+              imgPath={user.image}
+            />
+          </div>
+          <div>
+            <p className="mb-2 mt-1 truncate font-semibold">{user.name}</p>
+            <dl className="space-y-1">
+              {profileInfo.map((info, index) => (
+                <div key={index} className="flex flex-wrap">
+                  <dt className="w-[72px] text-left text-sm font-semibold text-gray-800">
+                    {info.label}
+                  </dt>
+                  <dd className="w-[calc(100%-72px)] truncate text-sm text-gray-700">
+                    {info.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
-        <div>
-          <p className="mb-2 mt-1 truncate font-semibold">{user.name}</p>
-          <dl className="space-y-1">
-            {profileInfo.map((info, index) => (
-              <div key={index} className="flex flex-wrap">
-                <dt className="w-[72px] text-left text-sm font-semibold text-gray-800">
-                  {info.label}
-                </dt>
-                <dd className="w-[calc(100%-72px)] truncate text-sm text-gray-700">
-                  {info.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </div>
+      ) : (
+        <MyProfileSkeleton />
+      )}
 
-      <EditProfileModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        user={user}
-      />
+      {user && (
+        <EditProfileModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          user={user}
+        />
+      )}
     </section>
   );
 };

@@ -17,7 +17,7 @@ export interface IGathering {
   location: string;
   participantCount: number;
   capacity: number;
-  image: string;
+  image: string | null;
   createdBy: number;
   canceledAt: string | null;
 }
@@ -29,5 +29,14 @@ export interface IParticipant {
   gatheringId: number;
   joinedAt: string;
 }
+
+export type FilterParamsObj = {
+  location?: string;
+  date?: string;
+  sort?: string;
+  sortBy?: string;
+  type?: string;
+  sortOrder?: string;
+};
 
 export * from "./my-card";
