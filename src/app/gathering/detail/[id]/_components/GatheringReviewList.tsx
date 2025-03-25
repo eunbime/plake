@@ -1,11 +1,14 @@
 "use client";
 
-import { useSuspenseReviewList } from "@/hooks/review/useReviewList";
+import { useParams } from "next/navigation";
+
+import { useSuspenseReviewsByGatheringId } from "@/hooks/review/useReviewsByGatheringId";
 
 import GatheringReviewItem from "./GatheringReviewItem";
 
 const GatheringReviewList = () => {
-  const { data } = useSuspenseReviewList();
+  const { id } = useParams<{ id: string }>();
+  const { data } = useSuspenseReviewsByGatheringId(id);
 
   return (
     <section className="flex h-full min-h-[80vh] flex-col gap-6 border-t-2 border-gray-200 bg-white p-6 pb-20">

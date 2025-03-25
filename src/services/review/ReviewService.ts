@@ -16,6 +16,10 @@ class ReviewService extends Service {
     return this.http.get<ReviewResponse>("/reviews");
   };
 
+  getReviewsByGatheringId = (gatheringId: string) => {
+    return this.http.get<ReviewResponse>(`/reviews?gatheringId=${gatheringId}`);
+  };
+
   createReview = () => {
     return this.http.post("/reviews", {});
   };
