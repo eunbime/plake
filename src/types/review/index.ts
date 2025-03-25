@@ -10,3 +10,10 @@ export interface IReview {
   comment: string;
   createdAt: string;
 }
+
+export interface IReviewResponse {
+  data: IReview[];
+  totalItemCount: number;
+  currentPage: number;
+  totalPages: number;
+}

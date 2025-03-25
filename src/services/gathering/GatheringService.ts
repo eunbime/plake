@@ -1,4 +1,3 @@
-import { CreateGatheringFormType } from "@/schemas/gatheringSchema";
 import Service from "@/services/Service";
 import { IGathering, IMyGathering } from "@/types/gathering";
 import { getCookieOfToken } from "@/utils/cookieToken";
@@ -28,24 +27,20 @@ class GatheringService extends Service {
     return data;
   }
 
-  createGathering(formData: CreateGatheringFormType) {
-    const data = this.http.post("/gatherings", formData);
-    return data;
+  createGathering(formData: FormData) {
+    return this.http.post("/gatherings", formData);
   }
 
   deleteGathering(id: string) {
-    const data = this.http.put(`/gatherings/${id}/cancel`);
-    return data;
+    return this.http.put(`/gatherings/${id}/cancel`);
   }
 
   joinGathering(id: string) {
-    const data = this.http.post(`/gatherings/${id}/join`);
-    return data;
+    return this.http.post(`/gatherings/${id}/join`);
   }
 
   leaveGathering(id: string) {
-    const data = this.http.delete(`/gatherings/${id}/leave`);
-    return data;
+    return this.http.delete(`/gatherings/${id}/leave`);
   }
 
   getMyGatheringList(reviewedOnly?: boolean, params?: string) {
