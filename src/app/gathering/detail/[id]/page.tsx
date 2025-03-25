@@ -4,10 +4,10 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-import FloatingBar from "@/components/gathering-detail/FloatingBar";
 import { prefetchGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
 import { prefetchReviewList } from "@/hooks/review/useReviewList";
 
+import FloatingBar from "./_components/FloatingBar";
 import GatheringInformation from "./_components/GatheringInformation";
 import GatheringReviewBoard from "./_components/GatheringReviewBoard";
 

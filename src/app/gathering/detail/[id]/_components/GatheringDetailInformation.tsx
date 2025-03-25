@@ -6,9 +6,10 @@ import { FaCircleCheck } from "react-icons/fa6";
 import DateTimeTag from "@/components/common/DateTimeTag";
 import FavoriteButton from "@/components/common/FavoriteButton";
 import ProgressBar from "@/components/common/ProgressBar";
-import ParticipantAvatarStack from "@/components/gathering-detail/ParticipantAvatarStack";
 import { GATHERING } from "@/constants/gathering";
 import { useSuspenseGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+
+import ParticipantAvatarStack from "./ParticipantAvatarStack";
 
 interface IGatheringDetailInformationProps {
   id: string;

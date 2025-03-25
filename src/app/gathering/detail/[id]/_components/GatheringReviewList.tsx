@@ -1,7 +1,8 @@
 "use client";
 
-import GatheringReviewItem from "@/components/gathering-detail/GatheringReviewItem";
 import { useSuspenseReviewList } from "@/hooks/review/useReviewList";
+
+import GatheringReviewItem from "./GatheringReviewItem";
 
 const GatheringReviewList = () => {
   const { data } = useSuspenseReviewList();
