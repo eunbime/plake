@@ -12,7 +12,11 @@ const Page = async () => {
   return (
     // TODO: MyCardSkeleton Component 제작 및 적용
     <FetchBoundary fallback={<LoadingDots />}>
-      <MyCardList direction="mypage" token={token} />
+      <MyCardList
+        direction="mypage"
+        token={token}
+        emptyMessage="신청한 모임이 아직 없어요"
+      />
     </FetchBoundary>
   );
 };

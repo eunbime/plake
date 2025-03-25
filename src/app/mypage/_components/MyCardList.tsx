@@ -12,16 +12,18 @@ import EmptyState from "./EmptyState";
 const MyCardList = ({
   direction,
   token,
+  emptyMessage,
 }: {
   direction: DirectionType;
   token: string;
+  emptyMessage: string;
 }) => {
   const reviewedOnly = direction === "reviews";
   const { data } = useSuspenseMyGatheringList({ reviewedOnly, token });
   const list = data?.pages.flat() ?? [];
 
   if (!list.length) {
-    return <EmptyState message="신청한 모임이 아직 없어요" />;
+    return <EmptyState message={emptyMessage} />;
   }
 
   return (

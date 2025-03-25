@@ -13,7 +13,10 @@ const MyCardItem = ({
   buttonProps,
 }: MyCardItemProps) => {
   return (
-    <Link href={"/mypage"} className="flex w-full flex-col gap-4 sm:flex-row">
+    <Link
+      href={`/mypage/detail/${gathering.id}`}
+      className="flex w-full flex-col gap-4 sm:flex-row"
+    >
       <div className="relative h-[156px] w-full min-w-[280px] sm:w-[280px]">
         <Image
           src={gathering.image || "/images/gathering_default.png"}

@@ -1,5 +1,3 @@
-"use client";
-
 import { Suspense } from "react";
 
 import ReviewContent from "@/app/mypage/_components/ReviewContent";
