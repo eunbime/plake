@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import gatheringService from "@/services/gathering/GatheringService";
+import { createGatheringService } from "@/services/gathering/GatheringService";
 import useModalStore from "@/stores/useModalStore";
 
 export const useCancelGatheringMutation = (
@@ -13,7 +13,10 @@ export const useCancelGatheringMutation = (
   const openAlert = useModalStore(state => state.openAlert);
 
   return useMutation({
-    mutationFn: () => gatheringService.deleteGathering(id),
+    mutationFn: async () => {
+      const service = await createGatheringService();
+      return service.deleteGathering(id);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GATHERING.all],
@@ -39,7 +42,7 @@ export const useCancelGathering = (id: string, isOrganizer: boolean) => {
   const handleCancelGathering = () => {
     openConfirm("정말 취소하시겠습니까?", () => {
       cancelGathering();
-      router.push("/gatherings");
+      router.push("/gathering/offline");
     });
   };
 
