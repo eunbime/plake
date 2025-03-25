@@ -17,12 +17,13 @@ const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
   const myReviewChk = User.id === tempUserId;
 
   return (
-    <article className="flex flex-col gap-6 md:flex-row">
+    <div className="flex flex-col gap-6 md:flex-row">
       <div className="relative min-h-[156px] w-full max-w-[280px] overflow-hidden rounded-3xl">
         <Image
           src={Gathering.image ?? "https://picsum.photos/500/700"}
           alt={Gathering.name}
           fill
+          sizes="(max-width: 768px)"
           style={{ objectFit: "cover" }}
         />
       </div>
@@ -52,9 +53,9 @@ const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
             </time>
           </p>
         </div>
-        <hr className="border-b-2 border-dashed border-gray-200" />
       </div>
-    </article>
+      <hr className="border-b-2 border-dashed border-gray-200" />
+    </div>
   );
 };
 

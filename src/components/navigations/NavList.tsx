@@ -89,7 +89,7 @@ const NavList = ({ activePath }: INavListProps) => {
   const currentPath = activePath || pathname;
 
   const isActive = (path: string): boolean => {
-    return currentPath.startsWith(path);
+    return currentPath.split("/")[1].startsWith(path.split("/")[1]);
   };
 
   return (

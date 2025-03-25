@@ -38,3 +38,21 @@ export const reviewList: IMainReview[] = [
     rating: 5,
   },
 ] as const;
+
+export const REVIEW_SORT_OPTION = [
+  { value: "createdAt&desc", label: "최신순" },
+  { value: "createdAt&asc", label: "오래된순" },
+  { value: "score&desc", label: "평점 높은순" },
+  { value: "score&asc", label: "평점 낮은순" },
+  { value: "participantCount&desc", label: "인원 많은순" },
+  { value: "participantCount&asc", label: "인원 적은순" },
+];
+
+export const REVIEW_TAB = [
+  { name: "오프라인", value: "", href: "/all-reviews/offline" },
+  { name: "온라인", value: "online", href: "/all-reviews/online" },
+];
+
+export const REVIEW_ONLINE_TAB = "/all-reviews/online";
+
+export const REVIEW_OFFLINE_TAB = "/all-reviews/offline";
