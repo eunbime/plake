@@ -4,7 +4,7 @@ export const nameRegex = z
   .string()
   .regex(/^[가-힣a-zA-Z0-9]+$/, "한글, 영문, 숫자만 입력 가능합니다.");
 
-export const emailRegex = z.string().email({
+const emailRegex = z.string().email({
   message: "유효한 이메일 주소를 입력해주세요.",
 });
 

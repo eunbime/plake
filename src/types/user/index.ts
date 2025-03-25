@@ -8,3 +8,5 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
 }
+
+export type IUpdateUser = Omit<IUser, "teamId">;
