@@ -18,8 +18,9 @@ interface IGatheringDetailInformationProps {
 const GatheringDetailInformation = ({
   id,
 }: IGatheringDetailInformationProps) => {
-  const { data } = useSuspenseGatheringDetail(id);
-  const { name, location, capacity, participantCount, dateTime } = data;
+  const {
+    data: { name, location, capacity, participantCount, dateTime },
+  } = useSuspenseGatheringDetail(id);
 
   const progress = (participantCount / capacity) * 100;
 

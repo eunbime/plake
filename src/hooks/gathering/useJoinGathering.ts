@@ -44,7 +44,7 @@ export const useLeaveGatheringMutation = (id: string) => {
   });
 };
 
-export const useJoinGathering = (id: string, currentUserId: number) => {
+export const useJoinGathering = (id: string, currentUserId?: number) => {
   const { mutate: joinGathering } = useJoinGatheringMutation(id);
   const { mutate: leaveGathering } = useLeaveGatheringMutation(id);
   const openConfirm = useModalStore(state => state.openConfirm);
