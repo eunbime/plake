@@ -30,7 +30,6 @@ const ServiceSelector = ({
     } else {
       setLocationValue("");
     }
-    console.log(id);
   };
 
   const handleSubServiceChange = (value: string) => {
