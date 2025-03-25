@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ONLINE_PARAMS, ONLINE_TAB } from "@/constants/gathering";
+import { ONLINE, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { MAIN_TAB } from "@/constants/ui";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import { cn } from "@/lib/utils";
@@ -20,9 +20,7 @@ const MainTab = () => {
           href={tab.href}
           aria-label="메인 주제 탭"
           className="relative"
-          onClick={() =>
-            pathname === ONLINE_TAB && setSearchParams(ONLINE_PARAMS)
-          }
+          onClick={() => pathname === ONLINE_PATH && setSearchParams(ONLINE)}
         >
           <span
             className={cn(

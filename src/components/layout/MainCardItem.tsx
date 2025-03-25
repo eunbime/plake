@@ -9,6 +9,8 @@ import { IoMdPerson } from "react-icons/io";
 import { MdWavingHand } from "react-icons/md";
 import { RxDividerVertical } from "react-icons/rx";
 
+import { ONLINE } from "@/constants/gatheringFilterParams";
+
 import DateTimeTag from "../common/DateTimeTag";
 import DeadlineTag from "../common/DeadlineTag";
 import FavoriteButton from "../common/FavoriteButton";
@@ -66,7 +68,7 @@ const MainCardItem = ({
                   <p className="text-lg font-semibold text-gray-800">{name}</p>
                   <RxDividerVertical className="text-gray-900" />
                   <span className="ml-[3px] min-w-16 text-sm text-gray-700">
-                    {location === "홍대입구" ? "온라인" : location}
+                    {location === ONLINE.location ? "온라인" : location}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
