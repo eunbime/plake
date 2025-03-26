@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/Button";
-import { REVIEW_OFFLINE_TAB } from "@/constants/review";
+import { REVIEW_OFFLINE_PATH } from "@/constants/review";
 import { SUB_TAB } from "@/constants/ui";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import { cn } from "@/lib/utils";
@@ -17,10 +17,10 @@ const ReviewSubTab = () => {
 
   return (
     <div className="align-center flex gap-2">
-      {SUB_TAB[pathname === REVIEW_OFFLINE_TAB ? "OFFLINE" : "ONLINE"].map(
+      {SUB_TAB[pathname === REVIEW_OFFLINE_PATH ? "OFFLINE" : "ONLINE"].map(
         (tab, i) => (
           <Link
-            href={tab.value ? `?type=${tab.value}` : REVIEW_OFFLINE_TAB}
+            href={tab.value ? `?type=${tab.value}` : REVIEW_OFFLINE_PATH}
             key={i}
           >
             <Button

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ONLINE_PARAMS } from "@/constants/gathering";
-import { REVIEW_ONLINE_TAB, REVIEW_TAB } from "@/constants/review";
+import { ONLINE } from "@/constants/gatheringFilterParams";
+import { REVIEW_ONLINE_PATH, REVIEW_TAB } from "@/constants/review";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +21,7 @@ const ReviewTab = () => {
           aria-label="리뷰페이지 주제 탭"
           className="relative"
           onClick={() =>
-            pathname === REVIEW_ONLINE_TAB && setSearchParams(ONLINE_PARAMS)
+            pathname === REVIEW_ONLINE_PATH && setSearchParams(ONLINE)
           }
         >
           <span

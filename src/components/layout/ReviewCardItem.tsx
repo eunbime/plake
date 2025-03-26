@@ -1,20 +1,20 @@
 import dayjs from "dayjs";
 import Image from "next/image";
+import { useShallow } from "zustand/shallow";
 
 import Avatar from "@/components/common/Avatar";
 import Rating from "@/components/common/Rating";
+import useUserStore from "@/stores/useUserStore";
 import { IReview } from "@/types/review";
 
 type TReviewCardItemProps = {
   review: IReview;
 };
 
-// 내 리뷰 확인용 - 추후 삭제
-const tempUserId = 314;
-
 const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
   const { comment, createdAt, score, User, Gathering } = review;
-  const myReviewChk = User.id === tempUserId;
+  const { user } = useUserStore(useShallow(state => ({ user: state.user })));
+  const myReviewChk = User.id === user?.id;
 
   return (
     <div className="flex flex-col gap-6 md:flex-row">

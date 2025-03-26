@@ -53,6 +53,6 @@ export const REVIEW_TAB = [
   { name: "온라인", value: "online", href: "/all-reviews/online" },
 ];
 
-export const REVIEW_ONLINE_TAB = "/all-reviews/online";
+export const REVIEW_ONLINE_PATH = "/all-reviews/online";
 
-export const REVIEW_OFFLINE_TAB = "/all-reviews/offline";
+export const REVIEW_OFFLINE_PATH = "/all-reviews/offline";
