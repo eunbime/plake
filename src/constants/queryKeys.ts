@@ -17,5 +17,6 @@ export const QUERY_KEYS = {
     list: [...REVIEW_ALL, "list"] as const,
     listByGatheringId: (gatheringId: string) =>
       [...REVIEW_ALL, "list", { gatheringId }] as const,
+    score: [...REVIEW_ALL, "score"] as const,
   },
 };

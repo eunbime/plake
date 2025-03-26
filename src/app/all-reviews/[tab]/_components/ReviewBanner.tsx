@@ -4,6 +4,7 @@ const ReviewBanner = () => {
   return (
     <section className="mb-8 flex items-center gap-2">
       <Image
+        priority
         src="/images/review_head.png"
         alt="review-head"
         width={72}

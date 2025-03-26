@@ -1,5 +1,6 @@
 import Service from "@/services/Service";
 import { IReviewResponse } from "@/types/review";
+import { IScore } from "@/types/review/score";
 import { getCookieOfToken } from "@/utils/cookieToken";
 
 class ReviewService extends Service {
@@ -10,6 +11,9 @@ class ReviewService extends Service {
 
   getReviewList = () => {
     return this.http.get<IReviewResponse>("/reviews");
+  };
+  getReviewScore = () => {
+    return this.http.get<IScore[]>("/reviews/scores");
   };
 
   getReviewsByGatheringId = (gatheringId: string) => {
