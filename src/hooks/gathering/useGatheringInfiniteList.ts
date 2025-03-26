@@ -7,7 +7,7 @@ import {
 import { ONLINE } from "@/constants/gatheringFilterParams";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import GatheringService from "@/services/gathering/GatheringService";
-import { IGathering } from "@/types/gathering";
+import { IGathering, IGatheringFilterParams } from "@/types/gathering";
 
 const filterByValue = (data: {
   pages: IGathering[][];
@@ -19,10 +19,13 @@ const filterByValue = (data: {
   pagesParams: data.pageParams,
 });
 
-const gatheringQueryOption = (type?: string, params?: string | undefined) => ({
-  queryKey: [QUERY_KEYS.GATHERING.list, params],
+const gatheringInfiniteListQueryOption = (
+  type?: string,
+  params?: IGatheringFilterParams,
+) => ({
+  queryKey: [QUERY_KEYS.GATHERING.listByParams(params)],
   queryFn: ({ pageParam = 1 }) => {
-    return GatheringService.getGatheringList(pageParam, params);
+    return GatheringService.getGatheringInfiniteList(pageParam, params);
   },
   initialPageParam: 1,
   throwOnError: true,
@@ -35,22 +38,30 @@ const gatheringQueryOption = (type?: string, params?: string | undefined) => ({
   select: type === "offline" ? filterByValue : undefined,
 });
 
-export const useGatheringList = (type?: string, params?: string) => {
-  return useInfiniteQuery(gatheringQueryOption(type, params));
+export const useGatheringInfiniteList = (
+  type?: string,
+  params?: IGatheringFilterParams,
+) => {
+  return useInfiniteQuery(gatheringInfiniteListQueryOption(type, params));
 };
 
-export const useSuspenseGatheringList = (type?: string, params?: string) => {
+export const useSuspenseGatheringInfiniteList = (
+  type?: string,
+  params?: IGatheringFilterParams,
+) => {
   const { data, hasNextPage, fetchNextPage, status } = useSuspenseInfiniteQuery(
-    gatheringQueryOption(type, params),
+    gatheringInfiniteListQueryOption(type, params),
   );
 
   return { data, hasNextPage, fetchNextPage, status };
 };
 
-export const prefetchGateringList = async (
+export const prefetchGateringInfiniteList = async (
   queryClient: QueryClient,
   type?: string,
-  params?: string,
+  params?: IGatheringFilterParams,
 ) => {
-  return queryClient.prefetchInfiniteQuery(gatheringQueryOption(type, params));
+  return queryClient.prefetchInfiniteQuery(
+    gatheringInfiniteListQueryOption(type, params),
+  );
 };
