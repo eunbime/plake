@@ -1,30 +1,12 @@
 import Service from "@/services/Service";
-import { IGathering } from "@/types/gathering";
 import { getCookieOfToken } from "@/utils/cookieToken";
 
 class GatheringService extends Service {
-  constructor(token?: string) {
+  constructor(token: string) {
     super();
-    this.setToken(token || "");
+    this.setToken(token);
   }
 
-  getGatheringList(type?: string, params?: string) {
-    const isOnline = type === "online";
-    const onlineFilter = isOnline ? "?location=홍대입구" : "";
-    const filterParams = isOnline ? onlineFilter + `&${params}` : `?${params}`;
-
-    if (isOnline && !params)
-      return this.http.get<IGathering[]>(`/gatherings${onlineFilter}`);
-
-    if (params)
-      return this.http.get<IGathering[]>(`/gatherings${filterParams}`);
-
-    return this.http.get<IGathering[]>(`/gatherings`);
-  }
-  getGatheringDetail(id: string) {
-    const data = this.http.get<IGathering>(`/gatherings/${id}`);
-    return data;
-  }
   createGathering(formData: FormData) {
     return this.http.post("/gatherings", formData);
   }
@@ -41,9 +23,10 @@ class GatheringService extends Service {
 
 export const createGatheringService = async () => {
   const token = await getCookieOfToken();
+
+  if (!token) {
+    throw new Error("Token is not found");
+  }
+
   return new GatheringService(token);
 };
-
-const gatheringService = new GatheringService();
-
-export default gatheringService;

@@ -1,13 +1,13 @@
 import { infiniteQueryOptions } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { reviewService } from "@/services/review/ReviewService";
+import anonReviewService from "@/services/review/AnonReviewService";
 import { IReviewResponse } from "@/types/review";
 
 export const reviewsByGatheringIdQueryOption = (gatheringId: string) =>
   infiniteQueryOptions({
     queryKey: [QUERY_KEYS.REVIEW.listByGatheringId(gatheringId)],
-    queryFn: () => reviewService.getReviewsByGatheringId(gatheringId),
+    queryFn: () => anonReviewService.getReviewsByGatheringId({ gatheringId }),
     throwOnError: true,
     retry: false,
     initialPageParam: 1,

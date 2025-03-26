@@ -6,8 +6,8 @@ import {
 
 import FetchBoundary from "@/components/boundary/FetchBoundary";
 import MainCarouselSkeleton from "@/components/skeletons/MainCarouselSkeleton";
-import { prefetchDeadlineImminentGatherings } from "@/hooks/gathering/useDeadlineImminentGatherings";
-import { prefetchPopularGatherings } from "@/hooks/gathering/usePopularGatherings";
+import { deadlineImminentGatheringsQueryOption } from "@/hooks/gathering/useDeadlineImminentGatherings";
+import { popularGatheringsQueryOption } from "@/hooks/gathering/usePopularGatherings";
 
 import DeadLineCarousel from "./DeadLineCarousel";
 import PopularCarousel from "./PopularCarousel";
@@ -16,8 +16,8 @@ const MainCarouselContainer = async () => {
   const queryClient = new QueryClient();
 
   await Promise.all([
-    prefetchPopularGatherings(queryClient),
-    prefetchDeadlineImminentGatherings(queryClient),
+    queryClient.prefetchQuery(popularGatheringsQueryOption()),
+    queryClient.prefetchQuery(deadlineImminentGatheringsQueryOption()),
   ]);
 
   return (
