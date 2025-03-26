@@ -3,8 +3,8 @@
 import { usePathname } from "next/navigation";
 
 import { ONLINE_PATH } from "@/constants/gatheringFilterParams";
-import useConvertToQueryStr from "@/hooks/gathering/useGatheringFilterParams";
-import { useSuspenseGatheringList } from "@/hooks/gathering/useGatheringList";
+import useGatheringFilterParams from "@/hooks/gathering/useGatheringFilterParams";
+import { useSuspenseGatheringInfiniteList } from "@/hooks/gathering/useGatheringInfiniteList";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
@@ -14,12 +14,13 @@ const MainCardList = () => {
   const pathname = usePathname();
 
   const { searchParamsObj } = useCustomSearchParams();
-  const params = useConvertToQueryStr(pathname, searchParamsObj);
+  const params = useGatheringFilterParams(pathname, searchParamsObj);
 
-  const { data, status, hasNextPage, fetchNextPage } = useSuspenseGatheringList(
-    pathname === ONLINE_PATH ? "online" : "offline",
-    params,
-  );
+  const { data, status, hasNextPage, fetchNextPage } =
+    useSuspenseGatheringInfiniteList(
+      pathname === ONLINE_PATH ? "online" : "offline",
+      params,
+    );
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting && hasNextPage) {

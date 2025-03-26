@@ -1,3 +1,5 @@
+import { IGatheringFilterParams } from "@/types/gathering";
+
 const GATHERING_ALL = ["gathering"] as const;
 const REVIEW_ALL = ["review"] as const;
 
@@ -6,6 +8,8 @@ export const QUERY_KEYS = {
     all: GATHERING_ALL,
     list: [...GATHERING_ALL, "list"] as const,
     myList: [...GATHERING_ALL, "myList"] as const,
+    listByParams: (params?: IGatheringFilterParams) =>
+      [...GATHERING_ALL, "list", params] as const,
     popular: [...GATHERING_ALL, "list", "popular"] as const,
     deadline: [...GATHERING_ALL, "list", "deadline"] as const,
     detail: (gatheringId: string) =>
