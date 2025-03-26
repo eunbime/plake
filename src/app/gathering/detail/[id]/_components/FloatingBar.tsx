@@ -1,8 +1,10 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
+
 import { Button } from "@/components/ui/Button";
 import { useCancelGathering } from "@/hooks/gathering/useCancelGathering";
-import { useSuspenseGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+import { gatheringDetailQueryOption } from "@/hooks/gathering/useGatheringDetail";
 import { useJoinGathering } from "@/hooks/gathering/useJoinGathering";
 import { useIsParticipant } from "@/hooks/gathering/useParticipants";
 import useCopyLink from "@/hooks/useCopyLink";
@@ -15,7 +17,7 @@ interface IFloatingBarProps {
 const FloatingBar = ({ id }: IFloatingBarProps) => {
   const {
     data: { createdBy },
-  } = useSuspenseGatheringDetail(id);
+  } = useSuspenseQuery(gatheringDetailQueryOption(id));
   const user = useUserStore(state => state.user);
   const currentUserId = user?.id;
 
