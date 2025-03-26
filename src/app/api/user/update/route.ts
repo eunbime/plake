@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { apiFetch } from "@/app/lib/api/apiFetch";
+import ApiClient from "@/app/lib/api/ApiClient";
 import { handleRouteError } from "@/app/lib/api/handleRouteErorr";
 import { getCookieOfToken } from "@/utils/cookieToken";
 
@@ -14,10 +14,11 @@ export async function PUT(req: Request) {
   }
 
   const formData = await req.formData();
+  const client = new ApiClient(token);
 
   try {
-    const result = await apiFetch("/auths/user", "PUT", formData, token);
-    return NextResponse.json(result);
+    const data = await client.put("/auths/user", formData);
+    return NextResponse.json(data);
   } catch (error) {
     return handleRouteError(error);
   }
