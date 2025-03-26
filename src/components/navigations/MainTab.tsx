@@ -13,7 +13,7 @@ const MainTab = () => {
   const { setSearchParams } = useCustomSearchParams();
 
   return (
-    <div className="mb-6 flex items-center gap-3">
+    <div className="flex items-center gap-3">
       {MAIN_TAB.map((tab, i) => (
         <Link
           key={i}
