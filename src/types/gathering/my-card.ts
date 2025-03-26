@@ -8,12 +8,13 @@ export interface IMyGathering extends IGathering {
   isReviewed: boolean;
 }
 
-interface StatusProps {
+export interface StatusProps {
   label: string;
   className: string;
+  icon?: React.ReactNode;
 }
 
-interface ButtonProps {
+export interface ButtonProps {
   label: string;
   variant: "purple" | "purple-outline";
   onClick: () => void;

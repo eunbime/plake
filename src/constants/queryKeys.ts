@@ -5,6 +5,7 @@ export const QUERY_KEYS = {
   GATHERING: {
     all: GATHERING_ALL,
     list: [...GATHERING_ALL, "list"] as const,
+    myList: [...GATHERING_ALL, "myList"] as const,
     popular: [...GATHERING_ALL, "list", "popular"] as const,
     deadline: [...GATHERING_ALL, "list", "deadline"] as const,
     detail: (gatheringId: string) =>
