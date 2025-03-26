@@ -19,7 +19,7 @@ const MyCardList = ({
   emptyMessage,
 }: {
   direction: DirectionType;
-  token: string;
+  token: string; // 삭제 예정
   emptyMessage: string;
 }) => {
   const reviewedOnly = direction === "reviews";
@@ -31,6 +31,7 @@ const MyCardList = ({
   }
 
   return (
+    // 수정 예정 | BaseCardList 컴포넌트 제작 및 적용
     <div>
       {list.map((gathering, index) => (
         <div
@@ -55,7 +56,7 @@ const MyCardList = ({
                   capacity={gathering.capacity}
                 />
               </div>
-              <MyCardAction btn={getButtonProps(gathering)} />
+              <MyCardAction action={getButtonProps(gathering)} />
             </MyCardContent>
           </MyCardItem>
         </div>

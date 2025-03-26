@@ -13,8 +13,8 @@ interface PageProps {
 }
 
 const Page = async ({ searchParams }: PageProps) => {
+  // 삭제 될 코드 | route handler 도입 예정
   const token = await getCookieOfToken();
-
   if (!token) return null;
 
   const isRoot = !searchParams.type;

@@ -58,9 +58,10 @@ export async function createGatheringService() {
   return new GatheringService(token);
 }
 
+// 삭제될 코드 | route handler 도입 예정
 export function createClientGatheringService(token: string) {
   return new GatheringService(token);
 }
 
 const gatheringService = new GatheringService();
-export { gatheringService };
+export default gatheringService;
