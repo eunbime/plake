@@ -1,9 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { createAuthService } from "@/services/auth/AuthService";
 import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
-import { APIError } from "@/types/error";
 import { IUpdateUser } from "@/types/user";
 
 export const useUpdateUser = () => {
@@ -12,8 +10,16 @@ export const useUpdateUser = () => {
 
   const { mutate: updateUser } = useMutation({
     mutationFn: async (data: FormData): Promise<IUpdateUser> => {
-      const authService = await createAuthService();
-      return authService.updateUser(data);
+      const res = await fetch("/api/user/update", {
+        method: "PUT",
+        body: data,
+      });
+
+      const result = await res.json();
+
+      if (res.ok) return result;
+
+      throw result;
     },
     onSuccess: (data: IUpdateUser) => {
       if (!user) return;
@@ -24,11 +30,12 @@ export const useUpdateUser = () => {
       });
     },
     onError: error => {
-      if (error instanceof APIError) {
-        openAlert(error.message);
-      } else {
-        openAlert("알 수 없는 오류가 발생했어요.");
-      }
+      const message =
+        typeof error === "object" && error !== null && "message" in error
+          ? (error as { message: string }).message
+          : "알 수 없는 오류가 발생했어요.";
+
+      openAlert(message);
     },
   });
 
