@@ -24,15 +24,16 @@ class GatheringService extends Service {
     if (!pageParam) pageParam = 1;
 
     const sliceParams = `limit=${ITEMS_PER_PAGE}&offset=${(pageParam - 1) * 10}`;
+    const defaultParams = `${sliceParams}&sortBy=dateTime`;
 
     if (params && Object.keys(params).length !== 0) {
       const convertedParams = new URLSearchParams(params).toString();
 
       return this.http.get<IGathering[]>(
-        `/gatherings?${convertedParams}&${sliceParams}`,
+        `/gatherings?${convertedParams}&${defaultParams}`,
       );
     } else {
-      return this.http.get<IGathering[]>(`/gatherings?${sliceParams}`);
+      return this.http.get<IGathering[]>(`/gatherings?${defaultParams}`);
     }
   }
 
