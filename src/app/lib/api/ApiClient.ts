@@ -1,4 +1,4 @@
-import { APIError } from "@/types/error";
+import { NextResponse } from "next/server";
 
 export default class ApiClient {
   private token?: string;
@@ -12,12 +12,12 @@ export default class ApiClient {
     }
   }
 
-  private async request<T>(
+  private async request(
     method: "GET" | "POST" | "PUT" | "DELETE",
     path: string,
     body?: unknown,
     config?: RequestInit,
-  ): Promise<T> {
+  ) {
     const headers = new Headers();
 
     if (this.token) {
@@ -39,29 +39,31 @@ export default class ApiClient {
     const data = await res.json();
 
     if (!res.ok) {
-      throw new APIError(
-        data.message || "요청 실패",
-        data.code || "UNKNOWN",
-        res.status,
+      return NextResponse.json(
+        {
+          code: data.code || "UNKNOWN",
+          message: data.message || "요청 실패",
+        },
+        { status: res.status },
       );
     }
 
-    return data;
+    return NextResponse.json(data);
   }
 
-  get<T>(path: string) {
-    return this.request<T>("GET", path);
+  get(path: string) {
+    return this.request("GET", path);
   }
 
-  post<T>(path: string, body?: unknown) {
-    return this.request<T>("POST", path, body);
+  post(path: string, body?: unknown) {
+    return this.request("POST", path, body);
   }
 
-  put<T>(path: string, body?: unknown) {
-    return this.request<T>("PUT", path, body);
+  put(path: string, body?: unknown) {
+    return this.request("PUT", path, body);
   }
 
-  delete<T>(path: string) {
-    return this.request<T>("DELETE", path);
+  delete(path: string) {
+    return this.request("DELETE", path);
   }
 }
