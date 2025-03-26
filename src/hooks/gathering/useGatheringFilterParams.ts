@@ -1,14 +1,15 @@
+import { ONLINE, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { FilterParamsObj } from "@/types/gathering";
 
-const useConvertToQueryStr = (paramsObj: FilterParamsObj) => {
-  const type = paramsObj.type;
+const useGatheringFilterParams = (
+  pathname: string,
+  paramsObj: FilterParamsObj,
+) => {
   const location = paramsObj.location;
   const sortOption = paramsObj.sort;
 
-  if (type === "online") {
-    paramsObj["location"] = "홍대입구";
-
-    delete paramsObj.type;
+  if (pathname === ONLINE_PATH) {
+    paramsObj["location"] = ONLINE.location;
   }
 
   if (location === "전체") {
@@ -19,10 +20,10 @@ const useConvertToQueryStr = (paramsObj: FilterParamsObj) => {
     let order = "";
 
     switch (sortOption) {
-      case "participantCount":
+      case "participantCount": //인기많은순 정렬
         order = "desc";
 
-      case "registrationEnd":
+      case "registrationEnd": //마감임박순 정렬
         order = "asc";
     }
 
@@ -32,4 +33,4 @@ const useConvertToQueryStr = (paramsObj: FilterParamsObj) => {
   return new URLSearchParams(paramsObj).toString();
 };
 
-export default useConvertToQueryStr;
+export default useGatheringFilterParams;

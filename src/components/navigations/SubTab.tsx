@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/Button";
-import { OFFLINE_TAB } from "@/constants/gathering";
+import { OFFLINE_PATH, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { SUB_TAB } from "@/constants/ui";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import { cn } from "@/lib/utils";
@@ -17,9 +17,9 @@ const SubTab = () => {
 
   return (
     <div className="align-center flex gap-2">
-      {SUB_TAB[pathname === OFFLINE_TAB ? "OFFLINE" : "ONLINE"].map(
+      {SUB_TAB[pathname === OFFLINE_PATH ? "OFFLINE" : "ONLINE"].map(
         (tab, i) => (
-          <Link href={tab.value ? `?type=${tab.value}` : OFFLINE_TAB} key={i}>
+          <Link href={tab.value ? `?type=${tab.value}` : ONLINE_PATH} key={i}>
             <Button
               variant="default"
               aria-label="서브 주제 탭"

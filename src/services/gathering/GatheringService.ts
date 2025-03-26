@@ -1,3 +1,4 @@
+import { ITEMS_PER_PAGE } from "@/constants/gatheringFilterParams";
 import Service from "@/services/Service";
 import { IGathering } from "@/types/gathering";
 import { getCookieOfToken } from "@/utils/cookieToken";
@@ -8,18 +9,18 @@ class GatheringService extends Service {
     this.setToken(token || "");
   }
 
-  getGatheringList(type?: string, params?: string) {
-    const isOnline = type === "online";
-    const onlineFilter = isOnline ? "?location=홍대입구" : "";
-    const filterParams = isOnline ? onlineFilter + `&${params}` : `?${params}`;
+  getGatheringList(pageParam?: number, params?: string) {
+    if (!pageParam) pageParam = 1;
 
-    if (isOnline && !params)
-      return this.http.get<IGathering[]>(`/gatherings${onlineFilter}`);
+    const sliceParams = `limit=${ITEMS_PER_PAGE}&offset=${(pageParam - 1) * 10}`;
 
-    if (params)
-      return this.http.get<IGathering[]>(`/gatherings${filterParams}`);
-
-    return this.http.get<IGathering[]>(`/gatherings`);
+    if (params) {
+      return this.http.get<IGathering[]>(
+        `/gatherings?${params}&${sliceParams}`,
+      );
+    } else {
+      return this.http.get<IGathering[]>(`/gatherings?${sliceParams}`);
+    }
   }
   getGatheringDetail(id: string) {
     const data = this.http.get<IGathering>(`/gatherings/${id}`);
