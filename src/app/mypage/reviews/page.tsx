@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import MyCardList from "@/app/mypage/_components/MyCardList";
+import MyCardList from "@/app/mypage/_components/my-card-list/MyCardList";
 import ReviewTab from "@/app/mypage/_components/ReviewTab";
 import FetchBoundary from "@/components/boundary/FetchBoundary";
 import LoadingDots from "@/components/common/LoadingDots";
@@ -27,6 +27,7 @@ const Page = async ({ searchParams }: PageProps) => {
 
       {isRoot ? (
         <FetchBoundary fallback={<LoadingDots />}>
+          {/* 변경 예정 | ReviewCardList 넣을거임 */}
           <MyCardList
             direction="reviews"
             token={token}
