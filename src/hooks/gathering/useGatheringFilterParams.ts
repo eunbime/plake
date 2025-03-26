@@ -1,9 +1,9 @@
 import { ONLINE, ONLINE_PATH } from "@/constants/gatheringFilterParams";
-import { FilterParamsObj } from "@/types/gathering";
+import { IGatheringFilterParams } from "@/types/gathering";
 
 const useGatheringFilterParams = (
   pathname: string,
-  paramsObj: FilterParamsObj,
+  paramsObj: IGatheringFilterParams,
 ) => {
   const location = paramsObj.location;
   const sortOption = paramsObj.sort;
@@ -30,7 +30,7 @@ const useGatheringFilterParams = (
     paramsObj["sortOrder"] = order;
   }
 
-  return new URLSearchParams(paramsObj).toString();
+  return paramsObj;
 };
 
 export default useGatheringFilterParams;
