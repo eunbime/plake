@@ -1,3 +1,5 @@
+import { APIError } from "@/types/error";
+
 export default class ApiClient {
   private token?: string;
   private baseURL: string;
@@ -37,11 +39,11 @@ export default class ApiClient {
     const data = await res.json();
 
     if (!res.ok) {
-      throw {
-        status: res.status,
-        code: data.code || "UNKNOWN",
-        message: data.message || "요청 실패",
-      };
+      throw new APIError(
+        data.message || "요청 실패",
+        data.code || "UNKNOWN",
+        res.status,
+      );
     }
 
     return data;

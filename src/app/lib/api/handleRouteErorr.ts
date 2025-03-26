@@ -1,25 +1,18 @@
 import { NextResponse } from "next/server";
 
-export const handleRouteError = (error: unknown) => {
-  if (
-    typeof error === "object" &&
-    error !== null &&
-    "code" in error &&
-    "message" in error &&
-    "status" in error
-  ) {
-    const err = error as { code: string; message: string; status: number };
+import { APIError } from "@/types/error";
 
+export const handleRouteError = (error: unknown) => {
+  if (error instanceof APIError) {
     return NextResponse.json(
       {
-        code: err.code,
-        message: err.message,
+        code: error.code,
+        message: error.message,
       },
-      { status: err.status },
+      { status: error.status },
     );
   }
 
-  // 예기치 못한 에러 (포맷 안 맞는 경우)
   return NextResponse.json(
     {
       code: "UNKNOWN_ERROR",
