@@ -1,5 +1,6 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { FaCircleCheck } from "react-icons/fa6";
 
@@ -7,7 +8,7 @@ import DateTimeTag from "@/components/common/DateTimeTag";
 import FavoriteButton from "@/components/common/FavoriteButton";
 import ProgressBar from "@/components/common/ProgressBar";
 import { GATHERING } from "@/constants/gathering";
-import { useSuspenseGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+import { gatheringDetailQueryOption } from "@/hooks/gathering/useGatheringDetail";
 
 import ParticipantAvatarStack from "./ParticipantAvatarStack";
 
@@ -20,10 +21,9 @@ const GatheringDetailInformation = ({
 }: IGatheringDetailInformationProps) => {
   const {
     data: { name, location, capacity, participantCount, dateTime },
-  } = useSuspenseGatheringDetail(id);
+  } = useSuspenseQuery(gatheringDetailQueryOption(id));
 
   const progress = (participantCount / capacity) * 100;
-
   const isGatheringFull = participantCount >= GATHERING.CAPACITY.MIN;
 
   return (

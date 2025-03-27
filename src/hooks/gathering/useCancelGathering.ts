@@ -27,7 +27,8 @@ export const useCancelGathering = (id: string) => {
       });
       router.push("/gathering/offline");
     },
-    onError: () => {
+    onError: error => {
+      console.log("error", error);
       openAlert("잠시 후 다시 시도해주세요.");
     },
   });
