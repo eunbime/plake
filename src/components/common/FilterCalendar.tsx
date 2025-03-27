@@ -62,9 +62,7 @@ const FilterCalendar = () => {
             mode="single"
             selected={date}
             onDayClick={setDate}
-            disabled={date =>
-              date > new Date() || date < new Date("1900-01-01")
-            }
+            fromDate={new Date()}
             initialFocus
             locale={ko}
           />
