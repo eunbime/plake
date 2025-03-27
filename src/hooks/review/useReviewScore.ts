@@ -1,11 +1,11 @@
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { reviewService } from "@/services/review/ReviewService";
+import anonReviewService from "@/services/review/AnonReviewService";
 
 const reviewScoreQueryOption = () => ({
   queryKey: [QUERY_KEYS.REVIEW.score],
-  queryFn: () => reviewService.getReviewScore(),
+  queryFn: () => anonReviewService.getReviewScore(),
 });
 
 export const useSuspenseReviewScore = () => {

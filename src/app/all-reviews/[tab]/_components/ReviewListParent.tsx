@@ -16,7 +16,12 @@ const ReviewListParent = () => {
   const onlineCheck = tab === online.value;
 
   const type = onlineCheck ? online.type : searchParams.get("type");
-  const location = onlineCheck ? online.location : searchParams.get("location");
+  let location;
+  if (searchParams.get("location") !== "전체") {
+    location = onlineCheck ? online.location : searchParams.get("location");
+  } else {
+    location = "";
+  }
   const date = searchParams.get("date");
   const sortBy = searchParams.get("sortBy");
   const sortOrder = searchParams.get("sortOrder");
