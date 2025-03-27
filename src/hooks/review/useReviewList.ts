@@ -1,34 +1,37 @@
 import {
   infiniteQueryOptions,
   QueryClient,
-  useInfiniteQuery,
   useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import anonReviewService from "@/services/review/AnonReviewService";
-import { IReviewResponse } from "@/types/review";
+import { IReviewResponse, TReviewQueryParams } from "@/types/review";
 
-const reviewListQueryOption = () =>
+const reviewListQueryOption = (searchParams?: TReviewQueryParams) =>
   infiniteQueryOptions({
-    queryKey: [QUERY_KEYS.REVIEW.list],
-    queryFn: anonReviewService.getReviewList,
+    queryKey: [QUERY_KEYS.REVIEW.listByQueryParams(searchParams)],
+    queryFn: () => anonReviewService.getReviewList(searchParams),
     initialPageParam: 1,
-    throwOnError: true,
-    retry: false,
     getNextPageParam: (lastPage: IReviewResponse) => {
-      return lastPage.data.length === 0 ? undefined : lastPage.data.length + 1;
+      if (
+        lastPage.data.length === 0 ||
+        lastPage.currentPage >= lastPage.totalPages
+      ) {
+        return undefined;
+      }
+
+      return lastPage.currentPage + 1;
     },
   });
 
-export const useReviewList = () => {
-  return useInfiniteQuery(reviewListQueryOption());
+export const useSuspenseReviewList = (searchParams?: TReviewQueryParams) => {
+  return useSuspenseInfiniteQuery(reviewListQueryOption(searchParams));
 };
 
-export const useSuspenseReviewList = () => {
-  return useSuspenseInfiniteQuery(reviewListQueryOption());
-};
-
-export const prefetchReviewList = (queryClient: QueryClient) => {
-  return queryClient.prefetchInfiniteQuery(reviewListQueryOption());
+export const prefetchReviewList = (
+  queryClient: QueryClient,
+  searchParams?: TReviewQueryParams,
+) => {
+  return queryClient.prefetchInfiniteQuery(reviewListQueryOption(searchParams));
 };

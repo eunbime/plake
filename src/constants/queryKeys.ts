@@ -1,4 +1,5 @@
 import { IGatheringFilterParams } from "@/types/gathering";
+import { TReviewQueryParams } from "@/types/review";
 
 const GATHERING_ALL = ["gathering"] as const;
 const REVIEW_ALL = ["review"] as const;
@@ -20,7 +21,10 @@ export const QUERY_KEYS = {
   REVIEW: {
     all: REVIEW_ALL,
     list: [...REVIEW_ALL, "list"] as const,
+    listByQueryParams: (searchParams?: TReviewQueryParams) =>
+      [...REVIEW_ALL, "list", searchParams] as const,
     listByGatheringId: (gatheringId: string) =>
       [...REVIEW_ALL, "list", { gatheringId }] as const,
+    score: [...REVIEW_ALL, "score"] as const,
   },
 };
