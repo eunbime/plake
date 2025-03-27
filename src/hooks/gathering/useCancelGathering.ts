@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { createGatheringService } from "@/services/gathering/GatheringService";
+import gatheringService from "@/services/gathering/GatheringService";
 import useModalStore from "@/stores/useModalStore";
 
 export const useCancelGathering = (id: string) => {
@@ -18,8 +18,7 @@ export const useCancelGathering = (id: string) => {
 
   const { mutate } = useMutation({
     mutationFn: async () => {
-      const service = await createGatheringService();
-      return service.deleteGathering(id);
+      return gatheringService.deleteGathering(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

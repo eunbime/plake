@@ -1,10 +1,8 @@
-import ApiClient from "@/app/lib/api/ApiClient";
-import { getCookieOfToken } from "@/utils/cookieToken";
+import { getAuthorizedClient } from "@/app/lib/api/getAuthorizedClient";
 
 export async function PUT(req: Request) {
-  const token = await getCookieOfToken();
-
   const formData = await req.formData();
-  const client = new ApiClient(token);
+  const client = await getAuthorizedClient();
+
   return client.put("/auths/user", formData);
 }

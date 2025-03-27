@@ -1,12 +1,37 @@
-import Service from "@/services/Service";
 import { IMyGathering, IMyGatheringFilterParams } from "@/types/gathering";
-import { getCookieOfToken } from "@/utils/cookieToken";
 
 class GatheringService {
   async createGathering(formData: FormData) {
     const res = await fetch("/api/gatherings", {
       method: "POST",
       body: formData,
+    });
+
+    if (!res.ok) throw await res.json();
+    return res.json();
+  }
+
+  async joinGathering(id: string) {
+    const res = await fetch(`/api/gatherings/${id}/join`, {
+      method: "POST",
+    });
+
+    if (!res.ok) throw await res.json();
+    return res.json;
+  }
+
+  async deleteGathering(id: string) {
+    const res = await fetch(`/api/gatherings/${id}/cancel`, {
+      method: "PUT",
+    });
+
+    if (!res.ok) throw await res.json();
+    return res.json();
+  }
+
+  async leaveGathering(id: string) {
+    const res = await fetch(`/api/gatherings/${id}/leave`, {
+      method: "DELETE",
     });
 
     if (!res.ok) throw await res.json();
@@ -50,33 +75,3 @@ class GatheringService {
 const gatheringService = new GatheringService();
 
 export default gatheringService;
-
-// 삭제될 코드
-class testGatheringService extends Service {
-  constructor(token: string) {
-    super();
-    this.setToken(token);
-  }
-
-  deleteGathering(id: string) {
-    return this.http.put(`/gatherings/${id}/cancel`);
-  }
-
-  joinGathering(id: string) {
-    return this.http.post(`/gatherings/${id}/join`);
-  }
-
-  leaveGathering(id: string) {
-    return this.http.delete(`/gatherings/${id}/leave`);
-  }
-}
-
-export async function createGatheringService() {
-  const token = await getCookieOfToken();
-
-  if (!token) {
-    throw new Error("Token is not found");
-  }
-
-  return new testGatheringService(token);
-}
