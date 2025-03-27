@@ -15,4 +15,4 @@ class NonAuthService extends Service {
   }
 }
 
-export default NonAuthService;
+export default new NonAuthService();

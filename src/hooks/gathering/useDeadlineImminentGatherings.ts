@@ -2,7 +2,7 @@ import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import gatheringService from "@/services/gathering/GatheringService";
+import gatheringService from "@/services/gathering/NonGatheringService";
 
 const deadlineImminentGatheringsQueryOption = () => ({
   queryKey: [QUERY_KEYS.GATHERING.deadline],

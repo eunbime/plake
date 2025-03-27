@@ -1,7 +1,7 @@
 import { QueryClient, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import gatheringService from "@/services/gathering/GatheringService";
+import gatheringService from "@/services/gathering/NonGatheringService";
 
 const gatheringDetailQueryOption = (id: string) => ({
   queryKey: [QUERY_KEYS.GATHERING.detail(id)],

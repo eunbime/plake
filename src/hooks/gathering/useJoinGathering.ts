@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { createGatheringService } from "@/services/gathering/GatheringService";
+import { createGatheringService } from "@/services/gathering/NonGatheringService";
 import useModalStore from "@/stores/useModalStore";
 
 export const useJoinGatheringMutation = (id: string) => {

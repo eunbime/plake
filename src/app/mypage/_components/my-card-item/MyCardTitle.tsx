@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { FaUser } from "react-icons/fa6";
 
 interface MyCardTitleProps {
-  hasLabel: boolean;
+  hasLabel?: boolean;
   name: string;
   location: string;
   dateTime: string;
@@ -12,7 +12,7 @@ interface MyCardTitleProps {
 }
 
 const MyCardTitle = ({
-  hasLabel,
+  hasLabel = false,
   name,
   location,
   dateTime,

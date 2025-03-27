@@ -1,7 +1,5 @@
 import { IGathering } from ".";
 
-export type DirectionType = "mypage" | "reviews" | "gathering";
-
 export interface IMyGathering extends IGathering {
   joinedAt: string;
   isCompleted: boolean;
@@ -20,8 +18,11 @@ export interface ButtonProps {
   onClick: () => void;
 }
 
-export interface MyCardItemProps {
-  gathering: IMyGathering;
-  statusProps: StatusProps[] | null;
-  buttonProps: ButtonProps | null;
+export interface IMyGatheringFilterParams {
+  completed?: "true" | "false";
+  reviewed?: "true" | "false";
+  limit?: string;
+  offset?: string;
+  sortBy?: "dateTime" | "registrationEnd" | "joinedAt";
+  sortOrder?: "asc" | "desc";
 }

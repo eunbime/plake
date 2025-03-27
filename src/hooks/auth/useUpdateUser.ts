@@ -12,8 +12,7 @@ export const useUpdateUser = () => {
 
   const { mutate: updateUser } = useMutation({
     mutationFn: async (data: FormData): Promise<IUpdateUser> => {
-      const authService = new AuthService();
-      return await authService.updateUser(data);
+      return await AuthService.updateUser(data);
     },
     onSuccess: data => {
       if (!user) return;

@@ -6,7 +6,7 @@ import {
 
 import { ONLINE } from "@/constants/gatheringFilterParams";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import GatheringService from "@/services/gathering/GatheringService";
+import GatheringService from "@/services/gathering/NonGatheringService";
 import { IGathering, IGatheringFilterParams } from "@/types/gathering";
 
 const filterByValue = (data: {

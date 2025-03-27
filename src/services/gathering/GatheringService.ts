@@ -1,82 +1,25 @@
-import { ITEMS_PER_PAGE } from "@/constants/gatheringFilterParams";
-import Service from "@/services/Service";
-import {
-  IGathering,
-  IGatheringFilterParams,
-  IMyGathering,
-} from "@/types/gathering";
-import { getCookieOfToken } from "@/utils/cookieToken";
+import { IMyGathering, IMyGatheringFilterParams } from "@/types/gathering";
 
-class GatheringService extends Service {
-  constructor(token?: string) {
-    super();
-    this.setToken(token || "");
-  }
+class GatheringService {
+  async getMyGatheringList(searchParams?: IMyGatheringFilterParams) {
+    const paramStr = new URLSearchParams(
+      (searchParams ?? {}) as Record<string, string>,
+    ).toString();
+    const url = `/api/gatherings/joined${paramStr && `?${paramStr}`}`;
 
-  getGatheringList() {
-    return this.http.get<IGathering[]>(`/gatherings`);
-  }
+    // 1. fetch가 pre render일때는 next js 서버로 api를 보내지만  <-- next가 자동으로 해주는 부분
+    //     브라우저에서 동작할때는 base url을 인식을 못한다
 
-  getGatheringInfiniteList(
-    pageParam?: number,
-    params?: IGatheringFilterParams,
-  ) {
-    if (!pageParam) pageParam = 1;
+    // 2. 갑자기 쿠키가 안감
 
-    const sliceParams = `limit=${ITEMS_PER_PAGE}&offset=${(pageParam - 1) * 10}`;
-    const defaultParams = `${sliceParams}&sortBy=dateTime`;
+    const res = await fetch(`http://localhost:3000/${url}`, {
+      method: "GET",
+      credentials: "include",
+    });
 
-    if (params && Object.keys(params).length !== 0) {
-      const convertedParams = new URLSearchParams(params).toString();
-
-      return this.http.get<IGathering[]>(
-        `/gatherings?${convertedParams}&${defaultParams}`,
-      );
-    } else {
-      return this.http.get<IGathering[]>(`/gatherings?${defaultParams}`);
-    }
-  }
-
-  getGatheringDetail(id: string) {
-    const data = this.http.get<IGathering>(`/gatherings/${id}`);
-    return data;
-  }
-
-  createGathering(formData: FormData) {
-    return this.http.post("/gatherings", formData);
-  }
-
-  deleteGathering(id: string) {
-    return this.http.put(`/gatherings/${id}/cancel`);
-  }
-
-  joinGathering(id: string) {
-    return this.http.post(`/gatherings/${id}/join`);
-  }
-
-  leaveGathering(id: string) {
-    return this.http.delete(`/gatherings/${id}/leave`);
-  }
-
-  getMyGatheringList(reviewedOnly?: boolean, params?: string) {
-    const reviewedFilter = reviewedOnly ? "reviewed=false" : "";
-    const query = [reviewedFilter, params].filter(Boolean).join("&");
-
-    return this.http.get<IMyGathering[]>(
-      `/gatherings/joined${query && `?${query}`}`,
-    );
+    if (!res.ok) throw await res.json();
+    return res.json() as Promise<IMyGathering[]>;
   }
 }
 
-export async function createGatheringService() {
-  const token = await getCookieOfToken();
-  return new GatheringService(token);
-}
-
-// 삭제될 코드 | route handler 도입 예정
-export function createClientGatheringService(token: string) {
-  return new GatheringService(token);
-}
-
-const gatheringService = new GatheringService();
-export default gatheringService;
+export default new GatheringService();
