@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import AuthService from "@/services/auth/AuthService";
+import authService from "@/services/auth/AuthService";
 import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
 import { APIError } from "@/types/error";
@@ -12,7 +12,7 @@ export const useUpdateUser = () => {
 
   const { mutate: updateUser } = useMutation({
     mutationFn: async (data: FormData): Promise<IUpdateUser> => {
-      return await AuthService.updateUser(data);
+      return await authService.updateUser(data);
     },
     onSuccess: data => {
       if (!user) return;
