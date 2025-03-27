@@ -17,3 +17,15 @@ export interface IReviewResponse {
   currentPage: number;
   totalPages: number;
 }
+
+export type TReviewQueryParams = {
+  gatheringId?: string;
+  userId?: string;
+  type?: string;
+  location?: string;
+  date?: string;
+  sortBy?: string;
+  sortOrder?: string;
+  limit?: string;
+  offset?: string;
+};

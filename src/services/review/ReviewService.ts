@@ -1,5 +1,5 @@
 import Service from "@/services/Service";
-import { IReviewResponse } from "@/types/review";
+import { IReviewResponse, TReviewQueryParams } from "@/types/review";
 import { IScore } from "@/types/review/score";
 import { getCookieOfToken } from "@/utils/cookieToken";
 
@@ -9,9 +9,15 @@ class ReviewService extends Service {
     this.setToken(token || "");
   }
 
-  getReviewList = () => {
-    return this.http.get<IReviewResponse>("/reviews");
+  getReviewList = (searchParams?: TReviewQueryParams) => {
+    let params = "";
+
+    if (searchParams) {
+      params = new URLSearchParams(searchParams).toString();
+    }
+    return this.http.get<IReviewResponse>(`/reviews?${params}`);
   };
+
   getReviewScore = () => {
     return this.http.get<IScore[]>("/reviews/scores");
   };

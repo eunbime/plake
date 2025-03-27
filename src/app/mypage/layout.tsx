@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import MyProfile from "@/app/mypage/_components/MyProfile";
-import TokenValidator from "@/components/auth/TokenValidator";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import NavTab from "@/components/navigations/NavTab";
 
 interface LayoutProps {
@@ -11,7 +11,7 @@ interface LayoutProps {
 export default function MypageLayout({ children }: LayoutProps) {
   return (
     <div className="base-wrap w-full min-w-[375px] bg-gray-50">
-      <TokenValidator />
+      <ProtectedRoute />
       <div className="mx-auto w-full max-w-[996px] pb-8">
         <h1 className="pb-4 pt-6 text-2xl font-semibold sm:px-2 sm:pb-6 sm:pt-8">
           마이 페이지
