@@ -1,23 +1,15 @@
-import Service from "@/services/Service";
-import { getCookieOfToken } from "@/utils/cookieToken";
+class ReviewService {
+  async createReview(formData: FormData) {
+    const res = await fetch("/api/reviews", {
+      method: "POST",
+      body: formData,
+    });
 
-class ReviewService extends Service {
-  constructor(token: string) {
-    super();
-    this.setToken(token);
+    if (!res.ok) throw await res.json();
+    return res.json();
   }
-
-  createReview = () => {
-    return this.http.post("/reviews", {});
-  };
 }
 
-export async function createReviewService() {
-  const token = await getCookieOfToken();
+const reviewService = new ReviewService();
 
-  if (!token) {
-    throw new Error("Token is not found");
-  }
-
-  return new ReviewService(token);
-}
+export default reviewService;
