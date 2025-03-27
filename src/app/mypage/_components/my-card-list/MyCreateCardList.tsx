@@ -1,7 +1,6 @@
 "use client";
 
 import EmptyState from "@/app/mypage/_components/EmptyState";
-import MyCardAction from "@/app/mypage/_components/my-card-item/MyCardAction";
 import MyCardContent from "@/app/mypage/_components/my-card-item/MyCardContent";
 import MyCardImage from "@/app/mypage/_components/my-card-item/MyCardImage";
 import MyCardItem from "@/app/mypage/_components/my-card-item/MyCardItem";
@@ -9,11 +8,9 @@ import MyCardTitle from "@/app/mypage/_components/my-card-item/MyCardTitle";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import useMyCardActions from "@/hooks/useMyCardActions";
 
-const MyReviewCardList = () => {
-  const { getButtonProps } = useMyCardActions();
-
+const MyCreateCardList = () => {
+  // TODO: MyCardList -> CardList 가져와야 함
   const { data, hasNextPage, fetchNextPage, status } =
     useSuspenseMyGatheringList({ reviewed: "false", completed: "true" });
 
@@ -28,7 +25,7 @@ const MyReviewCardList = () => {
   const { setTarget } = useIntersectionObserver({ onIntersect });
 
   if (!list.length) {
-    return <EmptyState message={EMPTY_MESSAGE.mypage.reviews} />;
+    return <EmptyState message={EMPTY_MESSAGE.mypage.gatherings} />;
   }
 
   return (
@@ -48,7 +45,6 @@ const MyReviewCardList = () => {
               participantCount={gathering.participantCount}
               capacity={gathering.capacity}
             />
-            <MyCardAction action={getButtonProps(gathering)} />
           </MyCardContent>
         </MyCardItem>
       ))}
@@ -62,4 +58,4 @@ const MyReviewCardList = () => {
   );
 };
 
-export default MyReviewCardList;
+export default MyCreateCardList;

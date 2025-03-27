@@ -1,11 +1,12 @@
-import EmptyState from "@/app/mypage/_components/EmptyState";
+import MyCreateCardList from "@/app/mypage/_components/my-card-list/MyCreateCardList";
+import FetchBoundary from "@/components/boundary/FetchBoundary";
+import LoadingDots from "@/components/common/LoadingDots";
 
 const Page = () => {
   return (
-    <>
-      {/* 추가 예정 */}
-      <EmptyState message="아직 만든 모임이 없어요" />
-    </>
+    <FetchBoundary fallback={<LoadingDots />}>
+      <MyCreateCardList />
+    </FetchBoundary>
   );
 };
 

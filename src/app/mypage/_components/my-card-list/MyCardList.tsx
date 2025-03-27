@@ -10,9 +10,12 @@ import MyCardTitle from "@/app/mypage/_components/my-card-item/MyCardTitle";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { getButtonProps, getStatusProps } from "@/utils/myCardHelpers";
+import useMyCardActions from "@/hooks/useMyCardActions";
+import { getStatusProps } from "@/utils/myCardHelpers";
 
 const MyCardList = () => {
+  const { getButtonProps } = useMyCardActions();
+
   const { data, hasNextPage, fetchNextPage, status } =
     useSuspenseMyGatheringList();
 
