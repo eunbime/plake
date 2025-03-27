@@ -1,10 +1,9 @@
 "use client";
 
-// import { useRouter } from "next/navigation";
-
 import { Button } from "@/components/ui/Button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { useLeaveGatheringMutation } from "@/hooks/gathering/useJoinGathering";
+import useModalStore from "@/stores/useModalStore";
 
 type MyCardActionType = "cancel" | "viewReview" | "writeReview";
 
@@ -14,10 +13,11 @@ interface MyCardActionProps {
 }
 
 const MyCardAction = ({ type, id }: MyCardActionProps) => {
-  // const router = useRouter();
   const { mutate: leave } = useLeaveGatheringMutation(String(id), [
     QUERY_KEYS.GATHERING.myList,
   ]);
+  const openConfirm = useModalStore(state => state.openConfirm);
+  const openCreateReview = useModalStore(state => state.openCreateReview);
 
   if (type === "cancel") {
     return (
@@ -26,7 +26,9 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
         className="h-10 w-[120px]"
         onClick={e => {
           e.preventDefault();
-          leave();
+          openConfirm("참여를 취소하시겠습니까?", () => {
+            leave();
+          });
         }}
       >
         예약 취소하기
@@ -48,7 +50,7 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
       className="h-10 w-[120px]"
       onClick={e => {
         e.preventDefault();
-        console.log("test");
+        openCreateReview(id);
       }}
     >
       리뷰 작성하기

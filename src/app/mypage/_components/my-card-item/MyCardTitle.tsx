@@ -20,7 +20,7 @@ const MyCardTitle = ({
   capacity,
 }: MyCardTitleProps) => {
   return (
-    <>
+    <div>
       <div
         className={clsx(
           "mb-1.5 flex flex-wrap truncate",
@@ -46,7 +46,7 @@ const MyCardTitle = ({
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

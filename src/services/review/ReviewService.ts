@@ -1,8 +1,13 @@
+import { TReviewForm } from "@/schemas/reviewSchema";
+
 class ReviewService {
-  async createReview(formData: FormData) {
+  async createReview(data: TReviewForm) {
     const res = await fetch("/api/reviews", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
 
     if (!res.ok) throw await res.json();
