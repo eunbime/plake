@@ -2,61 +2,59 @@
 
 import { useParams, useSearchParams } from "next/navigation";
 
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ReviewCardList from "@/components/layout/ReviewCardList";
 import { SERVICE_LIST } from "@/constants/gathering";
 import { useSuspenseReviewList } from "@/hooks/review/useReviewList";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { TReviewQueryParams } from "@/types/review";
 
 const ReviewListParent = () => {
-  const tabParam = useParams();
-  // URL 쿼리 파라미터 (예: ?type=MINDFULNESS&sort=latest)
+  const { tab } = useParams();
   const searchParams = useSearchParams();
+  const online = SERVICE_LIST.ONLINE;
+  const onlineCheck = tab === online.value;
 
-  // 모든 쿼리 파라미터를 객체로 변환
-  const getAllQueryParams = () => {
-    const queryParams: Record<string, string> = {};
+  const type = onlineCheck ? online.type : searchParams.get("type");
+  const location = onlineCheck ? online.location : searchParams.get("location");
+  const date = searchParams.get("date");
+  const sortBy = searchParams.get("sortBy");
+  const sortOrder = searchParams.get("sortOrder");
 
-    // searchParams를 순회하면서 객체로 변환
-    searchParams.forEach((value, key) => {
-      queryParams[key] = value;
-    });
-
-    return queryParams;
-  };
-
-  // 모든 쿼리 파라미터를 배열로 변환
-  const queryParamsArray = Array.from(searchParams.entries());
-
-  console.log("Path Params:", tabParam); // { tab: 'offline' }
-  console.log("Query Params Object:", getAllQueryParams()); // { type: 'MINDFULNESS', ... }
-  console.log("Query Params Array:", queryParamsArray); // [['type', 'MINDFULNESS'], ...]
-
-  // 개별 파라미터에 직접 접근
-  const type =
-    tabParam.tab === SERVICE_LIST.ONLINE.value
-      ? SERVICE_LIST.ONLINE.type
-      : searchParams.get("type"); // 'MINDFULNESS' 또는 null
-  const sort = searchParams.get("sort"); // 값이 있으면 해당 값, 없으면 null
-
-  console.log("Type param:", type);
-  console.log("Sort param:", sort);
-
-  // API 요청에 필요한 파라미터 구성
   const reviewQueryParams: TReviewQueryParams = {
     ...(type && { type }),
-    ...(sort && { sort }),
+    ...(sortBy && { sortBy }),
+    ...(sortOrder && { sortOrder }),
+    ...(location && { location }),
+    ...(date && { date }),
   };
 
-  const { data } = useSuspenseReviewList(reviewQueryParams);
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useSuspenseReviewList(reviewQueryParams);
 
   const flatData = data?.pages.flatMap(page => page.data);
 
-  // console.log("data", data);
-  // console.log("flatData", flatData);
+  const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (isIntersecting && hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const { setTarget } = useIntersectionObserver({ onIntersect });
+
   return (
     <>
       {flatData.length > 0 ? (
-        <ReviewCardList reviews={flatData} />
+        <>
+          <ReviewCardList reviews={flatData} />
+          <div ref={setTarget} className="h-10 w-full">
+            {isFetchingNextPage && (
+              <div className="flex justify-center p-4">
+                <LoadingSpinner size="lg" />
+              </div>
+            )}
+          </div>
+        </>
       ) : (
         <div className="flex min-h-40 w-full items-center justify-center">
           <p className="text-sm font-medium text-gray-500">

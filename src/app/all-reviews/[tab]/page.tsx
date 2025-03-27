@@ -3,6 +3,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 import FetchBoundary from "@/components/boundary/FetchBoundary";
 import ReviewCardItemSkeleton from "@/components/skeletons/ReviewCardItemSkeleton";
@@ -30,7 +31,9 @@ const Page = async () => {
       <section className="border-t-2 border-gray-200 bg-white p-6 px-4 md:px-6">
         <ReviewFilterSort />
         <FetchBoundary fallback={<ReviewCardItemSkeleton />}>
-          <ReviewListParent />
+          <Suspense>
+            <ReviewListParent />
+          </Suspense>
         </FetchBoundary>
       </section>
     </HydrationBoundary>

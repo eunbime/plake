@@ -26,6 +26,4 @@ export type TReviewQueryParams = {
   date?: string;
   sortBy?: string;
   sortOrder?: string;
-  limit?: string;
-  offset?: string;
 };
