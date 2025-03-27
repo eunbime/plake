@@ -1,45 +1,11 @@
-import { ITEMS_PER_PAGE } from "@/constants/gatheringFilterParams";
 import Service from "@/services/Service";
-import {
-  IGathering,
-  IGatheringFilterParams,
-  IMyGathering,
-} from "@/types/gathering";
+import { IMyGathering } from "@/types/gathering";
 import { getCookieOfToken } from "@/utils/cookieToken";
 
 class GatheringService extends Service {
-  constructor(token?: string) {
+  constructor(token: string) {
     super();
-    this.setToken(token || "");
-  }
-
-  getGatheringList() {
-    return this.http.get<IGathering[]>(`/gatherings`);
-  }
-
-  getGatheringInfiniteList(
-    pageParam?: number,
-    params?: IGatheringFilterParams,
-  ) {
-    if (!pageParam) pageParam = 1;
-
-    const sliceParams = `limit=${ITEMS_PER_PAGE}&offset=${(pageParam - 1) * 10}`;
-    const defaultParams = `${sliceParams}&sortBy=dateTime`;
-
-    if (params && Object.keys(params).length !== 0) {
-      const convertedParams = new URLSearchParams(params).toString();
-
-      return this.http.get<IGathering[]>(
-        `/gatherings?${convertedParams}&${defaultParams}`,
-      );
-    } else {
-      return this.http.get<IGathering[]>(`/gatherings?${defaultParams}`);
-    }
-  }
-
-  getGatheringDetail(id: string) {
-    const data = this.http.get<IGathering>(`/gatherings/${id}`);
-    return data;
+    this.setToken(token);
   }
 
   createGathering(formData: FormData) {
@@ -70,6 +36,11 @@ class GatheringService extends Service {
 
 export async function createGatheringService() {
   const token = await getCookieOfToken();
+
+  if (!token) {
+    throw new Error("Token is not found");
+  }
+
   return new GatheringService(token);
 }
 
@@ -77,6 +48,3 @@ export async function createGatheringService() {
 export function createClientGatheringService(token: string) {
   return new GatheringService(token);
 }
-
-const gatheringService = new GatheringService();
-export default gatheringService;
