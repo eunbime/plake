@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { createAuthService } from "@/services/auth/AuthService";
+import AuthService from "@/services/auth/AuthService";
 import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
+import { APIError } from "@/types/error";
 import { IUpdateUser } from "@/types/user";
 
 export const useUpdateUser = () => {
@@ -11,10 +12,10 @@ export const useUpdateUser = () => {
 
   const { mutate: updateUser } = useMutation({
     mutationFn: async (data: FormData): Promise<IUpdateUser> => {
-      const authService = await createAuthService();
-      return authService.updateUser(data);
+      const authService = new AuthService();
+      return await authService.updateUser(data);
     },
-    onSuccess: (data: IUpdateUser) => {
+    onSuccess: data => {
       if (!user) return;
 
       updateUserState({
@@ -23,17 +24,14 @@ export const useUpdateUser = () => {
       });
     },
     onError: error => {
-      if (error instanceof Error) {
-        openAlert(error.message);
-      } else {
-        openAlert("알 수 없는 오류가 발생했어요.");
-      }
+      const message =
+        error instanceof APIError
+          ? error.message
+          : "알 수 없는 오류가 발생했어요.";
+
+      openAlert(message);
     },
   });
 
-  const handleUpdateUser = (data: FormData) => {
-    updateUser(data);
-  };
-
-  return { handleUpdateUser };
+  return { handleUpdateUser: updateUser };
 };

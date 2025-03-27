@@ -30,12 +30,12 @@ export interface IParticipant {
   joinedAt: string;
 }
 
-export type FilterParamsObj = {
+export type IGatheringFilterParams = {
+  type?: string;
   location?: string;
   date?: string;
   sort?: string;
   sortBy?: string;
-  type?: string;
   sortOrder?: string;
 };
 

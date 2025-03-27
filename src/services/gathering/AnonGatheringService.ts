@@ -1,5 +1,10 @@
+import { ITEMS_PER_PAGE } from "@/constants/gatheringFilterParams";
 import Service from "@/services/Service";
-import { IGathering, IParticipant } from "@/types/gathering";
+import {
+  IGathering,
+  IGatheringFilterParams,
+  IParticipant,
+} from "@/types/gathering";
 
 class AnonGatheringService extends Service {
   getGatheringList(type?: string, params?: string) {
@@ -14,6 +19,26 @@ class AnonGatheringService extends Service {
       return this.http.get<IGathering[]>(`/gatherings${filterParams}`);
 
     return this.http.get<IGathering[]>(`/gatherings`);
+  }
+
+  getGatheringInfiniteList(
+    pageParam?: number,
+    params?: IGatheringFilterParams,
+  ) {
+    if (!pageParam) pageParam = 1;
+
+    const sliceParams = `limit=${ITEMS_PER_PAGE}&offset=${(pageParam - 1) * 10}`;
+    const defaultParams = `${sliceParams}&sortBy=dateTime`;
+
+    if (params && Object.keys(params).length !== 0) {
+      const convertedParams = new URLSearchParams(params).toString();
+
+      return this.http.get<IGathering[]>(
+        `/gatherings?${convertedParams}&${defaultParams}`,
+      );
+    } else {
+      return this.http.get<IGathering[]>(`/gatherings?${defaultParams}`);
+    }
   }
 
   getGatheringDetail(id: string) {

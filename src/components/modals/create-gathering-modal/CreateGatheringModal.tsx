@@ -23,7 +23,15 @@ import { createFormDataFromObject } from "@/utils/form";
 const labelTitleStyle = "text-base font-semibold text-gray-800";
 const errorMsgStyle = "text-sm font-semibold text-red-600";
 
-const CreateGatheringModal = () => {
+interface CreateGatheringModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const CreateGatheringModal = ({
+  isOpen,
+  onClose,
+}: CreateGatheringModalProps) => {
   const {
     register,
     handleSubmit,
@@ -48,13 +56,15 @@ const CreateGatheringModal = () => {
   const onSubmit = (data: CreateGatheringFormType) => {
     const formData = createFormDataFromObject(data);
     handleCreateGathering(formData);
+
+    onClose();
   };
 
   return (
     <Modal
       variant="mobileFull"
-      isOpen={false}
-      onClose={() => {}}
+      isOpen={isOpen}
+      onClose={onClose}
       title="모임 만들기"
     >
       <form
