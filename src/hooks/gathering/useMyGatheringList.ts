@@ -1,7 +1,7 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import GatheringService from "@/services/gathering/GatheringService";
+import gatheringService from "@/services/gathering/GatheringService";
 import { IMyGathering, IMyGatheringFilterParams } from "@/types/gathering";
 
 const myGatheringQueryOptions = (params: IMyGatheringFilterParams = {}) => ({
@@ -16,7 +16,7 @@ const myGatheringQueryOptions = (params: IMyGatheringFilterParams = {}) => ({
       offset: String(offset),
     };
 
-    return GatheringService.getMyGatheringList(queryParams);
+    return gatheringService.getMyGatheringList(queryParams);
   },
   initialPageParam: 1,
   getNextPageParam: (lastPage: IMyGathering[], pages: IMyGathering[][]) => {
