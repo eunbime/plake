@@ -6,18 +6,18 @@ import {
 
 import FetchBoundary from "@/components/boundary/FetchBoundary";
 import MainCarouselSkeleton from "@/components/skeletons/MainCarouselSkeleton";
-import { deadlineImminentGatheringsQueryOption } from "@/hooks/gathering/useDeadlineImminentGatherings";
+import { upcomingGatheringsQueryOption } from "@/hooks/gathering/useLatestGatherings";
 import { popularGatheringsQueryOption } from "@/hooks/gathering/usePopularGatherings";
 
-import DeadLineCarousel from "./DeadLineCarousel";
 import PopularCarousel from "./PopularCarousel";
+import UpcomingCarousel from "./UpcomingCarousel";
 
 const MainCarouselContainer = async () => {
   const queryClient = new QueryClient();
 
   await Promise.all([
     queryClient.prefetchQuery(popularGatheringsQueryOption()),
-    queryClient.prefetchQuery(deadlineImminentGatheringsQueryOption()),
+    queryClient.prefetchQuery(upcomingGatheringsQueryOption()),
   ]);
 
   return (
@@ -27,7 +27,7 @@ const MainCarouselContainer = async () => {
           <PopularCarousel />
         </FetchBoundary>
         <FetchBoundary fallback={<MainCarouselSkeleton />}>
-          <DeadLineCarousel />
+          <UpcomingCarousel />
         </FetchBoundary>
       </section>
     </HydrationBoundary>

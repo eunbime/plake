@@ -20,7 +20,9 @@ const filterByValue = (data: {
 
 const gatheringQueryOption = (type: string, params?: string | undefined) => ({
   queryKey: [QUERY_KEYS.GATHERING.list, params],
-  queryFn: () => anonGatheringService.getGatheringList(type, params),
+  queryFn: () => {
+    return anonGatheringService.getGatheringList();
+  },
   initialPageParam: 1,
   throwOnError: true,
   retry: false,

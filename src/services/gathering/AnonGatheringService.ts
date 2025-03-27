@@ -7,16 +7,11 @@ import {
 } from "@/types/gathering";
 
 class AnonGatheringService extends Service {
-  getGatheringList(type?: string, params?: string) {
-    const isOnline = type === "online";
-    const onlineFilter = isOnline ? "?location=홍대입구" : "";
-    const filterParams = isOnline ? onlineFilter + `&${params}` : `?${params}`;
+  getGatheringList(params?: Record<string, string>) {
+    const convertedParams = new URLSearchParams(params).toString();
 
-    if (isOnline && !params)
-      return this.http.get<IGathering[]>(`/gatherings${onlineFilter}`);
-
-    if (params)
-      return this.http.get<IGathering[]>(`/gatherings${filterParams}`);
+    if (convertedParams)
+      return this.http.get<IGathering[]>(`/gatherings?${convertedParams}`);
 
     return this.http.get<IGathering[]>(`/gatherings`);
   }
