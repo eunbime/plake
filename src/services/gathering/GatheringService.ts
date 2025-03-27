@@ -1,25 +1,50 @@
-import { IMyGathering, IMyGatheringFilterParams } from "@/types/gathering";
+import Service from "@/services/Service";
+import { IMyGathering } from "@/types/gathering";
+import { getCookieOfToken } from "@/utils/cookieToken";
 
-class GatheringService {
-  async getMyGatheringList(searchParams?: IMyGatheringFilterParams) {
-    const paramStr = new URLSearchParams(
-      (searchParams ?? {}) as Record<string, string>,
-    ).toString();
-    const url = `/api/gatherings/joined${paramStr && `?${paramStr}`}`;
+class GatheringService extends Service {
+  constructor(token: string) {
+    super();
+    this.setToken(token);
+  }
 
-    // 1. fetch가 pre render일때는 next js 서버로 api를 보내지만  <-- next가 자동으로 해주는 부분
-    //     브라우저에서 동작할때는 base url을 인식을 못한다
+  createGathering(formData: FormData) {
+    return this.http.post("/gatherings", formData);
+  }
 
-    // 2. 갑자기 쿠키가 안감
+  deleteGathering(id: string) {
+    return this.http.put(`/gatherings/${id}/cancel`);
+  }
 
-    const res = await fetch(`http://localhost:3000/${url}`, {
-      method: "GET",
-      credentials: "include",
-    });
+  joinGathering(id: string) {
+    return this.http.post(`/gatherings/${id}/join`);
+  }
 
-    if (!res.ok) throw await res.json();
-    return res.json() as Promise<IMyGathering[]>;
+  leaveGathering(id: string) {
+    return this.http.delete(`/gatherings/${id}/leave`);
+  }
+
+  getMyGatheringList(reviewedOnly?: boolean, params?: string) {
+    const reviewedFilter = reviewedOnly ? "reviewed=false" : "";
+    const query = [reviewedFilter, params].filter(Boolean).join("&");
+
+    return this.http.get<IMyGathering[]>(
+      `/gatherings/joined${query && `?${query}`}`,
+    );
   }
 }
 
-export default new GatheringService();
+export async function createGatheringService() {
+  const token = await getCookieOfToken();
+
+  if (!token) {
+    throw new Error("Token is not found");
+  }
+
+  return new GatheringService(token);
+}
+
+// 삭제될 코드 | route handler 도입 예정
+export function createClientGatheringService(token: string) {
+  return new GatheringService(token);
+}

@@ -4,8 +4,9 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-import { prefetchGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
-import { prefetchReviewsByGatheringId } from "@/hooks/review/useReviewsByGatheringId";
+import { gatheringDetailQueryOption } from "@/hooks/gathering/useGatheringDetail";
+import { participantsQueryOption } from "@/hooks/gathering/useParticipants";
+import { reviewsByGatheringIdQueryOption } from "@/hooks/review/useReviewsByGatheringId";
 
 import FloatingBar from "./_components/FloatingBar";
 import GatheringInformation from "./_components/GatheringInformation";
@@ -25,8 +26,9 @@ export default async function GatheringDetailPage({
   const queryClient = new QueryClient();
 
   await Promise.all([
-    prefetchGatheringDetail(id, queryClient),
-    prefetchReviewsByGatheringId(id, queryClient),
+    queryClient.prefetchQuery(gatheringDetailQueryOption(id)),
+    queryClient.prefetchQuery(participantsQueryOption(id)),
+    queryClient.prefetchInfiniteQuery(reviewsByGatheringIdQueryOption(id)),
   ]);
 
   return (

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export const useScrollToTop = (value: number) => {
+export const useScrollToTopOnValueChange = (value?: unknown) => {
   useEffect(() => {
     window.scrollTo({
       top: 0,

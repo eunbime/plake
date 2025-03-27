@@ -6,7 +6,7 @@ import {
 
 import { ONLINE } from "@/constants/gatheringFilterParams";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import GatheringService from "@/services/gathering/NonGatheringService";
+import anonGatheringService from "@/services/gathering/AnonGatheringService";
 import { IGathering, IGatheringFilterParams } from "@/types/gathering";
 
 const filterByValue = (data: {
@@ -25,7 +25,7 @@ const gatheringInfiniteListQueryOption = (
 ) => ({
   queryKey: [QUERY_KEYS.GATHERING.listByParams(params)],
   queryFn: ({ pageParam = 1 }) => {
-    return GatheringService.getGatheringInfiniteList(pageParam, params);
+    return anonGatheringService.getGatheringInfiniteList(pageParam, params);
   },
   initialPageParam: 1,
   throwOnError: true,
