@@ -1,7 +1,7 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa6";
 
-import { IMyGathering, StatusProps } from "@/types/gathering";
+import { IMyGathering, MyCardActionType, StatusProps } from "@/types/gathering";
 
 export const getStatusProps = (gathering: IMyGathering): StatusProps[] => {
   if (gathering.isCompleted) {
@@ -37,4 +37,16 @@ export const getStatusProps = (gathering: IMyGathering): StatusProps[] => {
       className: "border border-gray-200 text-gray-500",
     },
   ];
+};
+
+export const getButtonType = (gathering: IMyGathering): MyCardActionType => {
+  if (!gathering.isCompleted) {
+    return "cancel";
+  }
+
+  if (gathering.isReviewed) {
+    return "viewReview";
+  }
+
+  return "writeReview";
 };

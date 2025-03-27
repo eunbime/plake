@@ -12,11 +12,7 @@ export interface StatusProps {
   icon?: React.ReactNode;
 }
 
-export interface ButtonProps {
-  label: string;
-  variant: "purple" | "purple-outline";
-  onClick: () => void;
-}
+export type MyCardActionType = "cancel" | "viewReview" | "writeReview";
 
 export interface IMyGatheringFilterParams {
   completed?: "true" | "false";

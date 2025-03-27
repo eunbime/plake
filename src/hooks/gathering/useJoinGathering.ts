@@ -23,7 +23,10 @@ export const useJoinGatheringMutation = (id: string) => {
   });
 };
 
-export const useLeaveGatheringMutation = (id: string) => {
+export const useLeaveGatheringMutation = (
+  id: string,
+  invalidateKey?: unknown[],
+) => {
   const queryClient = useQueryClient();
   const openAlert = useModalStore(state => state.openAlert);
 
@@ -33,7 +36,7 @@ export const useLeaveGatheringMutation = (id: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GATHERING.detail(id)],
+        queryKey: invalidateKey ?? [QUERY_KEYS.GATHERING.detail(id)],
       });
     },
     onError: () => {

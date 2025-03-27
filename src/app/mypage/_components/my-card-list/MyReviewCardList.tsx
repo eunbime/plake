@@ -9,11 +9,9 @@ import MyCardTitle from "@/app/mypage/_components/my-card-item/MyCardTitle";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import useMyCardActions from "@/hooks/useMyCardActions";
+import { getButtonType } from "@/utils/myCardHelpers";
 
 const MyReviewCardList = () => {
-  const { getButtonProps } = useMyCardActions();
-
   const { data, hasNextPage, fetchNextPage, status } =
     useSuspenseMyGatheringList({ reviewed: "false", completed: "true" });
 
@@ -48,7 +46,7 @@ const MyReviewCardList = () => {
               participantCount={gathering.participantCount}
               capacity={gathering.capacity}
             />
-            <MyCardAction action={getButtonProps(gathering)} />
+            <MyCardAction type={getButtonType(gathering)} id={gathering.id} />
           </MyCardContent>
         </MyCardItem>
       ))}
