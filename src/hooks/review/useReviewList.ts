@@ -20,6 +20,8 @@ const reviewListQueryOption = (searchParams?: TReviewQueryParams) =>
       ) {
         return undefined;
       }
+
+      return lastPage.currentPage + 1;
     },
   });
 
