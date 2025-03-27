@@ -40,6 +40,7 @@ const ProtectedRoute = () => {
         clearInterval(checkIntervalRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 로그인 상태 변경 감지
@@ -50,6 +51,7 @@ const ProtectedRoute = () => {
       };
       checkToken();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   return null;

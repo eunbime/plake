@@ -29,7 +29,9 @@ const Page = async () => {
         <ReviewRating />
       </FetchBoundary>
       <section className="border-t-2 border-gray-200 bg-white p-6 px-4 md:px-6">
-        <ReviewFilterSort />
+        <Suspense>
+          <ReviewFilterSort />
+        </Suspense>
         <FetchBoundary fallback={<ReviewCardItemSkeleton />}>
           <Suspense>
             <ReviewListParent />
