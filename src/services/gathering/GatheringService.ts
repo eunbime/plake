@@ -1,6 +1,18 @@
+import Service from "@/services/Service";
 import { IMyGathering, IMyGatheringFilterParams } from "@/types/gathering";
+import { getCookieOfToken } from "@/utils/cookieToken";
 
 class GatheringService {
+  async createGathering(formData: FormData) {
+    const res = await fetch("/api/gatherings", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) throw await res.json();
+    return res.json();
+  }
+
   async getMyGatheringList(searchParams?: IMyGatheringFilterParams) {
     const paramStr = new URLSearchParams(
       (searchParams ?? {}) as Record<string, string>,
@@ -11,15 +23,6 @@ class GatheringService {
     const header = new Headers();
     let res: Response;
     if (typeof window === "undefined") {
-      // const { getCookieOfToken } = await import("@/utils/cookieToken");
-      // const { getGatheringsJoined } = await import(
-      //   "@/app/api/gatherings/joined/route"
-      // );
-
-      // const token = await getCookieOfToken();
-
-      // res = await getGatheringsJoined(paramStr, token);
-
       await import("next/headers").then(({ cookies }) => {
         const _cookies = cookies().getAll();
         const cookieArr = _cookies
@@ -48,53 +51,32 @@ const gatheringService = new GatheringService();
 
 export default gatheringService;
 
-// import Service from "@/services/Service";
-// import { IMyGathering } from "@/types/gathering";
-// import { getCookieOfToken } from "@/utils/cookieToken";
+// 삭제될 코드
+class testGatheringService extends Service {
+  constructor(token: string) {
+    super();
+    this.setToken(token);
+  }
 
-// class GatheringService extends Service {
-//   constructor(token: string) {
-//     super();
-//     this.setToken(token);
-//   }
+  deleteGathering(id: string) {
+    return this.http.put(`/gatherings/${id}/cancel`);
+  }
 
-//   createGathering(formData: FormData) {
-//     return this.http.post("/gatherings", formData);
-//   }
+  joinGathering(id: string) {
+    return this.http.post(`/gatherings/${id}/join`);
+  }
 
-//   deleteGathering(id: string) {
-//     return this.http.put(`/gatherings/${id}/cancel`);
-//   }
+  leaveGathering(id: string) {
+    return this.http.delete(`/gatherings/${id}/leave`);
+  }
+}
 
-//   joinGathering(id: string) {
-//     return this.http.post(`/gatherings/${id}/join`);
-//   }
+export async function createGatheringService() {
+  const token = await getCookieOfToken();
 
-//   leaveGathering(id: string) {
-//     return this.http.delete(`/gatherings/${id}/leave`);
-//   }
+  if (!token) {
+    throw new Error("Token is not found");
+  }
 
-//   getMyGatheringList(reviewedOnly?: boolean, params?: string) {
-//     const reviewedFilter = reviewedOnly ? "reviewed=false" : "";
-//     const query = [reviewedFilter, params].filter(Boolean).join("&");
-
-//     return this.http.get<IMyGathering[]>(
-//       `/gatherings/joined${query && `?${query}`}`,
-//     );
-//   }
-// }
-
-// export async function createGatheringService() {
-//   const token = await getCookieOfToken();
-
-//   if (!token) {
-//     throw new Error("Token is not found");
-//   }
-
-//   return new GatheringService(token);
-// }
-
-// // 삭제될 코드 | route handler 도입 예정
-// export function createClientGatheringService(token: string) {
-//   return new GatheringService(token);
-// }
+  return new testGatheringService(token);
+}
