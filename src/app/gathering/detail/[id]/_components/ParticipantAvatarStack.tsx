@@ -1,7 +1,9 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
+
 import Avatar from "@/components/common/Avatar";
-import { useParticipants } from "@/hooks/gathering/useParticipants";
+import { participantsQueryOption } from "@/hooks/gathering/useParticipants";
 import { IUser } from "@/types/user";
 
 interface IParticipantAvatarStackProps {
@@ -9,12 +11,12 @@ interface IParticipantAvatarStackProps {
 }
 
 const ParticipantAvatarStack = ({ id }: IParticipantAvatarStackProps) => {
-  const { data } = useParticipants(id);
+  const { data } = useSuspenseQuery(participantsQueryOption(id));
 
-  const slicedData = data?.slice(0, 4);
+  const slicedData = data.slice(0, 4);
 
-  if (data?.length === 0) {
-    return null;
+  if (data.length === 0) {
+    return <></>;
   }
 
   return (

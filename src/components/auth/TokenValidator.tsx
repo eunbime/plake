@@ -9,8 +9,8 @@ import useUserStore from "@/stores/useUserStore";
 
 const TokenValidator = () => {
   const { logout } = useLogout();
-  const { isLoggedIn } = useUserStore();
-  const { openAlert } = useModalStore();
+  const openAlert = useModalStore(state => state.openAlert);
+  const isLoggedIn = useUserStore(state => state.isLoggedIn);
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // 로그아웃 처리 함수

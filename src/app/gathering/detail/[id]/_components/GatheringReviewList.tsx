@@ -1,11 +1,12 @@
 "use client";
 
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 import Pagination from "@/components/ui/Pagination";
-import { useSuspenseReviewsByGatheringId } from "@/hooks/review/useReviewsByGatheringId";
-import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { reviewsByGatheringIdQueryOption } from "@/hooks/review/useReviewsByGatheringId";
+import { useScrollToTopOnValueChange } from "@/hooks/useScrollToTopOnValueChange";
 
 import GatheringReviewItem from "./GatheringReviewItem";
 
@@ -13,10 +14,11 @@ const GatheringReviewList = () => {
   const { id } = useParams<{ id: string }>();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, fetchNextPage, hasNextPage } =
-    useSuspenseReviewsByGatheringId(id);
+  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
+    reviewsByGatheringIdQueryOption(id),
+  );
 
-  useScrollToTop(currentPage);
+  useScrollToTopOnValueChange(currentPage);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

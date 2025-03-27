@@ -1,12 +1,15 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
+
 import { Button } from "@/components/ui/Button";
 import { useCancelGathering } from "@/hooks/gathering/useCancelGathering";
-import { useSuspenseGatheringDetail } from "@/hooks/gathering/useGatheringDetail";
+import { gatheringDetailQueryOption } from "@/hooks/gathering/useGatheringDetail";
 import { useJoinGathering } from "@/hooks/gathering/useJoinGathering";
-import { useIsParticipant } from "@/hooks/gathering/useParticipants";
+import { participantsQueryOption } from "@/hooks/gathering/useParticipants";
 import useCopyLink from "@/hooks/useCopyLink";
 import useUserStore from "@/stores/useUserStore";
+import { IParticipant } from "@/types/gathering";
 
 interface IFloatingBarProps {
   id: string;
@@ -14,8 +17,10 @@ interface IFloatingBarProps {
 
 const FloatingBar = ({ id }: IFloatingBarProps) => {
   const {
-    data: { createdBy },
-  } = useSuspenseGatheringDetail(id);
+    data: { createdBy, registrationEnd },
+  } = useSuspenseQuery(gatheringDetailQueryOption(id));
+  const { data: participants } = useSuspenseQuery(participantsQueryOption(id));
+
   const user = useUserStore(state => state.user);
   const currentUserId = user?.id;
 
@@ -26,8 +31,11 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
   const { handleCancelGathering } = useCancelGathering(id);
   const { handleCopyLink } = useCopyLink();
 
-  const isParticipant = useIsParticipant(id, currentUserId);
+  const isParticipant = participants?.some(
+    (participant: IParticipant) => participant.userId === currentUserId,
+  );
   const isOrganizer = currentUserId === createdBy;
+  const isRegistrationEnd = new Date(registrationEnd) < new Date();
 
   return (
     <div className="fixed bottom-0 left-0 right-0 flex min-h-[84px] items-center border-t-2 border-gray-200 bg-white py-5">
@@ -44,23 +52,32 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
         </div>
         {isOrganizer ? (
           <div className="flex gap-2">
-            <Button onClick={handleCancelGathering} variant="purple-outline">
-              {"취소하기"}
-            </Button>
+            {!isRegistrationEnd && (
+              <Button onClick={handleCancelGathering} variant="purple-outline">
+                {"취소하기"}
+              </Button>
+            )}
             <Button variant="purple" onClick={handleCopyLink}>
               {"공유하기"}
             </Button>
           </div>
         ) : (
           <>
-            {isParticipant ? (
-              <Button onClick={handleLeaveGathering} variant="purple-outline">
-                {"참여 취소하기"}
-              </Button>
-            ) : (
-              <Button onClick={handleJoinGathering} variant="purple">
-                {"참여하기"}
-              </Button>
+            {!isRegistrationEnd && (
+              <>
+                {isParticipant ? (
+                  <Button
+                    onClick={handleLeaveGathering}
+                    variant="purple-outline"
+                  >
+                    {"참여 취소하기"}
+                  </Button>
+                ) : (
+                  <Button onClick={handleJoinGathering} variant="purple">
+                    {"참여하기"}
+                  </Button>
+                )}
+              </>
             )}
           </>
         )}
