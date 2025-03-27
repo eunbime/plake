@@ -2,12 +2,12 @@ import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import gatheringService from "@/services/gathering/NonGatheringService";
+import anonGatheringService from "@/services/gathering/AnonGatheringService";
 
 const deadlineImminentGatheringsQueryOption = () => ({
   queryKey: [QUERY_KEYS.GATHERING.deadline],
   queryFn: async () => {
-    const gatherings = await gatheringService.getGatheringList();
+    const gatherings = await anonGatheringService.getGatheringList();
     return gatherings
       .filter(gathering =>
         dayjs(gathering.registrationEnd).isAfter(dayjs(new Date())),

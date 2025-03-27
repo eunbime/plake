@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { createGatheringService } from "@/services/gathering/NonGatheringService";
+import { createGatheringService } from "@/services/gathering/GatheringService";
 import useModalStore from "@/stores/useModalStore";
 
 export const useCancelGathering = (id: string) => {
