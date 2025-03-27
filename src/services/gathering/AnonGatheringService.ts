@@ -1,5 +1,5 @@
 import Service from "@/services/Service";
-import { IGathering } from "@/types/gathering";
+import { IGathering, IParticipant } from "@/types/gathering";
 
 class AnonGatheringService extends Service {
   getGatheringList(type?: string, params?: string) {
@@ -15,8 +15,16 @@ class AnonGatheringService extends Service {
 
     return this.http.get<IGathering[]>(`/gatherings`);
   }
+
   getGatheringDetail(id: string) {
     const data = this.http.get<IGathering>(`/gatherings/${id}`);
+    return data;
+  }
+
+  getGatheringParticipants(id: string) {
+    const data = this.http.get<IParticipant[]>(
+      `/gatherings/${id}/participants`,
+    );
     return data;
   }
 }

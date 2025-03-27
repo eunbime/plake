@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/Button";
 import { useCancelGathering } from "@/hooks/gathering/useCancelGathering";
 import { gatheringDetailQueryOption } from "@/hooks/gathering/useGatheringDetail";
 import { useJoinGathering } from "@/hooks/gathering/useJoinGathering";
-import { useIsParticipant } from "@/hooks/gathering/useParticipants";
+import { participantsQueryOption } from "@/hooks/gathering/useParticipants";
 import useCopyLink from "@/hooks/useCopyLink";
 import useUserStore from "@/stores/useUserStore";
+import { IParticipant } from "@/types/gathering";
 
 interface IFloatingBarProps {
   id: string;
@@ -18,6 +19,8 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
   const {
     data: { createdBy },
   } = useSuspenseQuery(gatheringDetailQueryOption(id));
+  const { data: participants } = useSuspenseQuery(participantsQueryOption(id));
+
   const user = useUserStore(state => state.user);
   const currentUserId = user?.id;
 
@@ -28,7 +31,9 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
   const { handleCancelGathering } = useCancelGathering(id);
   const { handleCopyLink } = useCopyLink();
 
-  const isParticipant = useIsParticipant(id, currentUserId);
+  const isParticipant = participants?.some(
+    (participant: IParticipant) => participant.userId === currentUserId,
+  );
   const isOrganizer = currentUserId === createdBy;
 
   return (

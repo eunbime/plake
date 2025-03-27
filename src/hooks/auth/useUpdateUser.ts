@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import { createAuthService } from "@/services/auth/AuthService";
 import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
-import { APIError } from "@/types/error";
 import { IUpdateUser } from "@/types/user";
 
 export const useUpdateUser = () => {
@@ -24,7 +23,7 @@ export const useUpdateUser = () => {
       });
     },
     onError: error => {
-      if (error instanceof APIError) {
+      if (error instanceof Error) {
         openAlert(error.message);
       } else {
         openAlert("알 수 없는 오류가 발생했어요.");

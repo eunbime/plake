@@ -9,5 +9,4 @@ export const gatheringDetailQueryOption = (id: string) =>
     queryFn: () => anonGatheringService.getGatheringDetail(id),
     throwOnError: true,
     retry: false,
-    staleTime: 1000 * 60 * 5,
   });

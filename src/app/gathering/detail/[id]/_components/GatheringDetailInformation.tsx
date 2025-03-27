@@ -24,7 +24,6 @@ const GatheringDetailInformation = ({
   } = useSuspenseQuery(gatheringDetailQueryOption(id));
 
   const progress = (participantCount / capacity) * 100;
-
   const isGatheringFull = participantCount >= GATHERING.CAPACITY.MIN;
 
   return (

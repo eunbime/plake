@@ -11,8 +11,8 @@ import { getCookieOfToken } from "@/utils/cookieToken";
 const TokenValidator = () => {
   const router = useRouter();
   const { logout } = useLogout();
-  const { openAlert } = useModalStore();
-  const { isLoggedIn } = useUserStore();
+  const openAlert = useModalStore(state => state.openAlert);
+  const isLoggedIn = useUserStore(state => state.isLoggedIn);
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // 로그아웃 처리 함수
