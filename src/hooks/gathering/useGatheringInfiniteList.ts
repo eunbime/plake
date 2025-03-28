@@ -3,6 +3,7 @@ import {
   useInfiniteQuery,
   useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
+import dayjs from "dayjs";
 
 import { ONLINE } from "@/constants/gatheringFilterParams";
 import { QUERY_KEYS } from "@/constants/queryKeys";
@@ -24,8 +25,14 @@ const gatheringInfiniteListQueryOption = (
   params?: IGatheringFilterParams,
 ) => ({
   queryKey: [QUERY_KEYS.GATHERING.listByParams(tab, params)],
-  queryFn: ({ pageParam = 1 }) => {
-    return anonGatheringService.getGatheringInfiniteList(pageParam, params);
+  queryFn: async ({ pageParam = 1 }) => {
+    const gatherings = await anonGatheringService.getGatheringInfiniteList(
+      pageParam,
+      params,
+    );
+    return gatherings.filter((gathering: IGathering) =>
+      dayjs(gathering.registrationEnd).isAfter(dayjs(new Date())),
+    );
   },
   initialPageParam: 1,
   throwOnError: true,
