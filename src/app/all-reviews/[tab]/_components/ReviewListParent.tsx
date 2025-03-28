@@ -47,7 +47,6 @@ const ReviewListParent = () => {
 
   const { setTarget } = useIntersectionObserver({ onIntersect });
 
-  console.log("data", data);
   return (
     <>
       {flatData.length > 0 ? (
