@@ -35,7 +35,7 @@ const MainCardList = ({ tab }: IMainCardListProps) => {
         page.map(card => (
           <MainCardItem
             key={card.id}
-            id={card.id}
+            id={String(card.id)}
             name={card.name}
             dateTime={new Date(card.dateTime)}
             registrationEnd={new Date(card.registrationEnd)}

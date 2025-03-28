@@ -13,11 +13,11 @@ import { ONLINE } from "@/constants/gatheringFilterParams";
 
 import DateTimeTag from "../common/DateTimeTag";
 import DeadlineTag from "../common/DeadlineTag";
-import FavoriteButton from "../common/FavoriteButton";
+import FavoriteButtonWrapper from "../common/FavoriteButtonWrapper";
 import ProgressBar from "../common/ProgressBar";
 
 interface IMainCardItemProps {
-  id: number;
+  id: string;
   name: string;
   dateTime: Date;
   registrationEnd: Date;
@@ -80,7 +80,7 @@ const MainCardItem = ({
                 <DateTimeTag date={dayjs(dateTime)} />
               </div>
             </div>
-            <FavoriteButton isFavorite={false} onToggle={() => {}} />
+            <FavoriteButtonWrapper id={id} />
           </div>
           <div className="flex w-full items-center gap-6">
             <div className="flex flex-1 flex-col items-start gap-2 md:w-[258px] lg:w-[258px]">

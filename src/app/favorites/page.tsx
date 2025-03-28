@@ -1,7 +1,9 @@
+import GatheringFavoriteList from "./_components/GatheringFavoriteList";
+
 const Page = () => {
   return (
-    <div>
-      <h1>Welcome to the Favorites Page</h1>
+    <div className="base-wrap">
+      <GatheringFavoriteList />
     </div>
   );
 };
