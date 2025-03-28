@@ -12,7 +12,7 @@ export default function MypageLayout({ children }: LayoutProps) {
   return (
     <div className="base-wrap w-full min-w-[375px] bg-gray-50">
       <ProtectedRoute />
-      <div className="mx-auto w-full max-w-[996px] pb-8">
+      <div className="mx-auto w-full max-w-[996px]">
         <h1 className="pb-4 pt-6 text-2xl font-semibold sm:px-2 sm:pb-6 sm:pt-8">
           마이 페이지
         </h1>

@@ -1,20 +1,18 @@
 "use client";
 
 import EmptyState from "@/app/mypage/_components/EmptyState";
-import MyCardAction from "@/app/mypage/_components/my-card-item/MyCardAction";
 import MyCardContent from "@/app/mypage/_components/my-card-item/MyCardContent";
 import MyCardImage from "@/app/mypage/_components/my-card-item/MyCardImage";
 import MyCardItem from "@/app/mypage/_components/my-card-item/MyCardItem";
-import MyCardLabels from "@/app/mypage/_components/my-card-item/MyCardLabels";
 import MyCardTitle from "@/app/mypage/_components/my-card-item/MyCardTitle";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { getButtonType, getStatusProps } from "@/utils/myCardHelpers";
 
-const MyCardList = () => {
+const MyCreateCardList = () => {
+  // TODO: MyCardList -> CardList 가져와야 함
   const { data, hasNextPage, fetchNextPage, status } =
-    useSuspenseMyGatheringList();
+    useSuspenseMyGatheringList({ reviewed: "false", completed: "true" });
 
   const list = data.pages.flat() ?? [];
 
@@ -27,7 +25,7 @@ const MyCardList = () => {
   const { setTarget } = useIntersectionObserver({ onIntersect });
 
   if (!list.length) {
-    return <EmptyState message={EMPTY_MESSAGE.mypage.default} />;
+    return <EmptyState message={EMPTY_MESSAGE.mypage.gatherings} />;
   }
 
   return (
@@ -40,18 +38,13 @@ const MyCardList = () => {
         >
           <MyCardImage image={gathering.image} name={gathering.name} />
           <MyCardContent hasAction={true}>
-            <div>
-              <MyCardLabels statuses={getStatusProps(gathering)} />
-              <MyCardTitle
-                hasLabel={true}
-                name={gathering.name}
-                location={gathering.location}
-                dateTime={gathering.dateTime}
-                participantCount={gathering.participantCount}
-                capacity={gathering.capacity}
-              />
-            </div>
-            <MyCardAction type={getButtonType(gathering)} id={gathering.id} />
+            <MyCardTitle
+              name={gathering.name}
+              location={gathering.location}
+              dateTime={gathering.dateTime}
+              participantCount={gathering.participantCount}
+              capacity={gathering.capacity}
+            />
           </MyCardContent>
         </MyCardItem>
       ))}
@@ -65,4 +58,4 @@ const MyCardList = () => {
   );
 };
 
-export default MyCardList;
+export default MyCreateCardList;

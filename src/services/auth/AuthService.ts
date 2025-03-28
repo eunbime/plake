@@ -1,12 +1,12 @@
 class AuthService {
   async getUser() {
-    const res = await fetch("/api/user");
+    const res = await fetch("/api/auths/user");
     if (!res.ok) throw await res.json();
     return res.json();
   }
 
   async updateUser(formData: FormData) {
-    const res = await fetch("/api/user/update", {
+    const res = await fetch("/api/auths/user", {
       method: "PUT",
       body: formData,
     });
@@ -16,4 +16,6 @@ class AuthService {
   }
 }
 
-export default AuthService;
+const authService = new AuthService();
+
+export default authService;
