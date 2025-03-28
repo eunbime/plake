@@ -3,7 +3,7 @@ import { TLoginForm } from "@/app/login/_components/LoginForm";
 
 import Service from "../Service";
 
-class NonAuthService extends Service {
+class AnonAuthService extends Service {
   login(formData: TLoginForm) {
     const data = this.http.post("/auths/signin", formData);
     return data;
@@ -15,4 +15,6 @@ class NonAuthService extends Service {
   }
 }
 
-export default NonAuthService;
+const anonAuthService = new AnonAuthService();
+
+export default anonAuthService;

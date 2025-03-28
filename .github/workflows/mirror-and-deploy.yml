@@ -33,7 +33,7 @@ jobs:
         run: |
           rm -rf target-repo/*
           mkdir -p deploy
-          ITEMS=(".next" "public" "src" "components.json" "middleware.ts" "next.config.mjs" \
+          ITEMS=(".next" "public" "src" "components.json" "next.config.mjs" \
                   "package.json" "package-lock.json" "postcss.config.mjs" "tailwind.config.ts" "tsconfig.json")
           for ITEM in "${ITEMS[@]}"; do
             if [ -e "$ITEM" ]; then
