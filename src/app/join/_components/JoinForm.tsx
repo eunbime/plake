@@ -89,7 +89,7 @@ const JoinForm = () => {
 
   const debouncedValidation = useDebounce(fieldName => {
     trigger(fieldName);
-  }, 1000);
+  }, 500);
 
   const onSubmit = handleSubmit(data => {
     setIsSubmitting(true);
