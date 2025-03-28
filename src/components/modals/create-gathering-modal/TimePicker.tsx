@@ -4,17 +4,30 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
 const baseStyle =
-  "m-[10px] flex h-[100px] md:h-[300px] flex-col gap-[10px] overflow-y-scroll pl-3";
+  "p-[10px] flex h-[100px] md:h-[300px] flex-col gap-3 scrollbar scrollbar-none overflow-y-scroll pl-4 first:pl-0 md:first:pl-3";
 
 interface ITimePickerProps {
   selectedDate?: Date;
   setValue?: (value: Date) => void;
+  value?: string;
 }
 
-const TimePicker = ({ selectedDate, setValue }: ITimePickerProps) => {
-  const [selectedHour, setSelectedHour] = useState<number>(12);
-  const [selectedMinute, setSelectedMinute] = useState<number>(0);
-  const [selectedAmPm, setSelectedAmPm] = useState<string>("PM");
+const TimePicker = ({ selectedDate, setValue, value }: ITimePickerProps) => {
+  const [selectedHour, setSelectedHour] = useState<number>(
+    value
+      ? dayjs(value).hour() === 12 || dayjs(value).hour() === 0
+        ? 12
+        : dayjs(value).hour() > 12
+          ? dayjs(value).hour() - 12
+          : dayjs(value).hour()
+      : 12,
+  );
+  const [selectedMinute, setSelectedMinute] = useState<number>(
+    value ? dayjs(value).minute() : 0,
+  );
+  const [selectedAmPm, setSelectedAmPm] = useState<string>(
+    value ? dayjs(value).format("A") : "PM",
+  );
 
   const updateDateTime = (
     hour: number = selectedHour,
@@ -42,7 +55,7 @@ const TimePicker = ({ selectedDate, setValue }: ITimePickerProps) => {
   };
 
   return (
-    <section className="flex gap-2 divide-x divide-gray-200">
+    <section className="flex divide-x divide-gray-200">
       <div className={baseStyle}>
         {Array.from({ length: 12 }).map((_, index) => {
           const hour = index === 0 ? 12 : index;

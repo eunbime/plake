@@ -42,12 +42,10 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
       <div className="base-wrap flex h-full w-full flex-wrap items-start justify-between gap-5 xs:flex-nowrap">
         <div className="flex h-full flex-col gap-2">
           <p className="text-base font-semibold">
-            {"더 건강한 나와 팀을 위한 프로그램 🏃‍️️"}
+            {"일상에 쉼표를, 즐거움에 느낌표를! 🎉‍️️"}
           </p>
           <p className="text-xs font-medium">
-            {
-              "국내 최고 웰니스 전문가와 프로그램을 통해 지친 몸과 마음을 회복해봐요"
-            }
+            {"지친 하루에 브레이크를 걸고, 새로운 경험을 시작해보세요."}
           </p>
         </div>
         {isOrganizer ? (

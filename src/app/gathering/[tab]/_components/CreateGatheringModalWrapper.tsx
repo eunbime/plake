@@ -10,8 +10,7 @@ import useUserStore from "@/stores/useUserStore";
 
 const CreateGatheringModalWrapper = () => {
   const router = useRouter();
-  const { openConfirm } = useModalStore();
-
+  const openConfirm = useModalStore(state => state.openConfirm);
   const user = useUserStore(state => state.user);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
