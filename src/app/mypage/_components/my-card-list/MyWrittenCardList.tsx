@@ -6,14 +6,15 @@ import ReviewCardList from "@/components/layout/ReviewCardList";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseReviewList } from "@/hooks/review/useReviewList";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import useUserStore from "@/stores/useUserStore";
 import { TReviewQueryParams } from "@/types/review";
 
-const MyWrittenCardList = () => {
-  const user = useUserStore(state => state.user);
+interface MyWrittenCardListProps {
+  userId: string;
+}
 
+const MyWrittenCardList = ({ userId }: MyWrittenCardListProps) => {
   const reviewQueryParams: TReviewQueryParams = {
-    userId: user?.id.toString(),
+    userId,
   };
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =

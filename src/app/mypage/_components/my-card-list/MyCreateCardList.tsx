@@ -8,11 +8,13 @@ import MyCardTitle from "@/app/mypage/_components/my-card-item/MyCardTitle";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseGatheringInfiniteList } from "@/hooks/gathering/useGatheringInfiniteList";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import useUserStore from "@/stores/useUserStore";
 
-const MyCreateCardList = () => {
-  const user = useUserStore(state => state.user);
-  const params = { createdBy: user?.id?.toString(), sortOrder: "desc" };
+interface MyCreateCardListProps {
+  userId: string;
+}
+
+const MyCreateCardList = ({ userId }: MyCreateCardListProps) => {
+  const params = { createdBy: userId, sortOrder: "desc" };
 
   const { data, hasNextPage, fetchNextPage, status } =
     useSuspenseGatheringInfiniteList(undefined, params);
