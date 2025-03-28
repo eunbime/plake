@@ -34,6 +34,7 @@ export type IGatheringFilterParams = {
   type?: string;
   location?: string;
   date?: string;
+  createdBy?: string;
   sort?: string;
   sortBy?: string;
   sortOrder?: string;
