@@ -6,13 +6,16 @@ import MyCardImage from "@/app/mypage/_components/my-card-item/MyCardImage";
 import MyCardItem from "@/app/mypage/_components/my-card-item/MyCardItem";
 import MyCardTitle from "@/app/mypage/_components/my-card-item/MyCardTitle";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
-import { useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
+import { useSuspenseGatheringInfiniteList } from "@/hooks/gathering/useGatheringInfiniteList";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import useUserStore from "@/stores/useUserStore";
 
 const MyCreateCardList = () => {
-  // TODO: MyCardList -> CardList 가져와야 함
+  const user = useUserStore(state => state.user);
+  const params = { createdBy: user?.id?.toString(), sortOrder: "desc" };
+
   const { data, hasNextPage, fetchNextPage, status } =
-    useSuspenseMyGatheringList({ reviewed: "false", completed: "true" });
+    useSuspenseGatheringInfiniteList(undefined, params);
 
   const list = data.pages.flat() ?? [];
 
