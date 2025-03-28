@@ -61,11 +61,11 @@ const LoginForm = () => {
           { shouldFocus: true },
         );
       }
+      setIsSubmitting(false);
     } else if (state && state.status && state.user) {
-      router.replace("/");
       setUserState(state.user);
+      router.replace("/");
     }
-    setIsSubmitting(false);
   }, [state, setError, router, setUserState, openAlert]);
 
   const onSubmit = handleSubmit(data => {

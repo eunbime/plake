@@ -61,11 +61,11 @@ const JoinForm = () => {
         },
         { shouldFocus: true },
       );
+      setIsSubmitting(false);
     } else if (state && state.status) {
       openAlert("회원가입이 완료되었습니다.");
       router.replace("/login");
     }
-    setIsSubmitting(false);
   }, [state, setError, router, openAlert]);
 
   const registerWithValidation = (
