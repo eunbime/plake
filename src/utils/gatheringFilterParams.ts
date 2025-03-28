@@ -1,7 +1,7 @@
 import { ONLINE, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { IGatheringFilterParams } from "@/types/gathering";
 
-const useGatheringFilterParams = (
+const gatheringFilterParams = (
   pathname: string,
   paramsObj: IGatheringFilterParams,
 ) => {
@@ -33,4 +33,4 @@ const useGatheringFilterParams = (
   return paramsObj;
 };
 
-export default useGatheringFilterParams;
+export default gatheringFilterParams;

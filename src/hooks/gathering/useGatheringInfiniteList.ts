@@ -20,10 +20,10 @@ const filterByValue = (data: {
 });
 
 const gatheringInfiniteListQueryOption = (
-  type?: string,
+  tab: string,
   params?: IGatheringFilterParams,
 ) => ({
-  queryKey: [QUERY_KEYS.GATHERING.listByParams(params)],
+  queryKey: [QUERY_KEYS.GATHERING.listByParams(tab, params)],
   queryFn: ({ pageParam = 1 }) => {
     return anonGatheringService.getGatheringInfiniteList(pageParam, params);
   },
@@ -35,22 +35,22 @@ const gatheringInfiniteListQueryOption = (
 
     return lastPage.length > 0 ? nextPage : undefined;
   },
-  select: type === "offline" ? filterByValue : undefined,
+  select: tab === "offline" ? filterByValue : undefined,
 });
 
 export const useGatheringInfiniteList = (
-  type?: string,
+  tab: string,
   params?: IGatheringFilterParams,
 ) => {
-  return useInfiniteQuery(gatheringInfiniteListQueryOption(type, params));
+  return useInfiniteQuery(gatheringInfiniteListQueryOption(tab, params));
 };
 
 export const useSuspenseGatheringInfiniteList = (
-  type?: string,
+  tab: string,
   params?: IGatheringFilterParams,
 ) => {
   const { data, hasNextPage, fetchNextPage, status } = useSuspenseInfiniteQuery(
-    gatheringInfiniteListQueryOption(type, params),
+    gatheringInfiniteListQueryOption(tab, params),
   );
 
   return { data, hasNextPage, fetchNextPage, status };
@@ -58,10 +58,10 @@ export const useSuspenseGatheringInfiniteList = (
 
 export const prefetchGateringInfiniteList = async (
   queryClient: QueryClient,
-  type?: string,
+  tab: string,
   params?: IGatheringFilterParams,
 ) => {
   return queryClient.prefetchInfiniteQuery(
-    gatheringInfiniteListQueryOption(type, params),
+    gatheringInfiniteListQueryOption(tab, params),
   );
 };
