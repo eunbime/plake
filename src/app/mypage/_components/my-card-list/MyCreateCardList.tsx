@@ -17,7 +17,7 @@ const MyCreateCardList = ({ userId }: MyCreateCardListProps) => {
   const params = { createdBy: userId, sortOrder: "desc" };
 
   const { data, hasNextPage, fetchNextPage, status } =
-    useSuspenseGatheringInfiniteList(undefined, params);
+    useSuspenseGatheringInfiniteList("all", params);
 
   const list = data.pages.flat() ?? [];
 

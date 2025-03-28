@@ -15,7 +15,7 @@ const Page = async () => {
 
   const { userId } = await prefetchCheckUser(queryClient);
 
-  await prefetchGateringInfiniteList(queryClient, undefined, {
+  await prefetchGateringInfiniteList(queryClient, "all", {
     createdBy: userId,
     sortOrder: "desc",
   });
