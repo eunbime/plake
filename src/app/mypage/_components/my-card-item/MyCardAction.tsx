@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/Button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { useLeaveGatheringMutation } from "@/hooks/gathering/useJoinGathering";
@@ -13,6 +15,7 @@ interface MyCardActionProps {
 }
 
 const MyCardAction = ({ type, id }: MyCardActionProps) => {
+  const router = useRouter();
   const { mutate: leave } = useLeaveGatheringMutation(String(id), [
     QUERY_KEYS.GATHERING.myList,
   ]);
@@ -38,7 +41,14 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
 
   if (type === "viewReview") {
     return (
-      <Button variant="purple" className="h-10 w-[120px]" onClick={() => {}}>
+      <Button
+        variant="purple"
+        className="h-10 w-[120px]"
+        onClick={e => {
+          e.preventDefault();
+          router.push("/mypage/reviews?type=written");
+        }}
+      >
         내가 쓴 리뷰 보기
       </Button>
     );
