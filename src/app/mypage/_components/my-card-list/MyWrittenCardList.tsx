@@ -15,6 +15,8 @@ interface MyWrittenCardListProps {
 const MyWrittenCardList = ({ userId }: MyWrittenCardListProps) => {
   const reviewQueryParams: TReviewQueryParams = {
     userId,
+    sortBy: "createdAt",
+    sortOrder: "desc",
   };
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
