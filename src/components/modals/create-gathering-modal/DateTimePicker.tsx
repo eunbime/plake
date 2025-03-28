@@ -41,7 +41,7 @@ const DateTimePicker = ({
     if (value) {
       setDisplayValue(dayjs(value).format("YYYY-MM-DD hh:mm A"));
     } else {
-      setDisplayValue("날짜를 선택해주세요");
+      setDisplayValue("");
     }
   }, [dateTimeValue, registrationEndValue, type]);
 
@@ -63,7 +63,6 @@ const DateTimePicker = ({
     } else {
       setRegistrationEndValue?.(formattedDate);
     }
-    setIsOpen(false);
   };
 
   return (
@@ -72,7 +71,9 @@ const DateTimePicker = ({
         {type === "dateTime" ? "모임 날짜" : "마감 날짜"}
       </Label>
       <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-[10px]">
-        <time className="font-medium text-gray-400">{displayValue}</time>
+        <time className="font-medium text-gray-400">
+          {displayValue ? displayValue : "날짜를 선택해주세요"}
+        </time>
         <FaRegCalendar
           className="cursor-pointer"
           onClick={() => setIsOpen(true)}
@@ -91,6 +92,7 @@ const DateTimePicker = ({
             <TimePicker
               selectedDate={selectedDate}
               setValue={value => handleDateTimeChange(value, "time")}
+              value={displayValue}
             />
           </div>
         )}

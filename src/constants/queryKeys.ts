@@ -13,8 +13,8 @@ export const QUERY_KEYS = {
     all: GATHERING_ALL,
     list: [...GATHERING_ALL, "list"] as const,
     myList: [...GATHERING_ALL, "myList"] as const,
-    listByParams: (params?: IGatheringFilterParams) =>
-      [...GATHERING_ALL, "list", params] as const,
+    listByParams: (tab: string, params?: IGatheringFilterParams) =>
+      [...GATHERING_ALL, "list", tab, params] as const,
     popular: [...GATHERING_ALL, "list", "popular"] as const,
     upcoming: [...GATHERING_ALL, "list", "upcoming"] as const,
     detail: (gatheringId: string) =>
