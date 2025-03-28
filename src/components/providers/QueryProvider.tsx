@@ -12,7 +12,8 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const queryClientOptions: QueryClientConfig = {
     defaultOptions: {
       queries: {
-        refetchOnWindowFocus: false,
+        staleTime: 0,
+        gcTime: 30000,
         retry: false,
         throwOnError: true,
       },

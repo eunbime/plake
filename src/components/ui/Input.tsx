@@ -92,6 +92,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {type === "password" && (
           <button
             type="button"
+            tabIndex={-1}
             onClick={togglePasswordVisibility}
             className="absolute right-[10px] top-9 bg-gray-50 pl-2 outline-none"
           >
@@ -110,6 +111,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             animate={shakeAnimation}
             transition={animationTransition}
             key={`error-${errorMsg}`}
+            tabIndex={-1}
           >
             {errorMsg}
           </motion.p>
