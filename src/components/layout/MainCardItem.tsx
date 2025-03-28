@@ -68,7 +68,7 @@ const MainCardItem = ({
           <div className="flex w-full items-center justify-between">
             <div className="flex flex-col items-start justify-center gap-2">
               <div className="flex items-center justify-center">
-                <p className="max-h-[30px] w-80 max-w-[450px] overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold text-gray-800">
+                <p className="max-h-[30px] max-w-[190px] overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold text-gray-800 md:max-w-[400px]">
                   {name}
                 </p>
                 <RxDividerVertical className="text-gray-900" />
