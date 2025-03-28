@@ -8,8 +8,11 @@ import { OFFLINE_PATH, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { SUB_TAB } from "@/constants/ui";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import { cn } from "@/lib/utils";
+import useTabStore from "@/stores/useTabStore";
 
 const SubTab = () => {
+  const onSubTabChangeOn = useTabStore(state => state.onSubTabChangeOn);
+
   const pathname = usePathname();
   const { searchParams, setSearchParams } = useCustomSearchParams();
 
@@ -25,7 +28,10 @@ const SubTab = () => {
           <Button
             variant="default"
             aria-label="서브 주제 탭"
-            onClick={() => setSearchParams({ type: tab.value })}
+            onClick={() => {
+              setSearchParams({ type: tab.value });
+              onSubTabChangeOn();
+            }}
             className={cn(
               "rounded-xl px-4 py-2.5",
               tab.value !== type &&

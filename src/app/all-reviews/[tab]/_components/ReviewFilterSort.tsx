@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 import Dropdown from "@/components/common/Dropdown";
 import FilterCalendar from "@/components/common/FilterCalendar";
@@ -11,13 +12,18 @@ const ReviewFilterSort = () => {
   const pathname = usePathname();
   const { setSearchParams } = useCustomSearchParams();
 
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
   return (
     <section className="mb-6 flex items-center justify-between gap-1">
       <div className="flex items-center justify-center gap-2">
         {pathname === REVIEW_OFFLINE_PATH && (
           <Dropdown onSelect={value => setSearchParams({ location: value })} />
         )}
-        <FilterCalendar />
+        <FilterCalendar
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
       <div>
         <Dropdown
