@@ -32,8 +32,8 @@ const GatheringFilterSort = () => {
   }, [isSubTabChange, onSubTabChangeOff]);
 
   return (
-    <section className="mb-6 flex items-center justify-between">
-      <div className="justfify-center flex items-center gap-2">
+    <section className="mb-6 flex items-center justify-between gap-1">
+      <div className="flex items-center justify-center gap-2">
         {pathname === OFFLINE_PATH && (
           <Dropdown
             onSelect={value => setSearchParams({ location: value })}

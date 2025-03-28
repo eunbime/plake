@@ -18,7 +18,6 @@ const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
   const { user } = useUserStore(useShallow(state => ({ user: state.user })));
   const pathName = usePathname();
 
-  console.log(pathName);
   const myReviewChk = pathName === "/mypage/reviews" && User.id === user?.id;
 
   return (
