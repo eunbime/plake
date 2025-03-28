@@ -21,7 +21,7 @@ const Pagination = ({
     (_, i) => startPage + i,
   );
 
-  if (totalPage <= 1) return null;
+  if (totalPage === 0) return null;
 
   return (
     <section className="flex w-full items-center justify-center gap-2">
