@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useSuspenseGatheringInfiniteList } from "@/hooks/gathering/useGatheringInfiniteList";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import gatheringFilterParams from "@/utils/gatheringFilterParams";
+import { updateGatheringParams } from "@/utils/gatheringFilterParams";
 
 import MainCardItem from "./MainCardItem";
 
@@ -16,7 +16,7 @@ interface IMainCardListProps {
 const MainCardList = ({ tab }: IMainCardListProps) => {
   const pathname = usePathname();
   const { searchParamsObj } = useCustomSearchParams();
-  const params = gatheringFilterParams(pathname, searchParamsObj);
+  const params = updateGatheringParams(pathname, searchParamsObj);
 
   const { data, status, hasNextPage, fetchNextPage } =
     useSuspenseGatheringInfiniteList(tab, params);
