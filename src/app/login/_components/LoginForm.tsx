@@ -61,11 +61,11 @@ const LoginForm = () => {
           { shouldFocus: true },
         );
       }
-      setIsSubmitting(false);
     } else if (state && state.status && state.user) {
-      setUserState(state.user);
       router.replace("/");
+      setUserState(state.user);
     }
+    setIsSubmitting(false);
   }, [state, setError, router, setUserState, openAlert]);
 
   const onSubmit = handleSubmit(data => {
@@ -99,7 +99,7 @@ const LoginForm = () => {
 
   const debouncedValidation = useDebounce(fieldName => {
     trigger(fieldName);
-  }, 1000);
+  }, 500);
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6">

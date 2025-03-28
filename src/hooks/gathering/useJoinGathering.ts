@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { createGatheringService } from "@/services/gathering/GatheringService";
+import gatheringService from "@/services/gathering/GatheringService";
 import useModalStore from "@/stores/useModalStore";
 
 export const useJoinGatheringMutation = (id: string) => {
@@ -10,8 +10,7 @@ export const useJoinGatheringMutation = (id: string) => {
   const openAlert = useModalStore(state => state.openAlert);
   return useMutation({
     mutationFn: async () => {
-      const service = await createGatheringService();
-      return service.joinGathering(id);
+      return gatheringService.joinGathering(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -24,18 +23,20 @@ export const useJoinGatheringMutation = (id: string) => {
   });
 };
 
-export const useLeaveGatheringMutation = (id: string) => {
+export const useLeaveGatheringMutation = (
+  id: string,
+  invalidateKey?: unknown[],
+) => {
   const queryClient = useQueryClient();
   const openAlert = useModalStore(state => state.openAlert);
 
   return useMutation({
     mutationFn: async () => {
-      const service = await createGatheringService();
-      return service.leaveGathering(id);
+      return gatheringService.leaveGathering(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GATHERING.detail(id)],
+        queryKey: invalidateKey ?? [QUERY_KEYS.GATHERING.detail(id)],
       });
     },
     onError: () => {

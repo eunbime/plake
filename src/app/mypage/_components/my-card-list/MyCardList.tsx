@@ -1,7 +1,5 @@
 "use client";
 
-import clsx from "clsx";
-
 import EmptyState from "@/app/mypage/_components/EmptyState";
 import MyCardAction from "@/app/mypage/_components/my-card-item/MyCardAction";
 import MyCardContent from "@/app/mypage/_components/my-card-item/MyCardContent";
@@ -9,59 +7,61 @@ import MyCardImage from "@/app/mypage/_components/my-card-item/MyCardImage";
 import MyCardItem from "@/app/mypage/_components/my-card-item/MyCardItem";
 import MyCardLabels from "@/app/mypage/_components/my-card-item/MyCardLabels";
 import MyCardTitle from "@/app/mypage/_components/my-card-item/MyCardTitle";
+import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
-import { DirectionType } from "@/types/gathering";
-import { getButtonProps, getStatusProps } from "@/utils/myCardHelpers";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { getButtonType, getStatusProps } from "@/utils/myCardHelpers";
 
-const MyCardList = ({
-  direction,
-  token,
-  emptyMessage,
-}: {
-  direction: DirectionType;
-  token: string; // 삭제 예정
-  emptyMessage: string;
-}) => {
-  const reviewedOnly = direction === "reviews";
-  const { data } = useSuspenseMyGatheringList({ reviewedOnly, token });
-  const list = data?.pages.flat() ?? [];
+const MyCardList = () => {
+  const { data, hasNextPage, fetchNextPage, status } =
+    useSuspenseMyGatheringList();
+
+  const list = data.pages.flat() ?? [];
+
+  const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (isIntersecting && hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const { setTarget } = useIntersectionObserver({ onIntersect });
 
   if (!list.length) {
-    return <EmptyState message={emptyMessage} />;
+    return <EmptyState message={EMPTY_MESSAGE.mypage.default} />;
   }
 
   return (
-    // 수정 예정 | BaseCardList 컴포넌트 제작 및 적용
-    <div>
+    <>
       {list.map((gathering, index) => (
-        <div
+        <MyCardItem
           key={gathering.id}
-          className={clsx(
-            "py-6",
-            index !== list.length - 1 &&
-              "border-b-2 border-dashed border-gray-200",
-          )}
+          id={gathering.id}
+          isLast={index === list.length - 1}
         >
-          <MyCardItem id={gathering.id}>
-            <MyCardImage image={gathering.image} name={gathering.name} />
-            <MyCardContent hasAction={true}>
-              <div>
-                <MyCardLabels statuses={getStatusProps(gathering)} />
-                <MyCardTitle
-                  hasLabel={true}
-                  name={gathering.name}
-                  location={gathering.location}
-                  dateTime={gathering.dateTime}
-                  participantCount={gathering.participantCount}
-                  capacity={gathering.capacity}
-                />
-              </div>
-              <MyCardAction action={getButtonProps(gathering)} />
-            </MyCardContent>
-          </MyCardItem>
-        </div>
+          <MyCardImage image={gathering.image} name={gathering.name} />
+          <MyCardContent hasAction={true}>
+            <div>
+              <MyCardLabels statuses={getStatusProps(gathering)} />
+              <MyCardTitle
+                hasLabel={true}
+                name={gathering.name}
+                location={gathering.location}
+                dateTime={gathering.dateTime}
+                participantCount={gathering.participantCount}
+                capacity={gathering.capacity}
+              />
+            </div>
+            <MyCardAction type={getButtonType(gathering)} id={gathering.id} />
+          </MyCardContent>
+        </MyCardItem>
       ))}
-    </div>
+
+      {status === "error" ? (
+        <div>{"에러가 발생했습니다."}</div>
+      ) : (
+        <div ref={setTarget}></div>
+      )}
+    </>
   );
 };
 
