@@ -23,7 +23,7 @@ export const useCalendar = (props?: IUseCalendar) => {
     mode: "single",
     selected: selectedDate,
     onSelect: handleDateChange,
-    defaultMonth: defaultDate,
+    defaultMonth: selectedDate,
     disabled: props?.disabledAfterDate
       ? { before: disabledBeforeDate, after: props.disabledAfterDate }
       : { before: disabledBeforeDate },
