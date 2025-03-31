@@ -53,9 +53,12 @@ export const useJoinGathering = (id: string, currentUserId?: number) => {
 
   const handleJoinGathering = () => {
     if (!currentUserId) {
-      openConfirm("로그인 후 참여할 수 있습니다. 이동하시겠습니까?", () => {
-        router.push("/login");
-      });
+      openConfirm(
+        "로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?",
+        () => {
+          router.push("/login");
+        },
+      );
     } else {
       openConfirm("모임에 참여하시겠습니까?", () => {
         joinGathering();
