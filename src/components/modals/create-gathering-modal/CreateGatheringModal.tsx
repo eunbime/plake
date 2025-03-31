@@ -32,7 +32,7 @@ const CreateGatheringModal = () => {
     setValue,
     getValues,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
     defaultValues: GATHERING_FORM,
@@ -92,7 +92,9 @@ const CreateGatheringModal = () => {
               setLocationValue={value => setValue("location", value)}
             />
             {errors.type && (
-              <span className={errorMsgStyle}>{errors.type.message}</span>
+              <p role="alert" className={errorMsgStyle}>
+                {errors.type.message}
+              </p>
             )}
           </section>
           {location !== SERVICE_LIST.ONLINE.location && (
@@ -106,7 +108,9 @@ const CreateGatheringModal = () => {
                 }
               />
               {errors.location && (
-                <span className={errorMsgStyle}>{errors.location.message}</span>
+                <p role="alert" className={errorMsgStyle}>
+                  {errors.location.message}
+                </p>
               )}
             </section>
           )}
@@ -118,7 +122,9 @@ const CreateGatheringModal = () => {
               }
             />
             {errors.image && (
-              <span className={errorMsgStyle}>{errors.image.message}</span>
+              <p role="alert" className={errorMsgStyle}>
+                {errors.image.message}
+              </p>
             )}
           </section>
 
@@ -133,9 +139,9 @@ const CreateGatheringModal = () => {
             registrationEndValue={getValues("registrationEnd")}
           />
           {(errors.dateTime || errors.registrationEnd) && (
-            <span className={errorMsgStyle}>
+            <p role="alert" className={errorMsgStyle}>
               {errors?.dateTime?.message || errors?.registrationEnd?.message}
-            </span>
+            </p>
           )}
           <section>
             <Input
@@ -148,7 +154,12 @@ const CreateGatheringModal = () => {
             />
           </section>
         </div>
-        <Button variant="purple" className="w-full" type="submit">
+        <Button
+          variant="purple"
+          className="w-full"
+          type="submit"
+          disabled={!isValid}
+        >
           {isPending ? <LoadingSpinner size="xs" /> : "확인"}
         </Button>
       </form>
