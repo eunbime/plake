@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL}}
+      NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
     steps:
       - name: Checkout repository
@@ -33,7 +34,7 @@ jobs:
         run: |
           rm -rf target-repo/*
           mkdir -p deploy
-          ITEMS=(".next" "public" "src" "components.json" "middleware.ts" "next.config.mjs" \
+          ITEMS=(".next" "public" "src" "components.json" "next.config.mjs" \
                   "package.json" "package-lock.json" "postcss.config.mjs" "tailwind.config.ts" "tsconfig.json")
           for ITEM in "${ITEMS[@]}"; do
             if [ -e "$ITEM" ]; then
