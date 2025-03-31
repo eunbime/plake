@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 import MyProfile from "@/app/mypage/_components/MyProfile";
@@ -9,6 +11,11 @@ interface LayoutProps {
 }
 
 export default function MypageLayout({ children }: LayoutProps) {
+  const token = cookies().get("authToken");
+  if (!token) {
+    redirect("/login");
+  }
+
   return (
     <div className="base-wrap w-full min-w-[375px] bg-gray-50">
       <ProtectedRoute />

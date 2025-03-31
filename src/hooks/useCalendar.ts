@@ -9,7 +9,6 @@ interface IUseCalendar {
 }
 
 export const useCalendar = (props?: IUseCalendar) => {
-  console.log(props?.disabledAfterDate);
   const defaultDate = props?.defaultDate ?? new Date();
   const disabledBeforeDate = new Date();
 
