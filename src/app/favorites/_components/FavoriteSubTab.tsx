@@ -1,3 +1,6 @@
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+
 import { Button } from "@/components/ui/Button";
 import { SUB_TAB } from "@/constants/ui";
 import { cn } from "@/lib/utils";
@@ -9,6 +12,12 @@ const GatheringSubTab = () => {
 
   const mainTabIdx = tabIdxs[0];
   const subTabIdx = tabIdxs[1];
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setTabIdxs([0, 0]); //다른 페이지로 이동시 탭 초기화
+  }, [pathname, setTabIdxs]);
 
   return (
     <div className="flex items-center gap-2">

@@ -19,7 +19,7 @@ const FavoriteList = () => {
   );
 
   const [favoriteList, setFavoriteList] = useState<string[]>([]);
-  const [filter, setFilter] = useState<string>("OFFLINE");
+  const [filter, setFilter] = useState<string>("");
 
   const email = user?.email || "unknown";
 
@@ -35,6 +35,10 @@ const FavoriteList = () => {
 
     setFilter(favoriteFilterKey[tabIdxs.join("-")]);
   }, [tabIdxs, email, favorite]);
+
+  useEffect(() => {
+    setFilter("OFFLINE");
+  }, []);
 
   return (
     <>

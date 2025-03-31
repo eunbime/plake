@@ -30,7 +30,7 @@ const FavoriteButtonWrapper = ({ id }: FavoriteButtonWrapperProps) => {
     const favoriteByUser: Set<string> = new Set(favorite?.[email]) || new Set();
 
     if (!favoriteByUser.has(id)) {
-      if (favoriteByUser.size >= 3)
+      if (favoriteByUser.size >= 30)
         openAlert("모임 찜하기는 최대 30개까지 가능합니다.");
       else {
         favoriteByUser.add(id);
@@ -48,10 +48,10 @@ const FavoriteButtonWrapper = ({ id }: FavoriteButtonWrapperProps) => {
 
   useEffect(() => {
     const value = localStorage.getItem("favorite");
-    const favoriteList = JSON.parse(value || "null");
+    const favorite = JSON.parse(value || "null");
+    const favoriteList = favorite?.state?.favorite?.[email];
 
-    if (favoriteList?.state?.favorite?.[email])
-      setIsFavorite(favoriteList.state.favorite?.[email].includes(id));
+    if (favoriteList) setIsFavorite(favoriteList.includes(id));
   }, [id, email]);
 
   return (
