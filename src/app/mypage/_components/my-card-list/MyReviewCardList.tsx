@@ -13,7 +13,12 @@ import { getButtonType } from "@/utils/myCardHelpers";
 
 const MyReviewCardList = () => {
   const { data, hasNextPage, fetchNextPage, status } =
-    useSuspenseMyGatheringList({ reviewed: "false", completed: "true" });
+    useSuspenseMyGatheringList({
+      reviewed: "false",
+      // completed: "true",
+      sortBy: "dateTime",
+      sortOrder: "desc",
+    });
 
   const list = data.pages.flat() ?? [];
 

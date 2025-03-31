@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { FaCircleCheck } from "react-icons/fa6";
 
 import DateTimeTag from "@/components/common/DateTimeTag";
-import FavoriteButton from "@/components/common/FavoriteButton";
+import FavoriteButtonWrapper from "@/components/common/FavoriteButtonWrapper";
 import ProgressBar from "@/components/common/ProgressBar";
 import { GATHERING } from "@/constants/gathering";
 import { gatheringDetailQueryOption } from "@/hooks/gathering/useGatheringDetail";
@@ -37,7 +37,7 @@ const GatheringDetailInformation = ({
           <DateTimeTag date={dayjs(dateTime)} />
         </div>
         <div>
-          <FavoriteButton isFavorite={false} onToggle={() => {}} />
+          <FavoriteButtonWrapper id={id} />
         </div>
       </section>
       <hr className="border-b-2 border-dashed border-gray-200" />

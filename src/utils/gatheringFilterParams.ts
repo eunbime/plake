@@ -1,12 +1,12 @@
 import { ONLINE, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { IGatheringFilterParams } from "@/types/gathering";
 
-const useGatheringFilterParams = (
+export const updateGatheringParams = (
   pathname: string,
   paramsObj: IGatheringFilterParams,
 ) => {
   const location = paramsObj.location;
-  const sortOption = paramsObj.sort;
+  const sortOption = paramsObj.sortBy;
 
   if (pathname === ONLINE_PATH) {
     paramsObj["location"] = ONLINE.location;
@@ -28,9 +28,9 @@ const useGatheringFilterParams = (
     }
 
     paramsObj["sortOrder"] = order;
+  } else {
+    paramsObj["sortBy"] = "dateTime";
   }
 
   return paramsObj;
 };
-
-export default useGatheringFilterParams;

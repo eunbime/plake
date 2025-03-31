@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 
 import Avatar from "@/components/common/Avatar";
@@ -15,7 +16,9 @@ type TReviewCardItemProps = {
 const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
   const { comment, createdAt, score, User, Gathering } = review;
   const { user } = useUserStore(useShallow(state => ({ user: state.user })));
-  const myReviewChk = User.id === user?.id;
+  const pathName = usePathname();
+
+  const myReviewChk = pathName === "/mypage/reviews" && User.id === user?.id;
 
   return (
     <div className="flex flex-col gap-6 md:flex-row">

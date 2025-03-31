@@ -38,7 +38,7 @@ const FloatingBar = ({ id }: IFloatingBarProps) => {
   const isRegistrationEnd = new Date(registrationEnd) < new Date();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex min-h-[84px] items-center border-t-2 border-gray-200 bg-white py-5">
+    <div className="fixed bottom-0 left-0 right-0 z-10 flex min-h-[84px] items-center border-t-2 border-gray-200 bg-white py-5">
       <div className="base-wrap flex h-full w-full flex-wrap items-start justify-between gap-5 xs:flex-nowrap">
         <div className="flex h-full flex-col gap-2">
           <p className="text-base font-semibold">

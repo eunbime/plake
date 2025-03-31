@@ -2,25 +2,24 @@
 
 import { usePathname } from "next/navigation";
 
-import { ONLINE_PATH } from "@/constants/gatheringFilterParams";
-import useGatheringFilterParams from "@/hooks/gathering/useGatheringFilterParams";
 import { useSuspenseGatheringInfiniteList } from "@/hooks/gathering/useGatheringInfiniteList";
 import useCustomSearchParams from "@/hooks/useCustomSearchParams";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { updateGatheringParams } from "@/utils/gatheringFilterParams";
 
 import MainCardItem from "./MainCardItem";
 
-const MainCardList = () => {
-  const pathname = usePathname();
+interface IMainCardListProps {
+  tab: string;
+}
 
+const MainCardList = ({ tab }: IMainCardListProps) => {
+  const pathname = usePathname();
   const { searchParamsObj } = useCustomSearchParams();
-  const params = useGatheringFilterParams(pathname, searchParamsObj);
+  const params = updateGatheringParams(pathname, searchParamsObj);
 
   const { data, status, hasNextPage, fetchNextPage } =
-    useSuspenseGatheringInfiniteList(
-      pathname === ONLINE_PATH ? "online" : "offline",
-      params,
-    );
+    useSuspenseGatheringInfiniteList(tab, params);
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting && hasNextPage) {
@@ -36,7 +35,7 @@ const MainCardList = () => {
         page.map(card => (
           <MainCardItem
             key={card.id}
-            id={card.id}
+            id={String(card.id)}
             name={card.name}
             dateTime={new Date(card.dateTime)}
             registrationEnd={new Date(card.registrationEnd)}

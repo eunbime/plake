@@ -1,3 +1,4 @@
+import { IFavoriteFilterParams } from "@/constants/favorite";
 import { ITEMS_PER_PAGE } from "@/constants/gatheringFilterParams";
 import Service from "@/services/Service";
 import {
@@ -22,18 +23,26 @@ class AnonGatheringService extends Service {
   ) {
     if (!pageParam) pageParam = 1;
 
-    const sliceParams = `limit=${ITEMS_PER_PAGE}&offset=${(pageParam - 1) * 10}`;
-    const defaultParams = `${sliceParams}&sortBy=dateTime`;
+    const limitParams = `limit=${ITEMS_PER_PAGE}&offset=${(pageParam - 1) * 10}`;
 
     if (params && Object.keys(params).length !== 0) {
       const convertedParams = new URLSearchParams(params).toString();
 
       return this.http.get<IGathering[]>(
-        `/gatherings?${convertedParams}&${defaultParams}`,
+        `/gatherings?${convertedParams}&${limitParams}`,
       );
     } else {
-      return this.http.get<IGathering[]>(`/gatherings?${defaultParams}`);
+      return this.http.get<IGathering[]>(`/gatherings?${limitParams}`);
     }
+  }
+
+  getFavoriteList(params: IFavoriteFilterParams) {
+    const ids = params.id.length > 0 ? params.id.join(",") : "";
+
+    if (ids) {
+      return this.http.get<IGathering[]>(`/gatherings?limit=30${`&id=${ids}`}`);
+    }
+    return [];
   }
 
   getGatheringDetail(id: string) {
