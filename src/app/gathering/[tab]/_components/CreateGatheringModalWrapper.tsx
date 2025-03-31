@@ -15,6 +15,7 @@ const CreateGatheringModalWrapper = () => {
       openCreateGathering: state.openCreateGathering,
     })),
   );
+
   const user = useUserStore(state => state.user);
 
   const onClickButton = () => {
