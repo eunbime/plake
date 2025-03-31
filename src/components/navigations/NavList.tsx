@@ -70,7 +70,8 @@ const NavItem = ({ isActive }: INavItemProps) => {
             {item.name}
           </Link>
           {item.href === "/favorites" && favoriteLength > 0 && (
-            <span className="absolute ml-[1.5px] rounded-3xl bg-purple-300 px-[6px] py-0 text-xs font-bold text-white">
+            // favoriteLength 구현 예정
+            <span className="absolute ml-[1.5px] hidden rounded-3xl bg-purple-300 px-[6px] py-0 text-xs font-bold text-white">
               {favoriteLength}
             </span>
           )}
