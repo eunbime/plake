@@ -88,8 +88,12 @@ const CreateGatheringModal = () => {
           <section className="flex flex-col gap-2">
             <Label className={labelTitleStyle}>선택 서비스</Label>
             <ServiceSelector
-              setTypeValue={value => setValue("type", value)}
-              setLocationValue={value => setValue("location", value)}
+              setTypeValue={value =>
+                setValue("type", value, { shouldValidate: true })
+              }
+              setLocationValue={value =>
+                setValue("location", value, { shouldValidate: true })
+              }
             />
             {errors.type && (
               <p role="alert" className={errorMsgStyle}>

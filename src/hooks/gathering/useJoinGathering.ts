@@ -16,6 +16,7 @@ export const useJoinGatheringMutation = (id: string) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GATHERING.detail(id)],
       });
+      openAlert("모임에 참여되었습니다.");
     },
     onError: () => {
       openAlert("잠시 후 다시 시도해주세요.");
@@ -38,6 +39,7 @@ export const useLeaveGatheringMutation = (
       queryClient.invalidateQueries({
         queryKey: invalidateKey ?? [QUERY_KEYS.GATHERING.detail(id)],
       });
+      openAlert("모임에서 나가셨습니다.");
     },
     onError: () => {
       openAlert("잠시 후 다시 시도해주세요.");
@@ -67,7 +69,7 @@ export const useJoinGathering = (id: string, currentUserId?: number) => {
   };
 
   const handleLeaveGathering = () => {
-    openConfirm("참여를 취소하시겠습니까?", () => {
+    openConfirm("모임에서 나가시겠습니까?", () => {
       leaveGathering();
     });
   };
