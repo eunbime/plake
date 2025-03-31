@@ -4,6 +4,7 @@ import { TReviewQueryParams } from "@/types/review";
 const AUTH_ALL = "auth" as const;
 const GATHERING_ALL = ["gathering"] as const;
 const REVIEW_ALL = ["review"] as const;
+const FAVORITE_ALL = ["favorite"] as const;
 
 export const QUERY_KEYS = {
   AUTH: {
@@ -30,5 +31,10 @@ export const QUERY_KEYS = {
     listByGatheringId: (gatheringId: string) =>
       [...REVIEW_ALL, "list", { gatheringId }] as const,
     score: [...REVIEW_ALL, "score"] as const,
+  },
+  FAVORITE: {
+    all: FAVORITE_ALL,
+    listByFilterValue: (filterByValue: string) =>
+      [...FAVORITE_ALL, "list", filterByValue] as const,
   },
 };
