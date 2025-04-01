@@ -17,6 +17,7 @@ const MyCardList = () => {
     useSuspenseMyGatheringList();
 
   const list = data.pages.flat() ?? [];
+  const filteredList = list.filter(gathering => gathering.canceledAt === null);
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting && hasNextPage) {
@@ -26,13 +27,13 @@ const MyCardList = () => {
 
   const { setTarget } = useIntersectionObserver({ onIntersect });
 
-  if (!list.length) {
+  if (!filteredList.length && !hasNextPage) {
     return <EmptyState message={EMPTY_MESSAGE.mypage.default} />;
   }
 
   return (
     <>
-      {list.map((gathering, index) => (
+      {filteredList.map((gathering, index) => (
         <MyCardItem
           key={gathering.id}
           id={gathering.id}
