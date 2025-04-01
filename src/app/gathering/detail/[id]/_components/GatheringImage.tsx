@@ -20,7 +20,7 @@ const GatheringImage = ({ id }: IGatheringImageProps) => {
         src={data.image || "/images/gathering_default.png"}
         alt="gathering-image"
         fill
-        sizes="(max-width: 768px) 100vw, 50vw"
+        sizes="(max-width: 768px) 90vw, 40vw"
         className="object-cover"
         priority
       />
