@@ -22,9 +22,11 @@ export const updateGatheringParams = (
     switch (sortOption) {
       case "participantCount": //인기많은순 정렬
         order = "desc";
+        break;
 
       case "registrationEnd": //마감임박순 정렬
         order = "asc";
+        break;
     }
 
     paramsObj["sortOrder"] = order;
