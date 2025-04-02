@@ -1,6 +1,16 @@
 import { ONLINE, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { IGatheringFilterParams } from "@/types/gathering";
 
+export const filterUndefined = (paramsObj: IGatheringFilterParams) => {
+  const filterParams = Object.entries(paramsObj)
+    .filter(([, value]) => value !== undefined)
+    .reduce((acc, value) => {
+      return { ...acc, [value[0]]: value[1] };
+    }, {});
+
+  return filterParams;
+};
+
 export const updateSortOption = (paramsObj: IGatheringFilterParams) => {
   const sortOption = paramsObj.sortBy;
 
@@ -39,7 +49,9 @@ export const updateGatheringParams = (
     delete paramsObj.location;
   }
 
-  const updatedSortParams = updateSortOption(paramsObj);
+  const filteredUndefined = filterUndefined(paramsObj);
+
+  const updatedSortParams = updateSortOption(filteredUndefined);
 
   return updatedSortParams;
 };
