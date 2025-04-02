@@ -49,7 +49,7 @@ const Page = async ({ params }: PageProps) => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <FetchBoundary fallback={<MainCardListSkeleton />}>
-        <MainCardList tab={tab} />
+        <MainCardList tab={tab} filteredParams={filteredParams} />
       </FetchBoundary>
     </HydrationBoundary>
   );
