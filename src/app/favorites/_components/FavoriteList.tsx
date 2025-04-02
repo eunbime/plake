@@ -44,7 +44,7 @@ const FavoriteList = () => {
 
   return (
     <>
-      <div className="mb-8 flex flex-col items-center justify-center gap-6">
+      <div className="mb-8 flex min-h-80 flex-col items-center justify-center gap-6">
         {favoriteData &&
           favoriteData.map((card: IGathering) => (
             <MainCardItem
@@ -60,7 +60,9 @@ const FavoriteList = () => {
               firstPage={false}
             />
           ))}
-        {favoriteData?.length === 0 && <div>찜한 모임이 없습니다.</div>}
+        {favoriteData?.length === 0 && (
+          <p className="text-gray-500">{"아직 찜한 모임이 없어요."}</p>
+        )}
       </div>
     </>
   );
