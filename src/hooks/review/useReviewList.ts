@@ -17,7 +17,6 @@ const filterByValue = (
 ): InfiniteData<IReviewResponse> => {
   if (!isFilter) return data;
 
-  // pages 배열의 각 페이지(IReviewResponse)에서 data 배열 필터링
   return {
     pages: data.pages.map(page => ({
       ...page,
