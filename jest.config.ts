@@ -37,8 +37,12 @@ const config: Config = {
 
   // coverage 수집 범위 설정
   collectCoverageFrom: [
-    "**/app/**/*.[jt]s?(x)",
+    "**/hooks/**/*.[jt]s?(x)",
     "**/components/**/*.[jt]s?(x)",
+    "**/stores/**/*.[jt]s?(x)",
+    "src/utils/**/*.[jt]s?(x)",
+
+    "!**/components/skeletons/**/*.[jt]s?(x)",
     "!**/*.stories.[jt]s?(x)",
   ],
 
