@@ -42,7 +42,11 @@ const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
           </p>
           <div className="text-xs font-medium text-gray-700">
             <span className="mr-2">{Gathering.name}</span>
-            <span>{Gathering.location}</span>
+            <span className="text-gray-500">
+              {Gathering.location === "홍대입구"
+                ? "온라인"
+                : Gathering.location}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             {myReviewChk || (
