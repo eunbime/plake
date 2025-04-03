@@ -1,20 +1,18 @@
 import { ONLINE, ONLINE_PATH } from "@/constants/gatheringFilterParams";
 import { IGatheringFilterParams } from "@/types/gathering";
 
-export const updateGatheringParams = (
-  pathname: string,
-  paramsObj: IGatheringFilterParams,
-) => {
-  const location = paramsObj.location;
+export const filterUndefined = (paramsObj: IGatheringFilterParams) => {
+  const filterParams = Object.entries(paramsObj)
+    .filter(([, value]) => value !== undefined)
+    .reduce((acc, value) => {
+      return { ...acc, [value[0]]: value[1] };
+    }, {});
+
+  return filterParams;
+};
+
+export const updateSortOption = (paramsObj: IGatheringFilterParams) => {
   const sortOption = paramsObj.sortBy;
-
-  if (pathname === ONLINE_PATH) {
-    paramsObj["location"] = ONLINE.location;
-  }
-
-  if (location === "전체") {
-    delete paramsObj.location;
-  }
 
   if (sortOption) {
     let order = "";
@@ -35,4 +33,25 @@ export const updateGatheringParams = (
   }
 
   return paramsObj;
+};
+
+export const updateGatheringParams = (
+  pathname: string,
+  paramsObj: IGatheringFilterParams,
+) => {
+  const location = paramsObj.location;
+
+  if (pathname === ONLINE_PATH) {
+    paramsObj["location"] = ONLINE.location;
+  }
+
+  if (location === "전체") {
+    delete paramsObj.location;
+  }
+
+  const filteredUndefined = filterUndefined(paramsObj);
+
+  const updatedSortParams = updateSortOption(filteredUndefined);
+
+  return updatedSortParams;
 };
