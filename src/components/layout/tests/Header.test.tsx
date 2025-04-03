@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import * as nextNavigation from "next/navigation";
 
@@ -68,8 +68,74 @@ describe("Header 컴포넌트 테스트", () => {
       const logo = screen.getByAltText("logo-image");
       await user.click(logo);
 
-      // router.push 호출 여부 확인
       expect(nextNavigation.usePathname()).toBe("/");
+    });
+
+    it("아바타를 클릭하면 팝업메뉴가 나타난다.", async () => {
+      (useUserStore as unknown as jest.Mock).mockReturnValue({
+        user: {
+          id: "1",
+          name: "테스트 유저",
+          email: "test@example.com",
+          image: "/images/avatar.png",
+        },
+        isLoggedIn: true,
+        isHydrated: true,
+      });
+      const user = userEvent.setup();
+      render(<Header />);
+
+      const profileAvatar = screen.getByLabelText("avatar-default");
+      await user.click(profileAvatar);
+
+      const popoverMenu = screen.getByRole("dialog");
+      expect(popoverMenu).toHaveAttribute("data-state", "open");
+    });
+
+    it("로그인 후 로그아웃을 클릭하면 다시 로그인 버튼이 나타난다.", async () => {
+      const mockStore = {
+        user: {
+          id: "1",
+          name: "테스트 유저",
+          email: "test@example.com",
+          image: "/images/avatar.png",
+        },
+        isLoggedIn: true,
+        isHydrated: true,
+        clearUserState: jest.fn().mockImplementation(() => {
+          mockStore.isLoggedIn = false;
+          mockStore.user = {
+            id: "",
+            name: "",
+            email: "",
+            image: "",
+          };
+          (useUserStore as unknown as jest.Mock).mockReturnValue(mockStore);
+        }),
+      };
+
+      (useUserStore as unknown as jest.Mock).mockReturnValue(mockStore);
+
+      const user = userEvent.setup();
+      const { rerender } = render(<Header />);
+
+      const profileAvatar = screen.getByLabelText("avatar-default");
+      await user.click(profileAvatar);
+
+      const popoverMenu = screen.getByRole("dialog");
+      expect(popoverMenu).toHaveAttribute("data-state", "open");
+
+      const logoutButton = await screen.findAllByText("로그아웃");
+      await user.click(logoutButton[1]);
+
+      expect(mockStore.clearUserState).toHaveBeenCalled();
+
+      rerender(<Header />);
+
+      await waitFor(() => {
+        const loginButton = screen.getByRole("link", { name: /로그인/i });
+        expect(loginButton).toBeInTheDocument();
+      });
     });
   });
 });

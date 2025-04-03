@@ -20,12 +20,21 @@ jest.mock("next/navigation", () => ({
   })),
 }));
 
+jest.mock("next/headers", () => ({
+  cookies: jest.fn(() => ({
+    get: jest.fn(),
+    set: jest.fn(),
+    delete: jest.fn(),
+    getAll: jest.fn(() => []),
+  })),
+}));
+
 jest.mock("@/stores/useUserStore", () => ({
   __esModule: true,
   default: jest.fn(() => ({
     user: null,
     isLoggedIn: false,
-    isHydrated: true,
+    isHydrated: false,
   })),
   useShallow: jest.fn(fn => fn),
 }));
