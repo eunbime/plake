@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import * as nextNavigation from "next/navigation";
 
-import useUserStore from "@/stores/useUserStore";
+import { mockUserStore } from "@/utils/test-utils/userMocking";
 
 import Header from "../Header";
 
@@ -18,6 +18,8 @@ describe("Header 컴포넌트 테스트", () => {
 
   describe("기본 렌더링 테스트", () => {
     it("Header가 정상적으로 렌더링된다.", () => {
+      // 기본 상태 사용 (로그아웃 상태)
+      mockUserStore.loggedOut();
       render(<Header />);
       const header = screen.getByRole("banner");
       expect(header).toBeInTheDocument();
@@ -36,6 +38,7 @@ describe("Header 컴포넌트 테스트", () => {
     });
 
     it("비로그인시 로그인버튼이 렌더링된다.", () => {
+      mockUserStore.loggedOut();
       render(<Header />);
       const loginButton = screen.getByRole("link", { name: /로그인/i });
       expect(loginButton).toBeInTheDocument();
@@ -43,16 +46,7 @@ describe("Header 컴포넌트 테스트", () => {
 
     it("로그인시 프로필 아바타가 렌더링된다.", () => {
       // 로그인 상태로 모킹 설정
-      (useUserStore as unknown as jest.Mock).mockReturnValue({
-        user: {
-          id: "1",
-          name: "테스트 유저",
-          email: "test@example.com",
-          image: "/images/avatar.png",
-        },
-        isLoggedIn: true,
-        isHydrated: true,
-      });
+      mockUserStore.loggedIn();
       render(<Header />);
 
       const profileAvatar = screen.getByLabelText("avatar-default");
@@ -72,16 +66,7 @@ describe("Header 컴포넌트 테스트", () => {
     });
 
     it("아바타를 클릭하면 팝업메뉴가 나타난다.", async () => {
-      (useUserStore as unknown as jest.Mock).mockReturnValue({
-        user: {
-          id: "1",
-          name: "테스트 유저",
-          email: "test@example.com",
-          image: "/images/avatar.png",
-        },
-        isLoggedIn: true,
-        isHydrated: true,
-      });
+      mockUserStore.loggedIn();
       const user = userEvent.setup();
       render(<Header />);
 
@@ -93,28 +78,7 @@ describe("Header 컴포넌트 테스트", () => {
     });
 
     it("로그인 후 로그아웃을 클릭하면 다시 로그인 버튼이 나타난다.", async () => {
-      const mockStore = {
-        user: {
-          id: "1",
-          name: "테스트 유저",
-          email: "test@example.com",
-          image: "/images/avatar.png",
-        },
-        isLoggedIn: true,
-        isHydrated: true,
-        clearUserState: jest.fn().mockImplementation(() => {
-          mockStore.isLoggedIn = false;
-          mockStore.user = {
-            id: "",
-            name: "",
-            email: "",
-            image: "",
-          };
-          (useUserStore as unknown as jest.Mock).mockReturnValue(mockStore);
-        }),
-      };
-
-      (useUserStore as unknown as jest.Mock).mockReturnValue(mockStore);
+      const mockStore = mockUserStore.loggedIn();
 
       const user = userEvent.setup();
       const { rerender } = render(<Header />);
