@@ -43,6 +43,14 @@ jest.mock("@/stores/useUserStore", () => ({
   useShallow: jest.fn(fn => fn),
 }));
 
+jest.mock("@/stores/useSideBarStore", () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    isOpen: false,
+  })),
+  useShallow: jest.fn(fn => fn),
+}));
+
 jest.mock("swiper/react", () => ({
   useSwiper: jest.fn(),
   Swiper: jest.fn(),
