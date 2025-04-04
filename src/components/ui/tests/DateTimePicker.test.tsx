@@ -144,7 +144,13 @@ describe("DateTimePicker 컴포넌트 테스트", () => {
 
   describe("registrationEnd 타입 테스트", () => {
     it("registrationEnd 타입일 때 마감 날짜가 제대로 설정되어야 함", () => {
-      const initialDateTime = "2024-03-20T12:00:00.000Z";
+      const today = new Date();
+
+      // 모임 날짜 설정
+      const meetingDate = new Date(today);
+      meetingDate.setDate(today.getDate() + 1);
+      const initialDateTime = meetingDate.toISOString();
+
       render(
         <DateTimePicker
           type="registrationEnd"
@@ -153,22 +159,33 @@ describe("DateTimePicker 컴포넌트 테스트", () => {
         />,
       );
 
+      // 캘린더 열기
       fireEvent.click(screen.getByLabelText("마감 날짜 선택"));
 
-      // 현재 달력에서 선택 가능한 미래 날짜를 찾아서 클릭
-      const dates = screen.getAllByRole("gridcell");
-      const selectableDate = Array.from(dates).find(
-        date => !date.className.includes("text-gray-400"),
-      );
+      // 그리드셀 내부의 실제 클릭 가능한 버튼 찾기
+      const dateButtons = screen.getAllByRole("button").filter(button => {
+        // 숫자 텍스트를 가진 버튼만 선택 (날짜 버튼)
+        return /^\d+$/.test(button.textContent || "");
+      });
 
-      if (selectableDate) {
-        fireEvent.click(selectableDate);
-        expect(mockSetRegistrationEndValue).toHaveBeenCalled();
-        expect(mockSetRegistrationEndValue).toHaveBeenCalledTimes(1);
-      } else {
-        // 선택 가능한 날짜가 없는 경우 테스트를 건너뜀
-        console.log("선택 가능한 날짜가 없습니다");
-      }
+      // 활성화된 버튼 찾기
+      const activeButtons = dateButtons.filter(button => {
+        // disabled 속성이 없고, 비활성화 클래스가 없는 버튼
+        const isDisabled = button.hasAttribute("disabled");
+        const isOutsideDay =
+          button.classList.contains("day-outside") ||
+          button.classList.contains("text-gray-400") ||
+          button.closest('[class*="text-gray-400"]');
+        return !isDisabled && !isOutsideDay;
+      });
+
+      // 활성화된 버튼이 있는지 확인
+      expect(activeButtons.length).toBeGreaterThan(0);
+
+      // 첫 번째 활성화된 버튼 클릭
+      fireEvent.click(activeButtons[0]);
+
+      expect(mockSetRegistrationEndValue).toHaveBeenCalled();
     });
 
     it("registrationEnd 타입일 때 모임 날짜 이후의 날짜만 선택 가능해야 함", () => {
