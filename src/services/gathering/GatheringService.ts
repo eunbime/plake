@@ -1,8 +1,14 @@
 import { ApiRouteService } from "@/services/Service";
-import { IMyGathering, IMyGatheringFilterParams } from "@/types/gathering";
+import {
+  IGathering,
+  IMyGathering,
+  IMyGatheringFilterParams,
+} from "@/types/gathering";
 
 class GatheringService extends ApiRouteService {
-  async createGathering(formData: FormData) {
+  async createGathering(
+    formData: FormData,
+  ): Promise<Omit<IGathering, "canceledAt">> {
     return this.http.post("/gatherings", formData);
   }
 
