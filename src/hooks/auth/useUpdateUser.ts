@@ -4,14 +4,13 @@ import authService from "@/services/auth/AuthService";
 import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
 import { APIError } from "@/types/error";
-import { IUpdateUser } from "@/types/user";
 
 export const useUpdateUser = () => {
   const { user, updateUserState } = useUserStore();
   const openAlert = useModalStore(state => state.openAlert);
 
   const { mutate: updateUser } = useMutation({
-    mutationFn: async (data: FormData): Promise<IUpdateUser> => {
+    mutationFn: async (data: FormData) => {
       return await authService.updateUser(data);
     },
     onSuccess: data => {
