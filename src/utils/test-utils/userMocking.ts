@@ -23,7 +23,8 @@ export const mockUserStore = {
   loggedIn: (overrides = {}) => {
     const mockStore = {
       user: {
-        id: "1",
+        teamId: 1,
+        id: 1,
         name: "테스트 유저",
         email: "test@example.com",
         image: "/images/avatar.png",
@@ -36,7 +37,8 @@ export const mockUserStore = {
       clearUserState: jest.fn().mockImplementation(() => {
         mockStore.isLoggedIn = false;
         mockStore.user = {
-          id: "",
+          teamId: 0,
+          id: 0,
           name: "",
           email: "",
           image: "",

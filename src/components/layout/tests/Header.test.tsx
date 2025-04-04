@@ -12,10 +12,6 @@ describe("Header 컴포넌트 테스트", () => {
     jest.spyOn(nextNavigation, "usePathname").mockReturnValue("/");
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe("기본 렌더링 테스트", () => {
     it("Header가 정상적으로 렌더링된다.", () => {
       // 기본 상태 사용 (로그아웃 상태)
