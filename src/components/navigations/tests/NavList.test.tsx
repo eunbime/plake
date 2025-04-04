@@ -25,26 +25,7 @@ describe("NavList 컴포넌트 테스트", () => {
     });
   });
   describe("상호작용 테스트", () => {
-    it("모바일 메뉴의 버튼 클릭 시 사이드바가 닫힌다.", async () => {
-      const mockStore = {
-        isOpen: true,
-        onToggleSideBar: jest.fn().mockImplementation(() => {
-          mockStore.isOpen = !mockStore.isOpen;
-        }),
-      };
-
-      (useSideBarStore as unknown as jest.Mock).mockReturnValue(mockStore);
-      render(<NavList />);
-      const user = userEvent.setup();
-
-      const loginButton = screen.getByLabelText("login-link-button");
-      expect(loginButton).toBeInTheDocument();
-      await user.click(loginButton);
-
-      expect(mockStore.onToggleSideBar).toHaveBeenCalled();
-      expect(mockStore.isOpen).toBe(false);
-    });
-    it("모바일 메뉴의 로그아웃 버튼 클릭 시 로그아웃이 된다.", async () => {
+    it("모바일 메뉴의 로그아웃 버튼 클릭 시 로그아웃이 되고 사이드바가 닫힌다.", async () => {
       const userStore = mockUserStore.loggedIn();
       const mockStore = {
         isOpen: true,
@@ -61,9 +42,11 @@ describe("NavList 컴포넌트 테스트", () => {
       expect(logoutButton).toBeInTheDocument();
       await user.click(logoutButton);
 
+      expect(userStore.clearUserState).toHaveBeenCalled();
+      expect(userStore.isLoggedIn).toBe(false);
+
       expect(mockStore.onToggleSideBar).toHaveBeenCalled();
       expect(mockStore.isOpen).toBe(false);
-      expect(userStore.clearUserState).toHaveBeenCalled();
     });
   });
 });

@@ -25,10 +25,6 @@ export const mockGathering = (overrides = {}): IGathering => {
   };
 };
 
-/**
- * 테스트용 모킹 리뷰 데이터를 생성합니다.
- * @param overrides 기본값 오버라이드
- */
 export const mockReview = (overrides = {}): IReview => {
   const defaultReview: IReview = {
     id: 1,
@@ -45,4 +41,12 @@ export const mockReview = (overrides = {}): IReview => {
     ...defaultReview,
     ...overrides,
   };
+};
+
+export const mockReviews = (count = 3): IReview[] => {
+  return Array.from({ length: count }).map((_, index) => {
+    return mockReview({
+      id: index + 1,
+    });
+  });
 };

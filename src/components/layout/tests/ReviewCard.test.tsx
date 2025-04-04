@@ -2,7 +2,11 @@ import { render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import * as nextNavigation from "next/navigation";
 
-import { mockGathering, mockReview } from "@/utils/test-utils/reviewMocking";
+import {
+  mockGathering,
+  mockReview,
+  mockReviews,
+} from "@/utils/test-utils/reviewMocking";
 
 import ReviewCardItem from "../ReviewCardItem";
 import ReviewCardList from "../ReviewCardList";
@@ -93,5 +97,13 @@ describe("ReviewCardList 컴포넌트 테스트", () => {
     render(<ReviewCardList />);
     const reviewCardList = screen.getByLabelText("리뷰 카드 리스트");
     expect(reviewCardList).toBeInTheDocument();
+  });
+
+  it("여러 리뷰 카드 아이템을 렌더링한다.", () => {
+    const reviews = mockReviews(5);
+    render(<ReviewCardList reviews={reviews} />);
+
+    const reviewCardItems = screen.queryAllByLabelText("리뷰 카드 아이템");
+    expect(reviewCardItems).toHaveLength(5);
   });
 });
