@@ -5,14 +5,17 @@ import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
 import { APIError } from "@/types/error";
 
+const updateUserRequest = async (formData: FormData) => {
+  return await authService.updateUser(formData);
+};
+
 export const useUpdateUser = () => {
   const { user, updateUserState } = useUserStore();
   const openAlert = useModalStore(state => state.openAlert);
 
   const { mutate: updateUser } = useMutation({
-    mutationFn: async (data: FormData) => {
-      return await authService.updateUser(data);
-    },
+    mutationFn: updateUserRequest,
+
     onSuccess: data => {
       if (!user) return;
 
@@ -21,6 +24,7 @@ export const useUpdateUser = () => {
         teamId: user.teamId,
       });
     },
+
     onError: error => {
       const message =
         error instanceof APIError
