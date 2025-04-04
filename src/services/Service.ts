@@ -6,9 +6,7 @@ abstract class Service {
 }
 
 export abstract class ApiRouteService {
-  protected http = PolymorphicHttpClient.getInstance(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api`,
-  );
+  protected http = PolymorphicHttpClient.getInstance();
 }
 
 export default Service;
