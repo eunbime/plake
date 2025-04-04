@@ -1,5 +1,9 @@
 import "@testing-library/jest-dom";
 
+beforeEach(() => {
+  jest.restoreAllMocks(); // 테스트 전 원래 구현으로 스파이 복원
+});
+
 jest.mock("next/navigation", () => ({
   ...jest.requireActual("next/navigation"),
   usePathname: jest.fn(() => "/"),
@@ -37,4 +41,16 @@ jest.mock("@/stores/useUserStore", () => ({
     isHydrated: false,
   })),
   useShallow: jest.fn(fn => fn),
+}));
+
+jest.mock("swiper/react", () => ({
+  useSwiper: jest.fn(),
+  Swiper: jest.fn(),
+  SwiperSlide: jest.fn(),
+  Navigation: jest.fn(),
+  Pagination: jest.fn(),
+  Scrollbar: jest.fn(),
+  A11y: jest.fn(),
+  Autoplay: jest.fn(),
+  EffectFade: jest.fn(),
 }));
