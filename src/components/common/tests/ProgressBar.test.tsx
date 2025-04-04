@@ -11,10 +11,6 @@ describe("ProgressBar 컴포넌트 테스트", () => {
     });
   });
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   it("기본 렌더링 테스트", () => {
     const { container } = render(<ProgressBar progress={50} />);
     const progressBar = container.firstChild;

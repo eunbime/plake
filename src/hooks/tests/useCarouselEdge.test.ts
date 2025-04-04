@@ -4,10 +4,6 @@ import { useSwiper } from "swiper/react";
 
 import useCarouselEdge from "@/hooks/useCarouselEdge";
 
-jest.mock("swiper/react", () => ({
-  useSwiper: jest.fn(),
-}));
-
 describe("useCarouselEdge 테스트", () => {
   const mockSwiper = {
     isBeginning: true,
@@ -17,8 +13,8 @@ describe("useCarouselEdge 테스트", () => {
   };
 
   beforeEach(() => {
-    (useSwiper as jest.Mock).mockReturnValue(mockSwiper);
     jest.clearAllMocks();
+    (useSwiper as jest.Mock).mockReturnValue(mockSwiper);
   });
 
   it("prev 방향일 때 초기값이 true로 설정됨", () => {

@@ -1,15 +1,12 @@
 import { renderHook } from "@testing-library/react";
 
-import { useScrollToTopOnValueChange } from "../useScrollToTopOnValueChange";
+import { useScrollToTopOnValueChange } from "@/hooks/useScrollToTopOnValueChange";
 
 describe("useScrollToTopOnValueChange 테스트", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     // window.scrollTo 모킹
     window.scrollTo = jest.fn();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
   });
 
   it("value가 변경될 때 window.scrollTo가 호출되어야 함", () => {

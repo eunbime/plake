@@ -3,18 +3,14 @@ import { renderHook } from "@testing-library/react";
 import { useClickOutside } from "@/hooks/useClickOutside";
 
 describe("useClickOutside 테스트", () => {
-  const mockHandler = jest.fn();
-  const mockRef = {
-    current: document.createElement("div"),
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  const mockHandler = jest.fn();
+  const mockRef = {
+    current: document.createElement("div"),
+  };
 
   it("요소 외부 클릭 시 핸들러가 호출되어야 함", () => {
     renderHook(() => useClickOutside(mockRef, mockHandler));
