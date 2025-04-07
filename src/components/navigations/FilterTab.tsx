@@ -9,10 +9,10 @@ const FilterTab = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6" aria-label="주제 탭">
       <MainTab pathname={pathname} />
       <SubTab pathname={pathname} />
-    </div>
+    </section>
   );
 };
 
