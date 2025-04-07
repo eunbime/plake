@@ -13,9 +13,6 @@ mockUserStore.loggedIn({
 // 로그아웃 상태 모킹
 mockUserStore.loggedOut();
 
-// 로딩 상태 모킹
-mockUserStore.loading();
-
  */
 export const mockUser = {
   teamId: 1,
@@ -64,19 +61,6 @@ export const mockUserStore = {
       user: null,
       isLoggedIn: false,
       isHydrated: true,
-      ...overrides,
-    };
-
-    (useUserStore as unknown as jest.Mock).mockReturnValue(mockStore);
-    return mockStore;
-  },
-
-  // 로딩 중 상태 모킹
-  loading: (overrides = {}) => {
-    const mockStore = {
-      user: null,
-      isLoggedIn: false,
-      isHydrated: false,
       ...overrides,
     };
 
