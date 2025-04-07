@@ -1,6 +1,6 @@
 "use client";
 
-import { IoMdArrowDropdown } from "react-icons/io";
+import { TbArrowsSort } from "react-icons/tb";
 
 import {
   Select,
@@ -9,8 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-import { LOCATION_OPTION } from "@/constants/ui";
-import { cn } from "@/lib/utils";
 
 interface IOption {
   value: string;
@@ -20,15 +18,13 @@ interface IOption {
 interface IDropdownProps {
   option?: Array<IOption>;
   placeholder?: string;
-  type?: "default" | "form";
   defaultValue?: string;
   onSelect?: (value: string) => void;
 }
 
-const Dropdown = ({
-  option = LOCATION_OPTION,
+const SortDropdown = ({
+  option,
   placeholder,
-  type = "default",
   defaultValue,
   onSelect,
 }: IDropdownProps) => {
@@ -37,27 +33,21 @@ const Dropdown = ({
       onValueChange={onSelect}
       defaultValue={defaultValue}
       value={defaultValue}
+      aria-label="정렬 드롭다운"
     >
-      <SelectTrigger
-        className={cn(
-          "w-full justify-between rounded-xl bg-white px-3 md:min-w-[110px]",
-          type === "form"
-            ? "border-gray-50 bg-gray-50 data-[placeholder]:text-gray-400"
-            : "bg-white data-[placeholder]:text-gray-800",
-        )}
-      >
-        <SelectValue placeholder={`${placeholder || "지역 전체"}`} />
-        <IoMdArrowDropdown size={16} color="black" className="ml-2.5" />
+      <SelectTrigger className="w-full justify-between rounded-xl bg-white px-3 data-[placeholder]:text-gray-800 md:min-w-[110px]">
+        <TbArrowsSort size={18} />
+        <span className="ml-2.5 !hidden md:!block">
+          <SelectValue placeholder={`${placeholder || "정렬"}`} />
+        </span>
       </SelectTrigger>
       <SelectContent className="w-full min-w-[110px] rounded-xl bg-white text-black">
-        {type === "default" && (
-          <SelectItem
-            value="total"
-            className="h-[32px] cursor-pointer rounded-xl px-2 py-1.5 pl-2 text-sm focus:bg-purple-100"
-          >
-            {"전체"}
-          </SelectItem>
-        )}
+        <SelectItem
+          value="total"
+          className="h-[32px] cursor-pointer rounded-xl px-2 py-1.5 pl-2 text-sm focus:bg-purple-100"
+        >
+          {"전체"}
+        </SelectItem>
         {option?.map((option, i) => (
           <SelectItem
             key={`option-${i}`}
@@ -72,4 +62,4 @@ const Dropdown = ({
   );
 };
 
-export default Dropdown;
+export default SortDropdown;
