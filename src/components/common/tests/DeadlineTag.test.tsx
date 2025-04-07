@@ -1,5 +1,4 @@
 import "@testing-library/jest-dom";
-import "dayjs/locale/ko"; // 한국어 가져오기
 
 import { render, screen, waitFor } from "@testing-library/react";
 import dayjs from "dayjs";
