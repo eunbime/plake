@@ -2,10 +2,12 @@
 
 import { useRouter } from "next/navigation";
 
+import ConfirmModal from "@/components/modals/confirm-alert-modal/ConfirmModal";
+import CreateReviewModal from "@/components/modals/create-review-modal/CreateReviewModal";
 import { Button } from "@/components/ui/Button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { useLeaveGatheringMutation } from "@/hooks/gathering/useJoinGathering";
-import useModalStore from "@/stores/useModalStore";
+import { useModal } from "@/hooks/useModal";
 
 type MyCardActionType = "cancel" | "viewReview" | "writeReview";
 
@@ -19,23 +21,30 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
   const { mutate: leave } = useLeaveGatheringMutation(String(id), [
     QUERY_KEYS.GATHERING.myList,
   ]);
-  const openConfirm = useModalStore(state => state.openConfirm);
-  const openCreateReview = useModalStore(state => state.openCreateReview);
+  const { isOpen, onClose, onOpen } = useModal();
 
   if (type === "cancel") {
     return (
-      <Button
-        variant="purple-outline"
-        className="h-10 w-fit"
-        onClick={e => {
-          e.preventDefault();
-          openConfirm("참여를 취소하시겠습니까?", () => {
+      <>
+        <Button
+          variant="purple-outline"
+          className="h-10 w-fit"
+          onClick={e => {
+            e.preventDefault();
+            onOpen();
+          }}
+        >
+          예약 취소하기
+        </Button>
+        <ConfirmModal
+          title="참여를 취소하시겠습니까?"
+          onConfirm={() => {
             leave();
-          });
-        }}
-      >
-        예약 취소하기
-      </Button>
+          }}
+          isOpen={isOpen}
+          onClose={onClose}
+        />
+      </>
     );
   }
 
@@ -55,16 +64,23 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
   }
 
   return (
-    <Button
-      variant="purple"
-      className="h-10 w-fit"
-      onClick={e => {
-        e.preventDefault();
-        openCreateReview(id);
-      }}
-    >
-      리뷰 작성하기
-    </Button>
+    <>
+      <Button
+        variant="purple"
+        className="h-10 w-fit"
+        onClick={e => {
+          e.preventDefault();
+          onOpen();
+        }}
+      >
+        리뷰 작성하기
+      </Button>
+      <CreateReviewModal
+        isOpen={isOpen}
+        onClose={onClose}
+        type="createReview"
+      />
+    </>
   );
 };
 
