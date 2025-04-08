@@ -21,7 +21,10 @@ const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
   const myReviewChk = pathName === "/mypage/reviews" && User.id === user?.id;
 
   return (
-    <div className="flex flex-col gap-6 md:flex-row">
+    <div
+      className="flex flex-col gap-6 md:flex-row"
+      aria-label="리뷰 카드 아이템"
+    >
       <Link
         href={`/gathering/detail/${Gathering.id}`}
         style={{ display: "contents" }}
@@ -37,7 +40,10 @@ const ReviewCardItem = ({ review }: TReviewCardItemProps) => {
         </div>
         <div className="flex min-h-[156px] flex-1 flex-col gap-[10px] border-b-2 border-dashed border-gray-200 pb-4">
           <Rating rating={score} />
-          <p className="min-h-[56px] text-sm font-medium text-gray-700">
+          <p
+            className="min-h-[56px] text-sm font-medium text-gray-700"
+            aria-label="review-comment"
+          >
             {comment}
           </p>
           <div className="text-xs font-medium text-gray-700">

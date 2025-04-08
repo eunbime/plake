@@ -1,5 +1,25 @@
 import "@testing-library/jest-dom";
 
+// Shadcn Select component를 열기 위해 필요한 mock
+class MockPointerEvent extends Event {
+  button: number;
+  ctrlKey: boolean;
+  pointerType: string;
+
+  constructor(type: string, props: PointerEventInit) {
+    super(type, props);
+    this.button = props.button || 0;
+    this.ctrlKey = props.ctrlKey || false;
+    this.pointerType = props.pointerType || "mouse";
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+window.PointerEvent = MockPointerEvent as any;
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
+window.HTMLElement.prototype.releasePointerCapture = jest.fn();
+window.HTMLElement.prototype.hasPointerCapture = jest.fn();
+
 beforeEach(() => {
   jest.restoreAllMocks(); // 테스트 전 원래 구현으로 스파이 복원
 });
@@ -39,6 +59,14 @@ jest.mock("@/stores/useUserStore", () => ({
     user: null,
     isLoggedIn: false,
     isHydrated: false,
+  })),
+  useShallow: jest.fn(fn => fn),
+}));
+
+jest.mock("@/stores/useSideBarStore", () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    isOpen: false,
   })),
   useShallow: jest.fn(fn => fn),
 }));

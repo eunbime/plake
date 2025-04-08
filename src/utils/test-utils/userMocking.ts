@@ -17,26 +17,29 @@ mockUserStore.loggedOut();
 mockUserStore.loading();
 
  */
+export const mockUser = {
+  teamId: 1,
+  id: 1,
+  name: "테스트 유저",
+  email: "test@example.com",
+  image: "/images/avatar.png",
+  companyName: "코드잇",
+  createdAt: "2025-04-03T09:52:19.610Z",
+  updatedAt: "2025-04-03T09:52:19.610Z",
+};
 
 export const mockUserStore = {
   // 로그인된 사용자 상태 모킹
   loggedIn: (overrides = {}) => {
     const mockStore = {
-      user: {
-        id: "1",
-        name: "테스트 유저",
-        email: "test@example.com",
-        image: "/images/avatar.png",
-        companyName: "코드잇",
-        createdAt: "2025-04-03T09:52:19.610Z",
-        updatedAt: "2025-04-03T09:52:19.610Z",
-      },
+      user: { ...mockUser },
       isLoggedIn: true,
       isHydrated: true,
       clearUserState: jest.fn().mockImplementation(() => {
         mockStore.isLoggedIn = false;
         mockStore.user = {
-          id: "",
+          teamId: 0,
+          id: 0,
           name: "",
           email: "",
           image: "",

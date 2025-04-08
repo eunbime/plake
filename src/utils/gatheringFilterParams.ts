@@ -47,7 +47,7 @@ export const updateLocationOption = (
     paramsObj["location"] = ONLINE.location;
   }
 
-  if (location === "전체") {
+  if (location === "total") {
     delete paramsObj.location;
   }
 
@@ -57,9 +57,9 @@ export const updateLocationOption = (
 export const updateSortOption = (paramsObj: IGatheringFilterParams) => {
   const sortOption = paramsObj?.sortBy;
 
-  if (sortOption) {
-    let value = "";
+  let value = "";
 
+  if (sortOption && sortOption !== "total") {
     switch (sortOption) {
       case "participantCount": //인기많은순 정렬
         value = "desc";
@@ -71,9 +71,9 @@ export const updateSortOption = (paramsObj: IGatheringFilterParams) => {
     }
 
     paramsObj["sortOrder"] = value;
-  } else {
-    paramsObj["sortBy"] = "dateTime";
   }
+
+  if (!value) paramsObj["sortBy"] = "dateTime";
 
   return paramsObj;
 };
