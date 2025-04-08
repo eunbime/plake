@@ -7,7 +7,6 @@ jest.unmock("@/stores/useUserStore");
 
 describe("useUserStore 테스트", () => {
   beforeEach(() => {
-    // 스토어 상태 초기화
     act(() => {
       useUserStore.getState().clearUserState();
     });
@@ -47,8 +46,6 @@ describe("useUserStore 테스트", () => {
     });
 
     it("clearUserState는 user를 null로, isLoggedIn을 false로 설정한다", () => {
-      // 먼저 사용자 설정
-
       act(() => {
         useUserStore.getState().setUserState(mockUser);
       });
