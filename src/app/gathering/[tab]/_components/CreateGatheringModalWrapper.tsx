@@ -11,6 +11,7 @@ import useUserStore from "@/stores/useUserStore";
 const CreateGatheringModalWrapper = () => {
   const router = useRouter();
   const { isOpen, onClose, onOpen } = useModal();
+
   const user = useUserStore(state => state.user);
 
   return (
