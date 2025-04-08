@@ -44,7 +44,7 @@ describe("MyWrittenCardList", () => {
     expect(comments[1]).toHaveTextContent(reviews[1].comment);
   });
 
-  it("다음 페이지 로딩 중이면 로딩 스피너가 표시된다.", () => {
+  it("다음 페이지 로딩 시 로딩 스피너가 표시된다.", () => {
     const reviews = mockReviews(1);
 
     mockUseSuspenseReviewList.mockReturnValue({
