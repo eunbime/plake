@@ -1,7 +1,6 @@
 import { GatheringType, IGathering } from "@/types/gathering";
 import { IReview } from "@/types/review";
-
-import { mockUserStore } from "./userMocking";
+import { mockUserStore } from "@/utils/test-utils/userMocking";
 
 export const mockGathering = (overrides = {}): IGathering => {
   const defaultGathering: IGathering = {

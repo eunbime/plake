@@ -7,14 +7,8 @@ import reviewService from "@/services/review/ReviewService";
 export const useCreateReview = () => {
   const queryClient = useQueryClient();
 
-  const {
-    mutate: createReview,
-    isPending,
-    isError,
-  } = useMutation({
-    mutationFn: async (data: TReviewForm) => {
-      return reviewService.createReview(data);
-    },
+  const mutation = useMutation({
+    mutationFn: (data: TReviewForm) => reviewService.createReview(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GATHERING.myList],
@@ -26,8 +20,12 @@ export const useCreateReview = () => {
   });
 
   const handleCreateReview = (data: TReviewForm) => {
-    createReview(data);
+    return mutation.mutateAsync(data);
   };
 
-  return { handleCreateReview, isPending, isError };
+  return {
+    handleCreateReview,
+    isPending: mutation.isPending,
+    isError: mutation.isError,
+  };
 };

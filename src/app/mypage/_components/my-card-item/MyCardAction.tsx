@@ -6,10 +6,10 @@ import ConfirmModal from "@/components/modals/confirm-alert-modal/ConfirmModal";
 import CreateReviewModal from "@/components/modals/create-review-modal/CreateReviewModal";
 import { Button } from "@/components/ui/Button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import { MY_CARD_ACTION_TEXT } from "@/constants/ui";
 import { useLeaveGatheringMutation } from "@/hooks/gathering/useJoinGathering";
 import { useModal } from "@/hooks/useModal";
-
-type MyCardActionType = "cancel" | "viewReview" | "writeReview";
+import { MyCardActionType } from "@/types/gathering";
 
 interface MyCardActionProps {
   type: MyCardActionType;
@@ -34,7 +34,7 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
             onOpen();
           }}
         >
-          예약 취소하기
+          {MY_CARD_ACTION_TEXT.CANCEL}
         </Button>
         <ConfirmModal
           title="참여를 취소하시겠습니까?"
@@ -58,30 +58,36 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
           router.push("/mypage/reviews?type=written");
         }}
       >
-        내가 쓴 리뷰 보기
+        {MY_CARD_ACTION_TEXT.VIEW_REVIEW}
       </Button>
     );
   }
 
-  return (
-    <>
-      <Button
-        variant="purple"
-        className="h-10 w-fit"
-        onClick={e => {
-          e.preventDefault();
-          onOpen();
-        }}
-      >
-        리뷰 작성하기
-      </Button>
-      <CreateReviewModal
-        isOpen={isOpen}
-        onClose={onClose}
-        type="createReview"
-      />
-    </>
-  );
+  if (type === "writeReview") {
+    return (
+      <>
+        <Button
+          variant="purple"
+          className="h-10 w-fit"
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            onOpen();
+          }}
+        >
+          {MY_CARD_ACTION_TEXT.WRITE_REVIEW}
+        </Button>
+        <CreateReviewModal
+          isOpen={isOpen}
+          onClose={onClose}
+          type="createReview"
+          reviewTargetId={id}
+        />
+      </>
+    );
+  }
+
+  return null;
 };
 
 export default MyCardAction;

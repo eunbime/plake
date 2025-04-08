@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 
 import GatheringFilterSort from "@/components/common/GatheringFilterSort";
-import FilterTab from "@/components/navigations/FilterTab";
 
+import GatheringFiltertab from "../[tab]/_components/GatheringFilterTab";
 import Banner from "./_components/Banner";
 import CreateGatheringModalWrapper from "./_components/CreateGatheringModalWrapper";
 
@@ -13,7 +13,7 @@ const GatheringLayout = ({ children }: { children: React.ReactNode }) => {
         <Banner />
         <div className="mt-8 flex justify-between">
           <Suspense>
-            <FilterTab />
+            <GatheringFiltertab />
           </Suspense>
           <CreateGatheringModalWrapper />
         </div>
