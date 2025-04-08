@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import MyCardList from "@/app/mypage/_components/my-card-list/MyCardList";
+import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseMyGatheringList as _useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
 import { mockMyGatherings } from "@/utils/test-utils/myGatheringMocking";
 
@@ -30,7 +31,7 @@ describe("MyCardList", () => {
     });
 
     render(<MyCardList />);
-    expect(screen.getByText("신청한 모임이 아직 없어요")).toBeInTheDocument();
+    expect(screen.getByText(EMPTY_MESSAGE.mypage.default)).toBeInTheDocument();
   });
 
   it("gathering이 있을 경우 카드 아이템이 렌더링된다.", () => {
