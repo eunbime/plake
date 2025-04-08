@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 
 import MyCardList from "@/app/mypage/_components/my-card-list/MyCardList";
@@ -12,14 +13,15 @@ jest.mock("@/hooks/useIntersectionObserver", () => ({
     setTarget: jest.fn(),
   }),
 }));
-// 액션 컴포넌트 테스트 코드 작성 후 삭제될 예정
-jest.mock("@/app/mypage/_components/my-card-item/MyCardAction", () => {
-  const MockAction = () => <div data-testid="mock-action" />;
-  MockAction.displayName = "MockMyCardAction";
-  return MockAction;
-});
 
 const mockUseSuspenseMyGatheringList = _useSuspenseMyGatheringList as jest.Mock;
+
+const renderWithClient = (ui: React.ReactElement) => {
+  const client = new QueryClient();
+  return render(
+    <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
+  );
+};
 
 describe("MyCardList", () => {
   it("gathering이 없을 경우 EmptyState가 렌더링된다.", () => {
@@ -30,7 +32,7 @@ describe("MyCardList", () => {
       status: "success",
     });
 
-    render(<MyCardList />);
+    renderWithClient(<MyCardList />);
     expect(screen.getByText(EMPTY_MESSAGE.mypage.default)).toBeInTheDocument();
   });
 
@@ -44,11 +46,10 @@ describe("MyCardList", () => {
       status: "success",
     });
 
-    render(<MyCardList />);
+    renderWithClient(<MyCardList />);
     mockGatherings.forEach(gathering => {
       expect(screen.getByText(gathering.name)).toBeInTheDocument();
     });
-    expect(screen.getAllByTestId("mock-action")).toHaveLength(2);
   });
 
   it("status가 error일 경우 에러 메시지가 표시된다.", () => {
@@ -61,7 +62,7 @@ describe("MyCardList", () => {
       status: "error",
     });
 
-    render(<MyCardList />);
+    renderWithClient(<MyCardList />);
     expect(screen.getByRole("alert")).toHaveTextContent("에러가 발생했습니다.");
   });
 });
