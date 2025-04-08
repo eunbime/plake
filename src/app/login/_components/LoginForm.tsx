@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { LOGIN_INPUTS } from "@/constants/loginJoin";
 import useDebounce from "@/hooks/useDebounce";
+import useFavorite from "@/hooks/useFavorite";
 import { LoginFormSchema } from "@/schemas/loginJoinSchema";
 import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
@@ -45,6 +46,8 @@ const LoginForm = () => {
   const { setUserState } = useUserStore();
   const { openAlert } = useModalStore();
 
+  const { setFavoriteInitValue } = useFavorite();
+
   useEffect(() => {
     if (state && !state.status && !state.user) {
       const error: TErrorMsg = JSON.parse(state.error);
@@ -64,8 +67,13 @@ const LoginForm = () => {
       setIsSubmitting(false);
     } else if (state && state.status && state.user) {
       setUserState(state.user);
+
+      // 로그인 유저의 즐겨찾기 목록 가져오기
+      setFavoriteInitValue(state.user?.email);
+
       router.replace("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state, setError, router, setUserState, openAlert]);
 
   const onSubmit = handleSubmit(data => {
