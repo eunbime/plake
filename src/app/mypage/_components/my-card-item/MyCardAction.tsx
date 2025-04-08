@@ -7,8 +7,7 @@ import { QUERY_KEYS } from "@/constants/queryKeys";
 import { MY_CARD_ACTION_TEXT } from "@/constants/ui";
 import { useLeaveGatheringMutation } from "@/hooks/gathering/useJoinGathering";
 import useModalStore from "@/stores/useModalStore";
-
-type MyCardActionType = "cancel" | "viewReview" | "writeReview";
+import { MyCardActionType } from "@/types/gathering";
 
 interface MyCardActionProps {
   type: MyCardActionType;
@@ -55,18 +54,22 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
     );
   }
 
-  return (
-    <Button
-      variant="purple"
-      className="h-10 w-fit"
-      onClick={e => {
-        e.preventDefault();
-        openCreateReview(id);
-      }}
-    >
-      {MY_CARD_ACTION_TEXT.WRITE_REVIEW}
-    </Button>
-  );
+  if (type === "writeReview") {
+    return (
+      <Button
+        variant="purple"
+        className="h-10 w-fit"
+        onClick={e => {
+          e.preventDefault();
+          openCreateReview(id);
+        }}
+      >
+        {MY_CARD_ACTION_TEXT.WRITE_REVIEW}
+      </Button>
+    );
+  }
+
+  return null;
 };
 
 export default MyCardAction;
