@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/Button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import { MY_CARD_ACTION_TEXT } from "@/constants/ui";
 import { useLeaveGatheringMutation } from "@/hooks/gathering/useJoinGathering";
 import useModalStore from "@/stores/useModalStore";
-
-type MyCardActionType = "cancel" | "viewReview" | "writeReview";
+import { MyCardActionType } from "@/types/gathering";
 
 interface MyCardActionProps {
   type: MyCardActionType;
@@ -34,7 +34,7 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
           });
         }}
       >
-        예약 취소하기
+        {MY_CARD_ACTION_TEXT.CANCEL}
       </Button>
     );
   }
@@ -49,23 +49,27 @@ const MyCardAction = ({ type, id }: MyCardActionProps) => {
           router.push("/mypage/reviews?type=written");
         }}
       >
-        내가 쓴 리뷰 보기
+        {MY_CARD_ACTION_TEXT.VIEW_REVIEW}
       </Button>
     );
   }
 
-  return (
-    <Button
-      variant="purple"
-      className="h-10 w-fit"
-      onClick={e => {
-        e.preventDefault();
-        openCreateReview(id);
-      }}
-    >
-      리뷰 작성하기
-    </Button>
-  );
+  if (type === "writeReview") {
+    return (
+      <Button
+        variant="purple"
+        className="h-10 w-fit"
+        onClick={e => {
+          e.preventDefault();
+          openCreateReview(id);
+        }}
+      >
+        {MY_CARD_ACTION_TEXT.WRITE_REVIEW}
+      </Button>
+    );
+  }
+
+  return null;
 };
 
 export default MyCardAction;
