@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 
 import GatheringFilterSort from "@/components/common/GatheringFilterSort";
-import CreateGatheringModal from "@/components/modals/create-gathering-modal/CreateGatheringModal";
 
 import GatheringFiltertab from "../[tab]/_components/GatheringFilterTab";
 import Banner from "./_components/Banner";
@@ -21,7 +20,6 @@ const GatheringLayout = ({ children }: { children: React.ReactNode }) => {
         <hr className="my-4 border-gray-200" />
         <GatheringFilterSort />
         {children}
-        <CreateGatheringModal />
       </div>
     </>
   );

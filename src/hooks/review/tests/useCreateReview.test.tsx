@@ -7,16 +7,7 @@ import { TReviewForm } from "@/schemas/reviewSchema";
 import reviewService from "@/services/review/ReviewService";
 
 jest.mock("@/services/review/ReviewService");
-jest.mock("@/stores/useModalStore", () => ({
-  __esModule: true,
-  default: jest.fn(selector =>
-    selector({
-      openAlert: mockOpenAlert,
-    }),
-  ),
-}));
 
-const mockOpenAlert = jest.fn();
 const mockInvalidateQueries = jest.fn();
 
 const createWrapper = () => {
@@ -44,6 +35,7 @@ describe("useCreateReview", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
   it("리뷰 등록 성공 시 invalidateQueries가 호출된다.", async () => {
@@ -61,10 +53,9 @@ describe("useCreateReview", () => {
     });
   });
 
-  it("리뷰 등록 실패 시 openAlert가 호출된다.", async () => {
-    (reviewService.createReview as jest.Mock).mockRejectedValueOnce(
-      new Error("등록 실패"),
-    );
+  it("리뷰 등록 실패 시 console.error가 호출된다.", async () => {
+    const mockError = new Error("등록 실패");
+    (reviewService.createReview as jest.Mock).mockRejectedValueOnce(mockError);
 
     const { result } = renderHook(() => useCreateReview(), {
       wrapper: createWrapper(),
@@ -74,8 +65,6 @@ describe("useCreateReview", () => {
       result.current.handleCreateReview(mockData).catch(() => {}),
     );
 
-    expect(mockOpenAlert).toHaveBeenCalledWith(
-      "리뷰 등록에 실패했습니다. 잠시 후 다시 시도해주세요.",
-    );
+    expect(console.error).toHaveBeenCalledWith("모임 생성 실패:", mockError);
   });
 });
