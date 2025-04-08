@@ -28,8 +28,10 @@ describe("ReviewTab", () => {
 
     render(<ReviewTab />);
 
-    const writableBtn = screen.getByText("작성 가능한 리뷰");
-    expect(writableBtn).toHaveClass("bg-black text-white");
+    const writableBtn = screen.getByRole("tab", {
+      name: "작성 가능한 리뷰",
+    });
+    expect(writableBtn).toHaveAttribute("aria-selected", "true");
   });
 
   it("초기 상태가 'written'이면 작성한 리뷰 탭이 활성화된다.", () => {
@@ -39,8 +41,10 @@ describe("ReviewTab", () => {
 
     render(<ReviewTab />);
 
-    const writtenBtn = screen.getByText("작성한 리뷰");
-    expect(writtenBtn).toHaveClass("bg-black text-white");
+    const writtenBtn = screen.getByRole("tab", {
+      name: "작성한 리뷰",
+    });
+    expect(writtenBtn).toHaveAttribute("aria-selected", "true");
   });
 
   it("작성한 리뷰 탭 클릭 시 query param이 추가된 경로로 push 된다.", () => {
@@ -50,7 +54,9 @@ describe("ReviewTab", () => {
 
     render(<ReviewTab />);
 
-    const writtenBtn = screen.getByText("작성한 리뷰");
+    const writtenBtn = screen.getByRole("tab", {
+      name: "작성한 리뷰",
+    });
     fireEvent.click(writtenBtn);
 
     expect(mockPush).toHaveBeenCalledWith("/mypage/reviews?type=written", {
@@ -65,7 +71,9 @@ describe("ReviewTab", () => {
 
     render(<ReviewTab />);
 
-    const writableBtn = screen.getByText("작성 가능한 리뷰");
+    const writableBtn = screen.getByRole("tab", {
+      name: "작성 가능한 리뷰",
+    });
     fireEvent.click(writableBtn);
 
     expect(mockPush).toHaveBeenCalledWith("/mypage/reviews", {

@@ -17,9 +17,15 @@ jest.mock("@/hooks/useIntersectionObserver", () => ({
 const mockUseSuspenseMyGatheringList = _useSuspenseMyGatheringList as jest.Mock;
 
 const renderWithClient = (ui: React.ReactElement) => {
-  const queryClient = new QueryClient();
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   return render(
-    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>,
+    <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
   );
 };
 
