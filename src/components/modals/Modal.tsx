@@ -5,6 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { IoCloseOutline } from "react-icons/io5";
 
+import BackDrop from "@/components/modals/BackDrop";
+
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -46,19 +48,10 @@ const Modal = ({
     };
   }, [isOpen, handleKeyDown]);
 
-  const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   if (!isOpen || !isMounted) return null;
 
   return createPortal(
-    <div
-      className="fixed inset-0 z-50 flex min-w-[320px] items-center justify-center bg-black/50"
-      onClick={handleBackgroundClick}
-    >
+    <BackDrop onClose={onClose}>
       <div
         className={clsx("relative w-full bg-white p-6", {
           "mx-4 max-w-[520px] rounded-lg": variant === "default",
@@ -86,7 +79,7 @@ const Modal = ({
         </div>
         {children}
       </div>
-    </div>,
+    </BackDrop>,
     document.getElementById("modal-root")!,
   );
 };

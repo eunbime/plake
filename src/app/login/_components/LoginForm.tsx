@@ -9,13 +9,14 @@ import { z } from "zod";
 
 import userSignInAction from "@/actions/user-signin-action";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import AlertModal from "@/components/modals/confirm-alert-modal/AlertModal";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { LOGIN_INPUTS } from "@/constants/loginJoin";
 import useDebounce from "@/hooks/useDebounce";
 import useFavorite from "@/hooks/useFavorite";
+import { useModal } from "@/hooks/useModal";
 import { LoginFormSchema } from "@/schemas/loginJoinSchema";
-import useModalStore from "@/stores/useModalStore";
 import useUserStore from "@/stores/useUserStore";
 
 import {
@@ -40,11 +41,11 @@ const LoginForm = () => {
 
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [alertMessage, setAlertMessage] = useState("");
   const [state, formAction] = useFormState(userSignInAction, null);
 
   const { setUserState } = useUserStore();
-  const { openAlert } = useModalStore();
+  const { isOpen, onClose, onOpen } = useModal();
 
   const { setFavoriteInitValue } = useFavorite();
 
@@ -53,7 +54,8 @@ const LoginForm = () => {
       const error: TErrorMsg = JSON.parse(state.error);
 
       if (error.code === "SERVER_ERROR" || error.code === "INVALID_TOKEN") {
-        return openAlert(error.message);
+        setAlertMessage(error.message);
+        onOpen();
       } else {
         setError(
           "email",
@@ -73,8 +75,9 @@ const LoginForm = () => {
 
       router.replace("/");
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, setError, router, setUserState, openAlert]);
+  }, [state, setError, router, setUserState, onOpen]);
 
   const onSubmit = handleSubmit(data => {
     setIsSubmitting(true);
@@ -110,29 +113,39 @@ const LoginForm = () => {
   }, 500);
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-6">
-      {LOGIN_INPUTS.map(input => (
-        <Input
-          {...registerWithValidation(input.id)}
-          key={input.id}
-          id={input.id}
-          type={input.type}
-          label={input.label}
+    <>
+      <form onSubmit={onSubmit} className="flex flex-col gap-6">
+        {LOGIN_INPUTS.map(input => (
+          <Input
+            {...registerWithValidation(input.id)}
+            key={input.id}
+            id={input.id}
+            type={input.type}
+            label={input.label}
+            disabled={isSubmitting}
+            placeholder={input.placeholder}
+            errorMsg={errors[input.id]?.message}
+          />
+        ))}
+        <Button
+          variant={"purple"}
+          type="submit"
+          className="mb-6 mt-10 h-[40px] text-sm font-semibold md:text-base"
+          aria-label="login-btn"
           disabled={isSubmitting}
-          placeholder={input.placeholder}
-          errorMsg={errors[input.id]?.message}
+        >
+          {isSubmitting ? <LoadingSpinner size="xs" /> : "로그인"}
+        </Button>
+      </form>
+      {isOpen && (
+        <AlertModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onConfirm={() => {}}
+          title={alertMessage}
         />
-      ))}
-      <Button
-        variant={"purple"}
-        type="submit"
-        className="mb-6 mt-10 h-[40px] text-sm font-semibold md:text-base"
-        aria-label="login-btn"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? <LoadingSpinner size="xs" /> : "로그인"}
-      </Button>
-    </form>
+      )}
+    </>
   );
 };
 
