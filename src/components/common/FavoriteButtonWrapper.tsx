@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 
+import AlertModal from "@/components/modals/confirm-alert-modal/AlertModal";
 import { MAX_FAVORITE_COUNT } from "@/constants/favorite";
 import useFavoriteLocalStorage from "@/hooks/useFavorite";
+import { useModal } from "@/hooks/useModal";
 import useFavoriteStore from "@/stores/useFavoriteStore";
-import useModalStore from "@/stores/useModalStore";
 
 import FavoriteButton from "./FavoriteButton";
 
@@ -14,7 +15,9 @@ interface FavoriteButtonWrapperProps {
 }
 
 const FavoriteButtonWrapper = ({ id }: FavoriteButtonWrapperProps) => {
-  const openAlert = useModalStore(state => state.openAlert);
+  const { isOpen, onClose, onOpen } = useModal();
+  const [alertMessage, setAlertMessage] = useState("");
+
   const { setFavoriteNewValue } = useFavoriteLocalStorage();
 
   const favoriteList = useFavoriteStore(state => state.favoriteList);
@@ -27,9 +30,10 @@ const FavoriteButtonWrapper = ({ id }: FavoriteButtonWrapperProps) => {
     const favoriteByUser: Set<string> = new Set(favoriteList) || new Set();
 
     if (!favoriteByUser.has(id)) {
-      if (favoriteByUser.size >= MAX_FAVORITE_COUNT)
-        openAlert("모임 찜하기는 최대 30개까지 가능합니다.");
-      else {
+      if (favoriteByUser.size >= MAX_FAVORITE_COUNT) {
+        setAlertMessage("모임 찜하기는 최대 30개까지 가능합니다.");
+        onOpen();
+      } else {
         favoriteByUser.add(id);
       }
       setIsFavorite(true);
@@ -47,6 +51,9 @@ const FavoriteButtonWrapper = ({ id }: FavoriteButtonWrapperProps) => {
         isFavorite={isFavorite}
         onToggle={() => onClickToggle(id)}
       />
+      {isOpen && (
+        <AlertModal isOpen={isOpen} onClose={onClose} title={alertMessage} />
+      )}
     </>
   );
 };
