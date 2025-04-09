@@ -32,10 +32,10 @@ const FavoriteList = () => {
           favoriteData.map((card: IGathering) => (
             <MainCardItem
               key={card.id}
-              id={String(card.id)}
+              id={card.id}
               name={card.name}
-              dateTime={new Date(card.dateTime)}
-              registrationEnd={new Date(card.registrationEnd)}
+              dateTime={card.dateTime}
+              registrationEnd={card.registrationEnd}
               location={card.location}
               participantCount={card.participantCount}
               capacity={card.capacity}
