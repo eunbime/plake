@@ -9,26 +9,26 @@ import ClosedMainCardItem from "./ClosedMainCardItem";
 import MainCardContent from "./MainCardContent";
 import MainCardImage from "./MainCardImage";
 
-interface IMainCardItemProps extends IGathering {
-  firstPage: boolean;
+interface IMainCardItemProps {
+  gathering: IGathering;
 }
 
-const MainCardItem = ({
-  id,
-  name,
-  dateTime,
-  registrationEnd,
-  location,
-  participantCount,
-  capacity,
-  image,
-  firstPage,
-}: IMainCardItemProps) => {
+const MainCardItem = ({ gathering }: IMainCardItemProps) => {
+  const {
+    id,
+    name,
+    dateTime,
+    registrationEnd,
+    location,
+    participantCount,
+    capacity,
+    image,
+  } = gathering;
   const today = dayjs();
   const isOpened = dayjs(registrationEnd).isAfter(today); // 모임오픈 여부 (모임이 종료되지 않았을 경우: true)
 
   return (
-    <article className="relative w-full">
+    <article className="relative w-full" aria-label="모임 카드">
       <Link
         href={`/gathering/detail/${id}`}
         className="absolute z-10 h-full w-full"
@@ -38,7 +38,6 @@ const MainCardItem = ({
           image={image}
           name={name}
           registrationEnd={dayjs(registrationEnd)}
-          firstPage={firstPage}
         />
         <MainCardContent
           name={name}
