@@ -1,7 +1,7 @@
 "use client";
 
 import EmptyState from "@/app/mypage/_components/EmptyState";
-import MyCardAction from "@/app/mypage/_components/my-card-item/MyCardAction";
+import MyCardActionGroup from "@/app/mypage/_components/my-card-item/actions/MyCardActionGroup";
 import MyCardContent from "@/app/mypage/_components/my-card-item/MyCardContent";
 import MyCardImage from "@/app/mypage/_components/my-card-item/MyCardImage";
 import MyCardItem from "@/app/mypage/_components/my-card-item/MyCardItem";
@@ -52,7 +52,10 @@ const MyCardList = () => {
                 capacity={gathering.capacity}
               />
             </div>
-            <MyCardAction type={getButtonType(gathering)} id={gathering.id} />
+            <MyCardActionGroup
+              type={getButtonType(gathering)}
+              id={gathering.id}
+            />
           </MyCardContent>
         </MyCardItem>
       ))}

@@ -25,11 +25,16 @@ jest.mock("@/hooks/useModal", () => ({
   useModal: jest.fn(),
 }));
 
-const queryClient = new QueryClient();
-
-const renderWithQueryClient = (ui: React.ReactElement) => {
+const renderWithClient = (ui: React.ReactElement) => {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   return render(
-    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>,
+    <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
   );
 };
 
@@ -66,7 +71,7 @@ describe("MyCardAction", () => {
   });
 
   it('"writeReview" 타입이면 리뷰 작성하기 버튼이 렌더링되고, 클릭 시 모달이 열린다.', () => {
-    renderWithQueryClient(<MyCardAction type="writeReview" id={mockUser.id} />);
+    renderWithClient(<MyCardAction type="writeReview" id={mockUser.id} />);
     const button = screen.getByText(MY_CARD_ACTION_TEXT.WRITE_REVIEW);
     fireEvent.click(button);
 
@@ -104,7 +109,7 @@ describe("MyCardAction", () => {
   });
 
   it('"writeReview" 버튼 클릭 시 e.preventDefault()가 호출된다.', () => {
-    renderWithQueryClient(<MyCardAction type="writeReview" id={mockUser.id} />);
+    renderWithClient(<MyCardAction type="writeReview" id={mockUser.id} />);
     const button = screen.getByText(MY_CARD_ACTION_TEXT.WRITE_REVIEW);
     const event = new MouseEvent("click", { bubbles: true });
     const prevent = jest.fn();
