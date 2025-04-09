@@ -69,7 +69,7 @@ describe("ProtectedRoute 컴포넌트", () => {
     await waitFor(() => expect(checkAuthToken).toHaveBeenCalledTimes(1));
 
     act(() => {
-      jest.advanceTimersByTime(600000);
+      jest.advanceTimersByTime(600000); //
     });
 
     await waitFor(() => expect(checkAuthToken).toHaveBeenCalledTimes(2));
