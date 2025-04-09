@@ -30,18 +30,7 @@ const FavoriteList = () => {
       <div className="mb-8 flex min-h-80 flex-col items-center justify-center gap-6">
         {favoriteData &&
           favoriteData.map((card: IGathering) => (
-            <MainCardItem
-              key={card.id}
-              id={card.id}
-              name={card.name}
-              dateTime={card.dateTime}
-              registrationEnd={card.registrationEnd}
-              location={card.location}
-              participantCount={card.participantCount}
-              capacity={card.capacity}
-              image={card.image}
-              firstPage={false}
-            />
+            <MainCardItem key={card.id} gathering={card} />
           ))}
         {favoriteData?.length === 0 && (
           <p className="text-gray-500">{"아직 찜한 모임이 없어요."}</p>
