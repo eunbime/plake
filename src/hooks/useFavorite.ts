@@ -32,7 +32,6 @@ const useFavoriteLocalStorage = () => {
 
   const setFavoriteInitValue = (user: string) => {
     const favoriteList = favoriteListByUser(user);
-    console.log("setFavoriteInitValue", user, favoriteList);
     setFavoriteList(favoriteList);
   };
 
