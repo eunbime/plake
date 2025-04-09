@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -124,7 +125,12 @@ const CreateReviewModal = ({
             <Button
               variant="purple"
               className="h-[44px] w-full"
-              disabled={!!errors.score || !!errors.comment}
+              disabled={
+                !!errors.score ||
+                !!errors.comment ||
+                watch("score") === 0 ||
+                !watch("comment")
+              }
               type="submit"
             >
               {isPending ? (
