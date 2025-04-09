@@ -13,10 +13,6 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("MyCardViewReviewButton", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("내가 쓴 리뷰 보기 버튼이 렌더링된다.", () => {
     renderWithClient(<MyCardViewReviewButton />);
     const button = screen.getByText(MY_CARD_ACTION_TEXT.VIEW_REVIEW);
