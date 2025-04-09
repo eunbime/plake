@@ -58,12 +58,12 @@ describe("ProtectedRoute 컴포넌트", () => {
     jest.useRealTimers();
   });
 
-  test("컴포넌트 마운트 시 초기 토큰 검사를 수행한다", async () => {
+  it("컴포넌트 마운트 시 초기 토큰 검사를 수행한다", async () => {
     render(<ProtectedRoute />);
     await waitFor(() => expect(checkAuthToken).toHaveBeenCalledTimes(1));
   });
 
-  test("10분마다 토큰 체크를 실행한다", async () => {
+  it("10분마다 토큰 체크를 실행한다", async () => {
     render(<ProtectedRoute />);
 
     await waitFor(() => expect(checkAuthToken).toHaveBeenCalledTimes(1));
@@ -75,7 +75,7 @@ describe("ProtectedRoute 컴포넌트", () => {
     await waitFor(() => expect(checkAuthToken).toHaveBeenCalledTimes(2));
   });
 
-  test("로그아웃 처리 함수가 올바르게 동작한다", async () => {
+  it("로그아웃 처리 함수가 올바르게 동작한다", async () => {
     (useModal as jest.Mock).mockReturnValue({
       isOpen: true,
       onOpen: mockOnOpen,
@@ -100,7 +100,7 @@ describe("ProtectedRoute 컴포넌트", () => {
     );
   });
 
-  test("isLoggedIn이 false일 때 토큰 검사를 수행한다", async () => {
+  it("isLoggedIn이 false일 때 토큰 검사를 수행한다", async () => {
     (useUserStore as unknown as jest.Mock).mockReturnValue({
       isLoggedIn: false,
     });
@@ -110,7 +110,7 @@ describe("ProtectedRoute 컴포넌트", () => {
     await waitFor(() => expect(checkAuthToken).toHaveBeenCalledTimes(2));
   });
 
-  test("컴포넌트 언마운트 시 인터벌을 정리한다", async () => {
+  it("컴포넌트 언마운트 시 인터벌을 정리한다", async () => {
     const clearIntervalSpy = jest.spyOn(global, "clearInterval");
 
     const { unmount } = render(<ProtectedRoute />);

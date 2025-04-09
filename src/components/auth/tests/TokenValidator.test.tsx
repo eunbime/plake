@@ -33,16 +33,12 @@ jest.mock("@/components/modals/confirm-alert-modal/AlertModal", () => ({
 }));
 
 describe("TokenValidator", () => {
-  // 공통 목 설정
   const mockLogout = jest.fn();
   const mockOnOpen = jest.fn();
   const mockOnClose = jest.fn();
 
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.clearAllMocks();
-
-    // 기본 목 구현 설정
     (useLogout as jest.Mock).mockReturnValue({ logout: mockLogout });
     (useModal as jest.Mock).mockReturnValue({
       isOpen: false,
@@ -57,7 +53,7 @@ describe("TokenValidator", () => {
     jest.useRealTimers();
   });
 
-  test("사용자가 로그인하지 않았을 때 인터벌이 설정되지 않아야 함", () => {
+  it("사용자가 로그인하지 않았을 때 인터벌이 설정되지 않는다.", () => {
     (useUserStore as unknown as jest.Mock).mockReturnValue(false);
     const setIntervalSpy = jest.spyOn(global, "setInterval");
 
@@ -66,7 +62,7 @@ describe("TokenValidator", () => {
     expect(setIntervalSpy).not.toHaveBeenCalled();
   });
 
-  test("사용자가 로그인했을 때 토큰 확인을 위한 인터벌이 설정되어야 함", () => {
+  it("사용자가 로그인했을 때 토큰 확인을 위한 인터벌이 설정된다.", () => {
     (useUserStore as unknown as jest.Mock).mockReturnValue(true);
     const setIntervalSpy = jest.spyOn(global, "setInterval");
 
@@ -76,7 +72,7 @@ describe("TokenValidator", () => {
     expect(setIntervalSpy).toHaveBeenCalledWith(expect.any(Function), 600000);
   });
 
-  test("컴포넌트 언마운트 시 인터벌이 정리되어야 함", () => {
+  it("컴포넌트 언마운트 시 인터벌이 정리된다.", () => {
     (useUserStore as unknown as jest.Mock).mockReturnValue(true);
     const clearIntervalSpy = jest.spyOn(global, "clearInterval");
 
@@ -86,7 +82,7 @@ describe("TokenValidator", () => {
     expect(clearIntervalSpy).toHaveBeenCalled();
   });
 
-  test("토큰 만료 시 올바르게 처리되어야 함", async () => {
+  it("토큰 만료 시 올바르게 처리된다.", async () => {
     (useUserStore as unknown as jest.Mock).mockReturnValue(true);
 
     (checkAuthToken as jest.Mock).mockImplementation(callback => {
@@ -106,7 +102,7 @@ describe("TokenValidator", () => {
     });
   });
 
-  test("isOpen이 true일 때 알림 모달이 렌더링되어야 함", () => {
+  it("isOpen이 true일 때 알림 모달이 렌더링된다.", () => {
     (useModal as jest.Mock).mockReturnValue({
       isOpen: true,
       onOpen: mockOnOpen,
@@ -122,7 +118,7 @@ describe("TokenValidator", () => {
     );
   });
 
-  test("isOpen이 false일 때 알림 모달이 렌더링되지 않아야 함", () => {
+  it("isOpen이 false일 때 알림 모달이 렌더링되지 않는다.", () => {
     (useModal as jest.Mock).mockReturnValue({
       isOpen: false,
       onOpen: mockOnOpen,
@@ -135,7 +131,7 @@ describe("TokenValidator", () => {
     expect(alertModal).not.toBeInTheDocument();
   });
 
-  test("토큰 확인 함수가 지정된 간격으로 호출되어야 함", () => {
+  it("토큰 확인 함수가 지정된 간격으로 호출된다.", () => {
     (useUserStore as unknown as jest.Mock).mockReturnValue(true);
 
     render(<TokenValidator />);
