@@ -19,10 +19,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => {
-  jest.clearAllMocks();
-});
-
 describe("EditProfileModal", () => {
   setupModalRoot();
 
@@ -32,7 +28,7 @@ describe("EditProfileModal", () => {
     user: mockUser,
   };
 
-  it("모달이 열리면 기본 사용자 정보가 렌더링된다", () => {
+  it("모달이 열리면 기본 사용자 정보가 렌더링된다.", () => {
     render(<EditProfileModal {...defaultProps} />);
     expect(screen.getByDisplayValue(mockUser.companyName)).toBeInTheDocument();
     expect(screen.getByDisplayValue(mockUser.email)).toBeInTheDocument();
@@ -40,27 +36,27 @@ describe("EditProfileModal", () => {
     expect(screen.getByText("수정하기")).toBeInTheDocument();
   });
 
-  it("회사명을 변경할 수 있다", () => {
+  it("회사명을 변경할 수 있다.", () => {
     render(<EditProfileModal {...defaultProps} />);
     const input = screen.getByPlaceholderText("회사를 입력해주세요");
     fireEvent.change(input, { target: { value: "새로운 회사" } });
     expect(input).toHaveValue("새로운 회사");
   });
 
-  it("수정 버튼 클릭 시 handleUpdateUser가 호출되고 onClose도 호출된다", () => {
+  it("수정 버튼 클릭 시 handleUpdateUser가 호출되고 onClose도 호출된다.", () => {
     render(<EditProfileModal {...defaultProps} />);
     fireEvent.click(screen.getByText("수정하기"));
     expect(mockHandleUpdateUser).toHaveBeenCalled();
     expect(defaultProps.onClose).toHaveBeenCalled();
   });
 
-  it("취소 버튼 클릭 시 onClose가 호출된다", () => {
+  it("취소 버튼 클릭 시 onClose가 호출된다.", () => {
     render(<EditProfileModal {...defaultProps} />);
     fireEvent.click(screen.getByText("취소"));
     expect(defaultProps.onClose).toHaveBeenCalled();
   });
 
-  it("에러가 있을 경우 AlertModal이 표시된다", () => {
+  it("에러가 있을 경우 AlertModal이 표시된다.", () => {
     (_useUpdateUser as jest.Mock).mockReturnValue({
       handleUpdateUser: mockHandleUpdateUser,
       errorMessage: "에러가 발생했습니다.",

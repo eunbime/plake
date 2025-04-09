@@ -17,10 +17,6 @@ describe("ReviewTab", () => {
     (usePathname as jest.Mock).mockReturnValue("/mypage/reviews");
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("초기 상태가 'writable'일 때 작성 가능한 리뷰 탭이 활성화된다.", () => {
     (useSearchParams as jest.Mock).mockReturnValue({
       get: () => null,

@@ -13,10 +13,6 @@ jest.mock("@/stores/useUserStore");
 describe("MyProfile", () => {
   const mockUseUserStore = useUserStore as unknown as jest.Mock;
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("유저 정보가 있을 때 프로필 정보가 렌더링된다.", () => {
     mockUseUserStore.mockImplementation(selector =>
       selector({

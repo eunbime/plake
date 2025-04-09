@@ -26,10 +26,6 @@ beforeEach(() => {
   });
 });
 
-afterEach(() => {
-  jest.clearAllMocks();
-});
-
 describe("CreateReviewModal", () => {
   setupModalRoot();
 

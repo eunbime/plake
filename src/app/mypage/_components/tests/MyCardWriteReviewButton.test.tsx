@@ -20,10 +20,6 @@ describe("MyCardWriteReviewButton", () => {
     (useModal as jest.Mock).mockReturnValue(mockModalHook);
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("리뷰 작성하기 버튼이 렌더링된다.", () => {
     renderWithClient(<MyCardWriteReviewButton id={123} />);
     const button = screen.getByText(MY_CARD_ACTION_TEXT.WRITE_REVIEW);
