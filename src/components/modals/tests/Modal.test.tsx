@@ -10,7 +10,7 @@ describe("Modal", () => {
 
   const renderModal = (props = {}) =>
     render(
-      <Modal isOpen={true} onClose={onClose} title="테스트 타이틀" {...props}>
+      <Modal isOpen={true} onClose={onClose} title="테스트 제목" {...props}>
         <p>내용</p>
       </Modal>,
     );
@@ -30,7 +30,7 @@ describe("Modal", () => {
 
   it("title과 children이 렌더링된다.", () => {
     renderModal();
-    expect(screen.getByText("테스트 타이틀")).toBeInTheDocument();
+    expect(screen.getByText("테스트 제목")).toBeInTheDocument();
     expect(screen.getByText("내용")).toBeInTheDocument();
   });
 
@@ -65,11 +65,11 @@ describe("Modal", () => {
 
   it("variant='alert'일 때도 정상 렌더링된다.", () => {
     renderModal({ variant: "alert" });
-    expect(screen.getByText("테스트 타이틀")).toBeInTheDocument();
+    expect(screen.getByText("테스트 제목")).toBeInTheDocument();
   });
 
   it("variant='mobileFull'일 때도 정상 렌더링된다.", () => {
     renderModal({ variant: "mobileFull" });
-    expect(screen.getByText("테스트 타이틀")).toBeInTheDocument();
+    expect(screen.getByText("테스트 제목")).toBeInTheDocument();
   });
 });

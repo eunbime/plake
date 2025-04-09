@@ -50,7 +50,7 @@ describe("CreateReviewModal", () => {
     expect(screen.getByText("리뷰 등록")).toBeInTheDocument();
   });
 
-  it("리뷰 등록 버튼 클릭 시 handleCreateReview가 호출되고 모달이 닫힌다", async () => {
+  it("리뷰 등록 버튼 클릭 시 handleCreateReview가 호출되고 모달이 닫힌다.", async () => {
     render(<CreateReviewModal {...defaultProps} />);
 
     fireEvent.click(screen.getByTestId("rating-heart-5"));
