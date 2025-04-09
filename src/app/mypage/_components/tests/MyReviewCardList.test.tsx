@@ -1,10 +1,10 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 
 import MyReviewCardList from "@/app/mypage/_components/my-card-list/MyReviewCardList";
 import { EMPTY_MESSAGE } from "@/constants/emptyMessage";
 import { useSuspenseMyGatheringList as _useSuspenseMyGatheringList } from "@/hooks/gathering/useMyGatheringList";
 import { mockMyGatherings } from "@/utils/test-utils/myGatheringMocking";
+import { renderWithClient } from "@/utils/test-utils/renderWithClient";
 
 jest.mock("@/hooks/gathering/useMyGatheringList");
 jest.mock("@/hooks/useIntersectionObserver", () => ({
@@ -15,19 +15,6 @@ jest.mock("@/hooks/useIntersectionObserver", () => ({
 }));
 
 const mockUseSuspenseMyGatheringList = _useSuspenseMyGatheringList as jest.Mock;
-
-const renderWithClient = (ui: React.ReactElement) => {
-  const client = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  });
-  return render(
-    <QueryClientProvider client={client}>{ui}</QueryClientProvider>,
-  );
-};
 
 describe("MyReviewCardList", () => {
   it("gathering이 없을 경우 EmptyState가 렌더링된다.", () => {
