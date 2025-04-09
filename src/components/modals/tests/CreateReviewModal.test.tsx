@@ -109,7 +109,6 @@ describe("CreateReviewModal", () => {
     });
 
     render(<CreateReviewModal {...defaultProps} />);
-
     expect(
       screen.getByText(
         text =>

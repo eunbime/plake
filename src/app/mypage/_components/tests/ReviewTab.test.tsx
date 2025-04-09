@@ -27,7 +27,6 @@ describe("ReviewTab", () => {
     });
 
     render(<ReviewTab />);
-
     const writableBtn = screen.getByRole("tab", {
       name: "작성 가능한 리뷰",
     });
@@ -40,7 +39,6 @@ describe("ReviewTab", () => {
     });
 
     render(<ReviewTab />);
-
     const writtenBtn = screen.getByRole("tab", {
       name: "작성한 리뷰",
     });
@@ -53,7 +51,6 @@ describe("ReviewTab", () => {
     });
 
     render(<ReviewTab />);
-
     const writtenBtn = screen.getByRole("tab", {
       name: "작성한 리뷰",
     });
@@ -70,7 +67,6 @@ describe("ReviewTab", () => {
     });
 
     render(<ReviewTab />);
-
     const writableBtn = screen.getByRole("tab", {
       name: "작성 가능한 리뷰",
     });
