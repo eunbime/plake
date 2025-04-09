@@ -85,31 +85,28 @@ describe("updateGatheringParams 테스트", () => {
   it("온라인 경로이고 params에 설정된 key의 값이 존재하는 경우", () => {
     expect(
       updateGatheringParams("/gathering/online", {
-        location: undefined,
-        date: undefined,
-        sort: undefined,
+        date: "2025-04-10",
+        sortBy: "registrationEnd",
         type: undefined,
       }),
     ).toStrictEqual({
       location: "홍대입구",
-      sortBy: "dateTime",
+      sortBy: "registrationEnd",
+      sortOrder: "asc",
+      date: "2025-04-10",
     });
   });
 
   it("오프라인 경로이고 params에 설정된 key의 값이 전부 undefined인 경우", () => {
     expect(
       updateGatheringParams("/gathering/offline", {
-        location: "건대입구",
-        date: "2025-04-09",
-        sortBy: "registrationEnd",
-        type: "exercise",
+        location: undefined,
+        date: undefined,
+        sort: undefined,
+        type: undefined,
       }),
     ).toStrictEqual({
-      location: "건대입구",
-      date: "2025-04-09",
-      sortBy: "registrationEnd",
-      sortOrder: "asc",
-      type: "OFFICE_STRETCHING",
+      sortBy: "dateTime",
     });
   });
 
