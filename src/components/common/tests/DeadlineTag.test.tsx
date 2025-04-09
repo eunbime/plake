@@ -6,9 +6,11 @@ import dayjs from "dayjs";
 import DeadlineTag from "../DeadlineTag";
 
 describe("모임이 마감되지 않은 경우(모집 종료일이 지나지 않은 경우) 렌더링 테스트", () => {
+  //"2025-04-08 오후 5시"로 타이머 고정
+  jest.useFakeTimers().setSystemTime(new Date("2025-04-08 17:00:00"));
+
   it("DeadlineTag가 보인다.", () => {
-    const today = dayjs();
-    const registrationEnd = today.add(1, "month"); // 마감일이 1달 이상 남은 경우
+    const registrationEnd = dayjs("2025-05-08");
     render(<DeadlineTag registrationEnd={registrationEnd} />);
 
     expect(
@@ -17,29 +19,23 @@ describe("모임이 마감되지 않은 경우(모집 종료일이 지나지 않
   });
 
   it("모집 종료 당일인 경우 마감되는 시간이 보인다.", () => {
-    const today = dayjs();
-
-    const registrationEnd = today.add(1, "hour"); // 마감 시간까지 1시간이 남았을 경우
-    const deadlineHour = registrationEnd.format("H");
-
+    const registrationEnd = dayjs("2025-04-08T19:00:00");
     render(<DeadlineTag registrationEnd={registrationEnd} />);
 
-    expect(screen.getByText(`오늘 ${deadlineHour}시 마감`)).toBeInTheDocument();
+    expect(screen.getByText("오늘 19시 마감")).toBeInTheDocument();
   });
 
   it("모집 종료 당일이 아닌 경우 마감까지 남은 일 수가 보인다.", () => {
-    const today = dayjs();
-    const registrationEnd = today.add(5, "day"); // 마감 일자까지 5일 남았을 경우
+    const registrationEnd = dayjs("2025-04-09T13:00:00");
     render(<DeadlineTag registrationEnd={registrationEnd} />);
 
-    expect(screen.getByText("5일 후 마감")).toBeInTheDocument();
+    expect(screen.getByText("1일 후 마감")).toBeInTheDocument();
   });
 });
 
 describe("모임이 마감된 경우(모집 종료일이 지난 경우) 렌더링 테스트", () => {
   it("DeadlineTag가 보이지 않는다.", async () => {
-    const today = dayjs();
-    const registrationEnd = today.subtract(7, "day"); // 오늘 기준 7일 전에 마감일이 지난 경우
+    const registrationEnd = dayjs("2025-03-09T20:00:00");
 
     const { container } = render(
       <DeadlineTag registrationEnd={registrationEnd} />,

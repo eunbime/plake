@@ -62,14 +62,12 @@ type Story = StoryObj<typeof MainCardItem>;
 
 export const Default: Story = {
   render: () => {
-    const date = new Date();
-
     return (
       <MainCardItem
-        id={"1"}
+        id={1}
         name={"달램핏 오피스 스트레칭"}
-        dateTime={date}
-        registrationEnd={new Date(date.setMonth(date.getMonth() + 1))}
+        dateTime={"2025-04-10T14:00:00.401Z"}
+        registrationEnd={"2025-04-12T14:00:00.401Z"}
         location={"강남구"}
         participantCount={6}
         capacity={20}
@@ -89,14 +87,12 @@ export const Default: Story = {
 
 export const ClosedCardItem: Story = {
   render: () => {
-    const date = new Date();
-
     return (
       <MainCardItem
-        id={"1"}
+        id={1}
         name={"달램핏 오피스 스트레칭"}
-        dateTime={date}
-        registrationEnd={new Date(date.setDate(date.getDay() - 1))}
+        dateTime={"2025-04-10T14:00:00.401Z"}
+        registrationEnd={"2025-04-04T14:00:00.401Z"}
         location={"강남구"}
         participantCount={6}
         capacity={20}
