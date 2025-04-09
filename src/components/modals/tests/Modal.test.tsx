@@ -1,21 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import Modal from "@/components/modals/Modal";
-
-beforeAll(() => {
-  const modalRoot = document.createElement("div");
-  modalRoot.setAttribute("id", "modal-root");
-  document.body.appendChild(modalRoot);
-});
-
-afterAll(() => {
-  const modalRoot = document.getElementById("modal-root");
-  if (modalRoot) {
-    document.body.removeChild(modalRoot);
-  }
-});
+import { setupModalRoot } from "@/utils/test-utils/setupModalRoot";
 
 describe("Modal", () => {
+  setupModalRoot();
+
   const onClose = jest.fn();
 
   const renderModal = (props = {}) =>
