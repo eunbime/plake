@@ -60,6 +60,7 @@ const Modal = ({
             variant === "mobileFull",
         })}
         onClick={e => e.stopPropagation()}
+        role="dialog"
         aria-modal="true"
       >
         <div
