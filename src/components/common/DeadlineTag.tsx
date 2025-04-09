@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
 import { FaClock } from "react-icons/fa6";
 
-interface IDeadlineTag {
+interface IDeadlineTagProps {
   registrationEnd: dayjs.Dayjs;
 }
 
-const DeadlineTag = ({ registrationEnd }: IDeadlineTag) => {
+const DeadlineTag = ({ registrationEnd }: IDeadlineTagProps) => {
   const today = dayjs().format("YYYY-MM-DDTHH:mm:ss"); //오늘일자
   const deadlineHour = registrationEnd.format("H");
 
