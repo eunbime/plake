@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Rating from "@/components/common/Rating";
@@ -43,7 +43,7 @@ const CreateReviewModal = ({
     formState: { errors },
     setValue,
     trigger,
-    watch,
+    control,
     reset,
   } = useForm<TReviewForm>({
     resolver: zodResolver(ReviewSchema),
@@ -53,6 +53,9 @@ const CreateReviewModal = ({
       comment: "",
     },
   });
+
+  const score = useWatch({ control, name: "score" });
+  const comment = useWatch({ control, name: "comment" });
 
   const { handleCreateReview, isPending, isError } = useCreateReview();
 
@@ -92,7 +95,7 @@ const CreateReviewModal = ({
           <div>
             <Label className={labelTitleStyle}>만족스러운 경험이었나요?</Label>
             <Rating
-              rating={watch("score")}
+              rating={score}
               isEditable={true}
               onRatingChange={handleRatingChange}
             />
@@ -126,10 +129,7 @@ const CreateReviewModal = ({
               variant="purple"
               className="h-[44px] w-full"
               disabled={
-                !!errors.score ||
-                !!errors.comment ||
-                watch("score") === 0 ||
-                !watch("comment")
+                !!errors.score || !!errors.comment || score === 0 || !comment
               }
               type="submit"
             >

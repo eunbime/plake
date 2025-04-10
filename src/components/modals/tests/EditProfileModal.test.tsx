@@ -67,4 +67,16 @@ describe("EditProfileModal", () => {
     render(<EditProfileModal {...defaultProps} />);
     expect(screen.getByText("에러가 발생했습니다.")).toBeInTheDocument();
   });
+
+  it("회사명이 비어있을 경우 수정 버튼은 비활성화된다.", () => {
+    render(
+      <EditProfileModal
+        {...defaultProps}
+        user={{ ...defaultProps.user, companyName: "" }}
+      />,
+    );
+
+    const submitButton = screen.getByText("수정하기");
+    expect(submitButton).toBeDisabled();
+  });
 });
