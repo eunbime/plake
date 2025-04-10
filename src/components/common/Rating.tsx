@@ -36,7 +36,7 @@ const Rating = ({
           key={index}
           onClick={e => handleRatingChange(e, index)}
           className={clsx(isEditable ? "cursor-pointer" : "cursor-default")}
-          aria-label={`${index + 1} 별점`}
+          data-testid={`rating-heart-${index + 1}`}
         >
           <FaHeart
             data-testid="heart-icon"

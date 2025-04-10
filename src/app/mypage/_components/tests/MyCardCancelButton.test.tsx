@@ -27,10 +27,6 @@ describe("MyCardCancelButton", () => {
     (useModal as jest.Mock).mockReturnValue(mockModalHook);
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("예약 취소하기 버튼이 렌더링된다.", () => {
     renderWithClient(<MyCardCancelButton id={123} />);
     const button = screen.getByText(MY_CARD_ACTION_TEXT.CANCEL);
