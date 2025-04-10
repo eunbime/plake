@@ -35,19 +35,21 @@ const Rating = ({
         "flex items-center gap-2",
         isEditable && "cursor-pointer",
       )}
+      aria-label="별점"
     >
       {Array.from({ length: totalHearts }).map((_, index) => (
-        <div
+        <button
           key={index}
           onClick={e => handleRatingChange(e, index)}
-          className={clsx(isEditable && "cursor-pointer")}
+          aria-label={`${index + 1} 별점`}
         >
           <FaHeart
+            data-testid="heart-icon"
             className={
               index < roundedRating ? HEART_COLOR.filled : HEART_COLOR.empty
             }
           />
-        </div>
+        </button>
       ))}
     </div>
   );
