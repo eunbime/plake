@@ -6,14 +6,12 @@ import DeadlineTag from "../common/DeadlineTag";
 interface IMainCardImageProps {
   image: string | null;
   name: string;
-  firstPage: boolean;
   registrationEnd: dayjs.Dayjs;
 }
 
 const MainCardImage = ({
   image,
   name,
-  firstPage,
   registrationEnd,
 }: IMainCardImageProps) => {
   return (
@@ -24,7 +22,6 @@ const MainCardImage = ({
         className="h-full w-full object-cover"
         fill
         sizes="(max-width: 768px) 50vw"
-        priority={firstPage}
       ></Image>
       <DeadlineTag registrationEnd={registrationEnd} />
     </div>
