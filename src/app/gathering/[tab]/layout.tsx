@@ -9,7 +9,7 @@ import CreateGatheringModalWrapper from "./_components/CreateGatheringModalWrapp
 const GatheringLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <div className="base-wrap">
+      <div className="base-wrap bg-gray-50 py-6 md:py-10 xl:px-28">
         <Banner />
         <div className="mt-8 flex justify-between">
           <Suspense>

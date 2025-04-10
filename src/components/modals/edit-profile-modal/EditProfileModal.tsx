@@ -100,6 +100,7 @@ const EditProfileModal = ({ isOpen, onClose, user }: EditProfileModalProps) => {
               variant="purple"
               className="h-[44px] w-full"
               onClick={handleSubmit}
+              disabled={!companyName}
             >
               수정하기
             </Button>

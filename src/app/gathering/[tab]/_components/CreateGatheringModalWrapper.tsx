@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { FaPlus } from "react-icons/fa";
 
 import ConfirmModal from "@/components/modals/confirm-alert-modal/ConfirmModal";
 import CreateGatheringModal from "@/components/modals/create-gathering-modal/CreateGatheringModal";
@@ -18,10 +19,12 @@ const CreateGatheringModalWrapper = () => {
     <>
       <Button
         variant="purple"
-        className="h-10 w-[94px] md:h-11 md:w-28"
+        className="h-10 w-10 rounded-full md:h-11 md:w-28 md:rounded-xl"
         onClick={onOpen}
+        aria-label="모임 만들기"
       >
-        모임 만들기
+        <FaPlus className="md:hidden" />
+        <span className="hidden md:block">모임 만들기</span>
       </Button>
       {user ? (
         <CreateGatheringModal isOpen={isOpen} onClose={onClose} />

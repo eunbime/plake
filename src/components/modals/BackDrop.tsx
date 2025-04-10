@@ -14,6 +14,7 @@ const BackDrop = ({
     <div
       className="fixed inset-0 z-50 flex min-w-[320px] items-center justify-center bg-black/50"
       onClick={handleBackgroundClick}
+      data-testid="backdrop"
     >
       {children}
     </div>
