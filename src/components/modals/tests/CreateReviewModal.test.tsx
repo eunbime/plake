@@ -64,14 +64,15 @@ describe("CreateReviewModal", () => {
 
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      // expect(mockHandleCreateReview).toHaveBeenCalledWith({
-      //   gatheringId: 123,
-      //   score: 5,
-      //   comment: "좋은 경험이었어요!",
-      // });
-      // expect(defaultProps.onClose).toHaveBeenCalled();
-    });
+    // TODO: 디버깅
+    // await waitFor(() => {
+    //   expect(mockHandleCreateReview).toHaveBeenCalledWith({
+    //     gatheringId: 123,
+    //     score: 5,
+    //     comment: "좋은 경험이었어요!",
+    //   });
+    //   expect(defaultProps.onClose).toHaveBeenCalled();
+    // });
   });
 
   it("취소 버튼 클릭 시 onClose가 호출된다.", () => {
