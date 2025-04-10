@@ -26,8 +26,11 @@ describe("Rating 컴포넌트 테스트", () => {
   describe("편집 가능한 상태(isEditable=true) 테스트", () => {
     it("편집 가능한 상태일 때 커서가 포인터여야 함", () => {
       render(<Rating isEditable />);
-      const container = screen.getByLabelText("별점");
-      expect(container).toHaveClass("cursor-pointer");
+      const hearts = screen.getAllByRole("button");
+      expect(hearts).toHaveLength(5);
+      hearts.forEach(heart => {
+        expect(heart).toHaveClass("cursor-pointer");
+      });
     });
 
     it("편집 가능한 상태일 때 하트를 클릭하면 onRatingChange가 호출되어야 함", async () => {
@@ -42,10 +45,13 @@ describe("Rating 컴포넌트 테스트", () => {
   });
 
   describe("편집 불가능한 상태(isEditable=false) 테스트", () => {
-    it("편집 불가능한 상태일 때 커서가 포인터가 아니어야 함", () => {
+    it("편집 불가능한 상태일 때 커서가 default 상태여야 함", () => {
       render(<Rating isEditable={false} />);
-      const container = screen.getByLabelText("별점");
-      expect(container).not.toHaveClass("cursor-pointer");
+      const hearts = screen.getAllByRole("button");
+      expect(hearts).toHaveLength(5);
+      hearts.forEach(heart => {
+        expect(heart).toHaveClass("cursor-default");
+      });
     });
 
     it("편집 불가능한 상태에서는 클릭해도 onRatingChange가 호출되지 않아야 함", async () => {

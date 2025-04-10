@@ -30,17 +30,12 @@ const Rating = ({
   });
 
   return (
-    <div
-      className={clsx(
-        "flex items-center gap-2",
-        isEditable && "cursor-pointer",
-      )}
-      aria-label="별점"
-    >
+    <div className={clsx("flex items-center gap-2")} aria-label="별점">
       {Array.from({ length: totalHearts }).map((_, index) => (
         <button
           key={index}
           onClick={e => handleRatingChange(e, index)}
+          className={clsx(isEditable ? "cursor-pointer" : "cursor-default")}
           aria-label={`${index + 1} 별점`}
         >
           <FaHeart
