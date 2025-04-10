@@ -34,7 +34,6 @@ describe("useCreateReview", () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
     jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
