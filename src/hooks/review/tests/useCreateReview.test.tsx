@@ -64,6 +64,6 @@ describe("useCreateReview", () => {
       result.current.handleCreateReview(mockData).catch(() => {}),
     );
 
-    expect(console.error).toHaveBeenCalledWith("모임 생성 실패:", mockError);
+    expect(console.error).toHaveBeenCalledWith("리뷰 생성 실패:", mockError);
   });
 });
