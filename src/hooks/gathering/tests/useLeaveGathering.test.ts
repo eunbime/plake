@@ -10,7 +10,7 @@ import {
 
 import { useLeaveGatheringMutation } from "../useLeaveGathering";
 
-jest.mock("@/services/gathering/gatheringService");
+jest.mock("@/services/gathering/GatheringService");
 
 describe("useLeaveGathering 테스트", () => {
   const mockGatheringId = "123";

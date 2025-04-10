@@ -9,7 +9,7 @@ import {
   wrapper,
 } from "@/utils/test-utils/testQueryClient";
 
-jest.mock("@/services/gathering/gatheringService");
+jest.mock("@/services/gathering/GatheringService");
 
 describe("useJoinGathering 테스트", () => {
   const mockGatheringId = "123";

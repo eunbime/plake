@@ -10,7 +10,7 @@ import {
   wrapper,
 } from "@/utils/test-utils/testQueryClient";
 
-jest.mock("@/services/gathering/gatheringService");
+jest.mock("@/services/gathering/GatheringService");
 
 describe("useCancelGathering 테스트", () => {
   const mockBack = jest.fn();
