@@ -1,9 +1,12 @@
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/Button";
 
-import MainAnimation from "./animations/MainAnimation";
+const MainAnimation = dynamic(() => import("./animations/MainAnimation"), {
+  ssr: false,
+});
 
 interface IMainPromotionProps {
   type: "offline" | "online";
